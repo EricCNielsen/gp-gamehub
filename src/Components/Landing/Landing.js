@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default Landing = () => {
+const Landing = () => {
     return(
         <div>
             <h1>Landing</h1>
         </div>
     )
 
-}   
+}
+
+export default Landing
