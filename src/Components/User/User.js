@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default User = () => {
+const User = () => {
     return(
         <div>
             <h1>User</h1>
         </div>
     )
 
-}   
+}
+
+export default User
