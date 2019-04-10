@@ -39,7 +39,7 @@ function Nav(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             GameHub
           </Typography>
-          <Button onClick={this.props.auth.login} color="inherit">
+          <Button onClick={props.auth.login} color="inherit">
             Login
           </Button>
         </Toolbar>
