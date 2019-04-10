@@ -31,6 +31,7 @@
     "react-scripts": "2.1.8",
     "react-spinners": "^0.5.4",
     "redux": "^4.0.1",
+    "styled-components": "^4.2.0",
     "uuid": "^3.3.2"
   },
   "scripts": {
