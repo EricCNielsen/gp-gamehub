@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
+import Group from '../Group/Group';
+import Search from '../Search/Search';
+import GamingNews from '../GamingNews/GamingNews';
+import Rankings from '../Rankings/Rankings';
+
 
 const Dashboard = () => {
     return(
         <div>
-            <h1>Dashboard</h1>
+            <Search />
+            <Group />
+            <GamingNews />
+            <Rankings />
         </div>
     )
 
