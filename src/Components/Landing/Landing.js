@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import styled from "styled-components";
+import About from "./About.js";
 
 const Landing = () => {
-    return(
-        <div>
-            <h1>Landing</h1>
-        </div>
-    )
+  return (
+    <div>
+      <About />
+    </div>
+  );
+};
 
-}
-
-export default Landing
+export default Landing;
