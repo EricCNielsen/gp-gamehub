@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-const Landing = () => {
+const Group = () => {
     return(
         <div>
-            <h1>Landing</h1>
+            <h1>Group</h1>
         </div>
     )
 
 }
 
-export default Landing
+export default Group

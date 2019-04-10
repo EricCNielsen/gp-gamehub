@@ -1,6 +1,8 @@
 {
   "name": "gp-gamehub",
   "version": "0.1.0",
+  "main": "server/index.js",
+  "proxy": "http://localhost:4000",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.3",

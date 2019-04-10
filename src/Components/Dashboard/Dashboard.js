@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-const Landing = () => {
+const Dashboard = () => {
     return(
         <div>
-            <h1>Landing</h1>
+            <h1>Dashboard</h1>
         </div>
     )
 
 }
 
-export default Landing
+export default Dashboard
