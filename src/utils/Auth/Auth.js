@@ -1,4 +1,5 @@
 import auth0 from "auth0-js"
+// import { withRouter } from "react-router-dom"
 
 class Auth {
   constructor(history) {
