@@ -1,3 +1,3 @@
 select *
 from users
-where username = $1
+where username ilike '%' || $1 || '%'

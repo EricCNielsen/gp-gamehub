@@ -20,13 +20,13 @@ const CreatorsWrapper = styled.div`
 `;
 
 function Creators(props, { id }) {
-  console.log(props);
   const { classes } = props;
   return (
-    <CreatorsWrapper id={id}>
+    <CreatorsWrapper>
       <h1>this is where the creator stuff will go</h1>
       <p>asdfghjk </p>
       <Button
+        id="creators"
         onClick={props.auth.login}
         style={{
           position: "absolute",
