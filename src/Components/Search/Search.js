@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 import axios from 'axios';
@@ -10,6 +10,7 @@ const SearchContainer = styled.div`
         transition: width .5s;
         border-radius:10px;
         padding: .5%;
+        outline:none;
     };
 `;
 
@@ -27,10 +28,28 @@ const Search = () => {
 
     const [searchInput, setSearchInput] = useState('')
     const [openSearch, setOpenSearch] = useState(false)
+    const [data, setData] = useState('')
 
     const fireSearch = () => {
-        
+        console.log(11111, searchInput)
+        axios.get(`/api/search?search=${searchInput}`)
+        .then((res => {
+            console.log(res.data)
+            setData(res.data)
+        }))
     }
+    const handleInput = (e) => {
+        setSearchInput(e.target.value)
+    }
+     const handleKeyDown = (e) => {
+         console.log(1)
+        if (e.key === 'Enter') {
+            console.log(2)
+          fireSearch();
+        }
+      }
+
+    console.log(searchInput)
 
     return(
         <div>
@@ -39,9 +58,9 @@ const Search = () => {
                     <FontAwesomeIcon icon="search" onClick={_ => setOpenSearch(!openSearch)}/>
                 </SearchIcon>
                         <input 
-                            onKeyDown={fireSearch} 
+                            onKeyDown={handleKeyDown} 
                             val={searchInput} 
-                            onChange={e => setSearchInput(e.target.value)} 
+                            onChange={handleInput} 
                             placeholder={
                                 openSearch ? 'Search': null
                             } 
@@ -51,6 +70,7 @@ const Search = () => {
                                 padding: openSearch ? "5px":"0"
                             }}
                         />
+                        
             </SearchContainer>
         </div>
     );
