@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import styled from "styled-components";
 import About from "./About.js";
 import Creators from "./Creators.js";
+import Auth from "../../utils/Auth/Auth";
 // import AnchorLink from "react-anchor-link-smooth-scroll";
 import { Link, animateScroll as scroll } from "react-scroll";
 import green from "@material-ui/core/colors/green";
@@ -27,7 +28,11 @@ const ListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   position: fixed;
+  margin-top: 200px;
   left: 0;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -36,11 +41,14 @@ const ContentWrapper = styled.div`
   justify-content: center;
 `;
 
-function Landing({}) {
+function Landing(props) {
   const [value, setValue] = useState("");
   let handleChange = e => {
     setValue(e.target.value);
   };
+
+  const auth = new Auth(props.history);
+
   return (
     <LandingWrapper>
       <ListWrapper>
@@ -77,7 +85,7 @@ function Landing({}) {
       </ListWrapper>
       <ContentWrapper>
         <About id="about" />
-        <Creators id="creators" />
+        <Creators id="creators" auth={auth} />
       </ContentWrapper>
     </LandingWrapper>
   );
