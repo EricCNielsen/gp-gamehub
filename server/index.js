@@ -45,6 +45,7 @@ app.use(
 //-------------- API CONTROLLER ------------------//
 
 app.get("/api/search", ctrl.search)
+app.put("/api/user", ctrl.updateUser)
 
 //-------------- AMAZONS3 ------------------//
 
