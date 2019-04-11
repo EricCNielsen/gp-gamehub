@@ -1,3 +1,3 @@
 select *
 from users
-where username = ${username}
+where username = $1

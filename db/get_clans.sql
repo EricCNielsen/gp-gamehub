@@ -1,3 +1,3 @@
 select *
 from clan
-where name = ${name}
+where name = $1
