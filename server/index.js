@@ -2,7 +2,7 @@ require("dotenv").config()
 
 const express = require("express"),
   massive = require("massive"),
-  ctrl = require("./controller/controller"),
+  ctrl = require("./controller/controller.js"),
   aws = require("aws-sdk"),
   session = require("express-session"),
   pg = require("pg"),
@@ -44,8 +44,7 @@ app.use(
 
 //-------------- API CONTROLLER ------------------//
 
-app.get('/api/search', ctrl.search)
-
+app.get("/api/search", ctrl.search)
 
 //-------------- AMAZONS3 ------------------//
 
@@ -127,7 +126,10 @@ app.get(`/auth/callback`, async (req, res, next) => {
   }
 })
 
-//--------------------------- AUTH0 ----------------------------//
+//--------------------------- Endpoints ----------------------------//
+
+app.get("/auth/current", ctrl.checkCurrent)
+app.get("/auth/user", ctrl.getUser)
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db)
