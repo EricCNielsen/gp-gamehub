@@ -14,7 +14,9 @@ const styles = theme => ({
 });
 
 const CreatorsWrapper = styled.div`
-  background: orange;
+  background-image: url("https://images.pexels.com/photos/929824/pexels-photo-929824.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+
+  background-size: cover;
   border: 0.1px solid transparent;
   height: 100vh;
 `;

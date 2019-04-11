@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const AboutWrapper = styled.div`
-  background: gainsboro;
+  background-image: url("https://images.pexels.com/photos/929831/pexels-photo-929831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-size: cover;
   border: 0.1px solid transparent;
   height: 100vh;
 `;

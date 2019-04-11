@@ -1,12 +1,12 @@
 module.exports = {
-    search: async (req, res) => {
-        const db = req.app.get('db');
-        const {search} = req.query
-        console.log(111, search)
-        let searchResults = {}
-        
-        searchResults.users = await db.get_users(search)
-        searchResults.clans = await db.get_clans(search)
+  search: async (req, res) => {
+    const db = req.app.get("db");
+    const { search } = req.query;
+    console.log(111, search);
+    let searchResults = {};
+
+    searchResults.users = await db.get_users(search);
+    searchResults.clans = await db.get_clans(search);
 
     res.status(200).send(searchResults);
   },
