@@ -1,0 +1,32 @@
+img {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.dropzone {
+  border: dashed;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28;
+  margin: 0 auto;
+}
+
+input {
+  width: 400px;
+  height: 100px;
+  background: transparent;
+  text-align: center;
+}
