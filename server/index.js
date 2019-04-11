@@ -42,6 +42,11 @@ app.use(
   })
 )
 
+//-------------- API CONTROLLER ------------------//
+
+app.get('/api/search', ctrl.search)
+
+
 //-------------- AMAZONS3 ------------------//
 
 app.get("/api/signs3", (req, res) => {
