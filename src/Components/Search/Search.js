@@ -10,6 +10,7 @@ const SearchContainer = styled.div`
         transition: width .5s;
         border-radius:10px;
         padding: .5%;
+        outline:none;
     };
 `;
 
@@ -27,9 +28,14 @@ const Search = () => {
 
     const [searchInput, setSearchInput] = useState('')
     const [openSearch, setOpenSearch] = useState(false)
+    const [data, setData] = useState('')
 
     const fireSearch = () => {
-        
+        axios.get('/api/search')
+        .then((res => {
+            setData(res.data)
+            console.log(data)
+        }))
     }
 
     return(
