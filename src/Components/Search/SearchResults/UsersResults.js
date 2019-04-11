@@ -17,8 +17,8 @@ const User = styled.div`
         width:10vh;
         object-fit: cover
     }
-    
-`
+    overflow: auto;
+    `
 
 
 const UserResults = ({users}) => {

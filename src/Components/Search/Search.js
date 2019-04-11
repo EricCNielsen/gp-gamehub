@@ -9,12 +9,13 @@ import ClansResults from './SearchResults/ClansResults';
 const SearchContainer = styled.div`
     position: relative;
     height: 5vh;
-    background: grey;
     input {
         transition: width .5s;
         border-radius:10px;
         padding: .5%;
         outline:none;
+        background-color: white;
+        height: 2vh;
     };
 `;
 
