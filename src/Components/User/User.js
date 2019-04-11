@@ -5,10 +5,10 @@ import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import "./user.css";
 
-function User() {
+function User(props) {
   const [isUploading, setUploading] = useState(false),
     [url, setUrl] = useState(url),
-    [experience, setExperience] = useState('beginner');
+    [experience, setExperience] = useState("beginner");
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
@@ -62,6 +62,12 @@ function User() {
       });
   };
 
+  let handleSave = () => {
+    
+    axios.put()
+  }
+
+  if (props.user_id) {
   return (
     <>
       <h1>Avatar</h1>
@@ -70,9 +76,7 @@ function User() {
       {url ? (
         <button onClick={() => setUrl("")}>edit</button>
       ) : (
-        <div
-          className="dropzone"
-        >
+        <div className="dropzone">
           <Dropzone
             className="dropzone"
             onDropAccepted={getSignedRequest}
@@ -83,15 +87,20 @@ function User() {
           </Dropzone>
         </div>
       )}
-      <input placeholder="Bio Here" />
-      <select value={experience}
-      onChange={e => setExperience(e.target.value)}>
-        <option value='beginner'>beginner</option>
-        <option value='intermediate'>intermediate</option>
-        <option value='expert'>expert</option>
+      <p>Select Expereince Level: </p>
+      <select value={experience} onChange={e => setExperience(e.target.value)}>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
       </select>
+      <br/>
+      <input placeholder="Bio Here" />
+      <button>Save</button>
     </>
-  );
+      )
+    }
 }
 
 export default User;
