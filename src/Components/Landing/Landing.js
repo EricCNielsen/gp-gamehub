@@ -85,7 +85,7 @@ function Landing(props) {
       </ListWrapper>
       <ContentWrapper>
         <About id="about" />
-        <Creators id="creators" auth={auth} />
+        <Creators auth={auth} />
       </ContentWrapper>
     </LandingWrapper>
   );
