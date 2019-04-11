@@ -3,10 +3,12 @@ import axios from "axios";
 import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
+import "./user.css";
 
-function User() {
+function User(props) {
   const [isUploading, setUploading] = useState(false),
-    [url, setUrl] = useState(url);
+    [url, setUrl] = useState(url),
+    [experience, setExperience] = useState("beginner");
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
@@ -60,33 +62,45 @@ function User() {
       });
   };
 
+  let handleSave = () => {
+    
+    axios.put()
+  }
+
+  if (props.user_id) {
   return (
     <>
       <h1>Avatar</h1>
-      <img src={url} alt="" width="250px" height="250px" borderRadius="50"/>
+      <img src={url} alt="profile img" />
 
-      <Dropzone
-        onDropAccepted={getSignedRequest}
-        style={{
-          width: 200,
-          height: 200,
-          borderWidth: 7,
-          marginTop: 100,
-          borderColor: "rgb(102, 102, 102)",
-          borderStyle: "dashed",
-          borderRadius: 5,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: 28
-        }}
-        accept="image/*"
-        multiple={false}
-      >
-        {isUploading ? <GridLoader /> : <p>Drop File or Click Here</p>}
-      </Dropzone>
+      {url ? (
+        <button onClick={() => setUrl("")}>edit</button>
+      ) : (
+        <div className="dropzone">
+          <Dropzone
+            className="dropzone"
+            onDropAccepted={getSignedRequest}
+            accept="image/*"
+            multiple={false}
+          >
+            {isUploading ? <GridLoader /> : <p>Drop File or Click Here</p>}
+          </Dropzone>
+        </div>
+      )}
+      <p>Select Expereince Level: </p>
+      <select value={experience} onChange={e => setExperience(e.target.value)}>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
+      </select>
+      <br/>
+      <input placeholder="Bio Here" />
+      <button>Save</button>
     </>
-  );
+      )
+    }
 }
 
 export default User;
