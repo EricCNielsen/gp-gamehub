@@ -1,19 +1,7 @@
-import auth0 from "auth0-js"
-// import { withRouter } from "react-router-dom"
-
 class Auth {
   constructor(history) {
     this.history = history
     this.userProfile = null
-    // this.auth0 = new auth0.WebAuth({
-    //   domain: process.env.REACT_APP_AUTH0_DOMAIN,
-    //   clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
-    //   redirectUri: process.env.REACT_APP_AUTH0_CALLBACK_URL,
-    //   //Token is the access token and id_token will authenticate user,
-    //   responseType: "token id_token",
-    //   //this specifies the scope. openid includes audience, exp, etc. profile data includes user info like name, nickname, picture, etc.
-    //   scope: "openid profile email"
-    // })
   }
 
   login() {
@@ -25,9 +13,6 @@ class Auth {
     window.location = `https://${REACT_APP_DOMAIN}/authorize?client_id=${REACT_APP_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${url}&response_type=code`
     console.log(window.location)
   }
-  // login = () => {
-  //   this.auth0.authorize()
-  // }
 
   handleAuthentication = () => {
     this.auth0.parseHash((err, authResult) => {
