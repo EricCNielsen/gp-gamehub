@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import MobileContainer from "../Styles/MobileContainer";
-import axios from "axios";
+import React, { useEffect, useState } from "react"
+import MobileContainer from "../Styles/MobileContainer"
+import axios from "axios"
 
 const Rankings = () => {
   useEffect(() => {
-    getTop5Users();
-  }, []);
+    getTop5Users()
+  }, [])
 
-  const [top5Users, setTop5Users] = useState([]);
+  const [top5Users, setTop5Users] = useState([])
 
   const getTop5Users = async () => {
-    let top5 = await axios.get("/api/top5users");
-    console.log(top5.data);
-    setTop5Users(top5.data);
-  };
+    let top5 = await axios.get("/api/top5users")
+    console.log(top5.data)
+    setTop5Users(top5.data)
+  }
 
   return (
     <MobileContainer>
@@ -26,11 +26,11 @@ const Rankings = () => {
             <li key={user.username} style={{ textAlign: "left" }}>
               {user.username} : {user.a_r}
             </li>
-          );
+          )
         })}
       </ol>
     </MobileContainer>
-  );
-};
+  )
+}
 
-export default Rankings;
+export default Rankings
