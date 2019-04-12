@@ -77,8 +77,8 @@ const Search = () => {
                     }}
                 />
                 <SearchResults>
-                    <UsersResults users = {searchResults.users}/>
-                    <ClansResults clans = {searchResults.clans}/>  
+                    <UsersResults users = {searchResults.users}  openSearch={openSearch}/>
+                    <ClansResults clans = {searchResults.clans} openSearch={openSearch}/>  
                 </SearchResults>
             </SearchContainer>
         </div>
