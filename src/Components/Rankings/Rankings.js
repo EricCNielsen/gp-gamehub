@@ -4,14 +4,15 @@ import axios from "axios"
 
 const Rankings = () => {
   useEffect(() => {
-    // getTop5Users();
-  })
-  const [top5Users, setTop5Users] = useState("")
+    getTop5Users()
+  }, [])
+
+  const [top5Users, setTop5Users] = useState([])
 
   const getTop5Users = async () => {
     let top5 = await axios.get("/api/top5users")
-    setTop5Users = top5.data
     console.log(top5.data)
+    setTop5Users(top5.data)
   }
 
   return (
@@ -20,11 +21,13 @@ const Rankings = () => {
       <hr />
       <h2>Top 5 Users</h2>
       <ol>
-        <li />
-        <li />
-        <li />
-        <li />
-        <li />
+        {top5Users.map(user => {
+          return (
+            <li key={user.username} style={{ textAlign: "left" }}>
+              {user.username} : {user.a_r}
+            </li>
+          )
+        })}
       </ol>
     </MobileContainer>
   )

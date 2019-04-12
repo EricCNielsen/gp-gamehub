@@ -73,12 +73,13 @@ const Search = () => {
                     style={{ 
                         width: openSearch ? "80vw":"0", 
                         borderStyle: openSearch ? "solid":"none",
-                        padding: openSearch ? "5px":"0"
+                        padding: openSearch ? "5px":"0",
+                        textAlign: "left",
                     }}
                 />
                 <SearchResults>
-                    <UsersResults users = {searchResults.users}/>
-                    <ClansResults clans = {searchResults.clans}/>  
+                    <UsersResults users = {searchResults.users}  openSearch={openSearch}/>
+                    <ClansResults clans = {searchResults.clans} openSearch={openSearch}/>  
                 </SearchResults>
             </SearchContainer>
         </div>
