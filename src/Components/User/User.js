@@ -9,12 +9,12 @@ import {connect} from 'react-redux';
 
 function User(props) {
   const [isUploading, setUploading] = useState(false),
-    [url, setUrl] = useState(url),
+    [url, setUrl] = useState(props.url),
     // [experience, setExperience] = useState(0),
-    [username, setUsername] = useState(username),
-    [email, setEmail] = useState(email),
-    [location, setLocation] = useState(''),
-    [bio, setBio] = useState('');
+    [username, setUsername] = useState(props.username),
+    [email, setEmail] = useState(props.email),
+    [location, setLocation] = useState(props.location),
+    [bio, setBio] = useState(props.bio);
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
@@ -81,6 +81,7 @@ function User(props) {
       console.log(err)
     }
   }
+  console.log(22222222, props)
 
   if (props.user_id) {
   return (
