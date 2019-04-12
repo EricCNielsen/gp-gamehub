@@ -1,9 +1,9 @@
-class Auth {
-  constructor(history) {
-    this.history = history
-    this.userProfile = null
-  }
+import auth0 from "auth0-js"
 
+class Auth {
+  constructor() {
+    this.logout = this.logout.bind(this)
+  }
   login() {
     console.log("test")
     const { REACT_APP_DOMAIN, REACT_APP_CLIENT_ID } = process.env
@@ -12,6 +12,23 @@ class Auth {
 
     window.location = `https://${REACT_APP_DOMAIN}/authorize?client_id=${REACT_APP_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${url}&response_type=code`
     console.log(window.location)
+  }
+
+  logout = () => {
+    const {
+      REACT_APP_DOMAIN,
+      REACT_APP_CLIENT_ID,
+      REACT_APP_LOGOUT_URL
+    } = process.env
+    const webAuth = new auth0.WebAuth({
+      domain: REACT_APP_DOMAIN,
+      clientID: REACT_APP_CLIENT_ID
+    })
+
+    webAuth.logout({
+      returnTo: REACT_APP_LOGOUT_URL,
+      client_id: REACT_APP_CLIENT_ID
+    })
   }
 
   handleAuthentication = () => {
@@ -41,16 +58,16 @@ class Auth {
     const expiresAt = JSON.parse(localStorage.getItem("expires_at"))
     return new Date().getTime() < expiresAt
   }
-  logout = () => {
-    localStorage.removeItem("access_token")
-    localStorage.removeItem("id_token")
-    localStorage.removeItem("expires_at")
-    this.userProfile = null
-    this.auth0.logout({
-      clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
-      returnTo: "http://localhost:3000"
-    })
-  }
+  // logout = () => {
+  //   localStorage.removeItem("access_token")
+  //   localStorage.removeItem("id_token")
+  //   localStorage.removeItem("expires_at")
+  //   this.userProfile = null
+  //   this.auth0.logout({
+  //     clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
+  //     returnTo: "http://localhost:3000"
+  //   })
+  // }
 
   getAccessToken = () => {
     const accessToken = localStorage.getItem("access_token")
