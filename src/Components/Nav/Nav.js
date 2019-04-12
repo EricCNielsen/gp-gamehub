@@ -11,6 +11,7 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
+import Menu from "./Menu/Menu"
 
 const styles = {
   root: {
@@ -58,9 +59,7 @@ function Nav(props) {
     <div className={classes.root}>
       <AppBar className={classes.navbar}>
         <Toolbar>
-          {/* {location.pathname !== "/" && (
-            
-          )} */}
+          {location.pathname !== "/" && <Menu />}
           <Typography variant="h6" color="inherit" className={classes.grow}>
             GameHub
           </Typography>
