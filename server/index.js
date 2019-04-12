@@ -131,6 +131,7 @@ app.get(`/auth/callback`, async (req, res, next) => {
 app.get("/auth/current", ctrl.checkCurrent);
 app.get("/auth/account", ctrl.getAuth);
 app.post("/auth/logout", ctrl.logout);
+app.get("/api/top5users", ctrl.top5Users);
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
