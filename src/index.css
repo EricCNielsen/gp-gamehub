@@ -16,3 +16,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#root {
+  z-index: 1;
+}
+
+#account-img {
+  z-index: 2;
+}
