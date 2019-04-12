@@ -25,12 +25,14 @@ const UserResults = ({users}) => {
      const results = users
      .map((user, i) => {
         return(
-            <User key={i}>
-                
-                <img src={user.picture} alt="profile picture"/>
-                <h1>{user.username}</h1>
-                <h2>{user.location}</h2>
-            </User>
+            <Link to="/user/:${id}">
+                <User key={i}>
+                    
+                    <img src={user.picture} alt="profile picture"/>
+                    <h1>{user.username}</h1>
+                    <h2>{user.location}</h2>
+                </User>
+            </Link>
         )
     })
     return (
