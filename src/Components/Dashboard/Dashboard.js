@@ -15,10 +15,10 @@ function Dashboard(props) {
   })
 
   async function getUserInfo() {
-    console.log(!props.username)
+    const { updateUser } = props
     if (!props.username) {
       const user = await axios.get("/auth/user")
-      console.log(user)
+      updateUser(user.data[0])
     }
   }
 

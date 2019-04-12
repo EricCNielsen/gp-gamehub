@@ -120,7 +120,7 @@ app.get(`/auth/callback`, async (req, res, next) => {
     } else {
       let createdUser = await db.create_user([name, email, picture, sub])
       req.session.user = createdUser[0]
-      res.redirect("/dashboard")
+      res.redirect("/user")
     }
   } catch (err) {
     console.log(err)
