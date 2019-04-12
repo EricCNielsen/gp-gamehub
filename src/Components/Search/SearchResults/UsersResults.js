@@ -26,8 +26,7 @@ const UserResults = ({users}) => {
      .map((user, i) => {
         return(
             <User key={i}>
-                <h3>Users</h3>
-                <hr/>
+                
                 <img src={user.picture} alt="profile picture"/>
                 <h1>{user.username}</h1>
                 <h2>{user.location}</h2>
