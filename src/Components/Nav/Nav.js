@@ -3,6 +3,7 @@ import axios from "axios"
 
 import { connect } from "react-redux"
 import { updateUser } from "../../ducks/reducer"
+import AccountImage from "./AccountImage/AccountImage"
 
 //MaterialUI
 import PropTypes from "prop-types"
@@ -16,7 +17,9 @@ import Menu from "./Menu/Menu"
 const styles = {
   root: {
     // flexGrow: 1,
-    overflow: "hidden"
+    overflow: "hidden",
+    position: "relative",
+    zIndex: 1
   },
   grow: {
     flexGrow: 1
@@ -54,12 +57,12 @@ function Nav(props) {
     }
   }
 
-  const { classes, location, username, picture } = props
+  const { classes, location } = props
   return (
     <div className={classes.root}>
       <AppBar className={classes.navbar}>
         <Toolbar>
-          {location.pathname !== "/" && <Menu />}
+          {location.pathname !== "/" && <Menu history={props.history} />}
           <Typography variant="h6" color="inherit" className={classes.grow}>
             GameHub
           </Typography>
@@ -68,17 +71,7 @@ function Nav(props) {
               Login
             </Button>
           ) : (
-            <div>
-              <img
-                src={picture}
-                alt={username}
-                style={{ width: "3.5em", height: "3.5em" }}
-              />
-              <h5>{username}</h5>
-              <Button onClick={handleLogout} color="inherit">
-                Logout
-              </Button>
-            </div>
+            <AccountImage handleLogout={handleLogout} />
           )}
         </Toolbar>
       </AppBar>
@@ -89,19 +82,12 @@ function Nav(props) {
 Nav.propTypes = {
   classes: PropTypes.object.isRequired
 }
-const mapSateToProps = reduxState => {
-  const { username, picture } = reduxState
-  return {
-    username,
-    picture
-  }
-}
 
 const mapDispatchToProps = {
   updateUser
 }
 
 export default connect(
-  mapSateToProps,
+  null,
   mapDispatchToProps
 )(withStyles(styles)(Nav))

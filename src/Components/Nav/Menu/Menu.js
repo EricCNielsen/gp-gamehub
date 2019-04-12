@@ -1,17 +1,22 @@
 import React, { useState } from "react"
 import Drawer from "@material-ui/core/Drawer"
-import Button from "@material-ui/core/Button"
-import List from "@material-ui/core/List"
 import Divider from "@material-ui/core/Divider"
+import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
-import InboxIcon from "@material-ui/icons/MoveToInbox"
-import MailIcon from "@material-ui/icons/Mail"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 
-function Menu() {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUserCog } from "@fortawesome/free-solid-svg-icons"
+import { faUsers } from "@fortawesome/free-solid-svg-icons"
+import { faHome } from "@fortawesome/free-solid-svg-icons"
+
+//Routing:
+import { NavLink } from "react-router-dom"
+
+function Menu(props) {
   const [toggle, setToggle] = useState(false)
 
   function toggleDrawer() {
@@ -21,42 +26,61 @@ function Menu() {
   const sideList = (
     <div>
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
+        <NavLink to="/group">
+          <ListItem button key="Clans">
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <FontAwesomeIcon icon={faUsers} size="lg" />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary="Clans" />
           </ListItem>
-        ))}
+        </NavLink>
+        <NavLink to="/dashboard">
+          <ListItem button key="Main">
+            <ListItemIcon>
+              <FontAwesomeIcon icon={faHome} size="lg" />
+            </ListItemIcon>
+            <ListItemText primary="Main" />
+          </ListItem>
+        </NavLink>
       </List>
-      <Divider />
+    </div>
+  )
+
+  const EditAccount = (
+    <div>
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
+        <NavLink to="/user">
+          <ListItem button key="Account">
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <FontAwesomeIcon icon={faUserCog} size="lg" />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary="Account" />
           </ListItem>
-        ))}
+        </NavLink>
       </List>
     </div>
   )
 
   return (
     <div>
-      <IconButton color="inherit" aria-label="Menu">
+      <IconButton
+        onClick={toggleDrawer}
+        onKeyDown={toggleDrawer}
+        color="inherit"
+        aria-label="Menu"
+      >
         <MenuIcon />
       </IconButton>
-      <Drawer>
-        <div
-          tabIndex={0}
-          role="button"
-          onClick={toggleDrawer}
-          onKeyDown={this.toggleDrawer("left", false)}
-        >
+      <Drawer open={toggle} onClose={() => setToggle(false)}>
+        <div>
+          <h2>GameHub</h2>
+        </div>
+        <Divider />
+        <div tabIndex={0} role="button">
           {sideList}
+        </div>
+        <div tabIndex={0} role="button">
+          {EditAccount}
         </div>
       </Drawer>
     </div>
