@@ -85,7 +85,6 @@ app.get("/api/signs3", (req, res) => {
 
 app.get(`/auth/callback`, async (req, res, next) => {
   try {
-    console.log(req)
     // use code from query in payload for token
     const payload = {
       client_id: REACT_APP_CLIENT_ID,
@@ -120,7 +119,7 @@ app.get(`/auth/callback`, async (req, res, next) => {
     } else {
       let createdUser = await db.create_user([name, email, picture, sub])
       req.session.user = createdUser[0]
-      res.redirect("/dashboard")
+      res.redirect("/user")
     }
   } catch (err) {
     console.log(err)
@@ -131,6 +130,7 @@ app.get(`/auth/callback`, async (req, res, next) => {
 
 app.get("/auth/current", ctrl.checkCurrent)
 app.get("/auth/user", ctrl.getUser)
+app.post("/auth/logout", ctrl.logout)
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db)
