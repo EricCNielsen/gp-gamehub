@@ -34,7 +34,7 @@ const styles = {
 function Nav(props) {
   useEffect(() => {
     handleCurrent()
-  })
+  }, [])
 
   function handleLogout() {
     try {

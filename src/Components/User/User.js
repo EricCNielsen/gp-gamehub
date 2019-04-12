@@ -4,17 +4,18 @@ import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import "./user.css";
-import {updateUser} from '../../ducks/reducer';
-import {connect} from 'react-redux';
+import { updateUser } from "../../ducks/reducer";
+import { connect } from "react-redux";
 
 function User(props) {
   const [isUploading, setUploading] = useState(false),
-    [url, setUrl] = useState(props.url),
-    // [experience, setExperience] = useState(0),
-    [username, setUsername] = useState(props.username),
-    [email, setEmail] = useState(props.email),
-    [location, setLocation] = useState(props.location),
-    [bio, setBio] = useState(props.bio);
+    [url, setUrl] = useState(""),
+    [edit, setEdit] = useState(false),
+    [experience, setExperience] = useState(''),
+    [username, setUsername] = useState(""),
+    // [email, setEmail] = useState(props.email),
+    [location, setLocation] = useState(""),
+    [bio, setBio] = useState("");
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
@@ -70,48 +71,87 @@ function User(props) {
       picture: url,
       bio,
       location,
-      email,
       username
     };
-    console.log(user)
+    // console.log("hello", user);
     try {
-     let res = await axios.put('/api/user', user);
-     console.log(res.data);
+      let res = await axios.put("/api/user", user);
+      props.updateUser(res.data[0]);
+      setEdit(false);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-  console.log(22222222, props)
+  };
 
+  let handleEdit = async () => {
+    setEdit(!edit);
+    setUsername(props.username);
+    setLocation(props.location);
+    setBio(props.bio);
+    setUrl(props.picture);
+  };
   if (props.user_id) {
-  return (
-    <>
-      <img src={url} alt="profile img" />
+    return (
+      <>
+        {edit ? (
+          <>
+            <img className="profile" src={url} alt="profile img" />
 
-      {url ? (
-        <button onClick={() => setUrl("")}>edit</button>
-      ) : (
-        <div className="dropzone">
-          <Dropzone
-            className="dropzone"
-            onDropAccepted={getSignedRequest}
-            accept="image/*"
-            multiple={false}
-          >
-            {isUploading ? <GridLoader /> : <p>Drop File or Click Here</p>}
-          </Dropzone>
-        </div>
-      )}
-      <br/>
-      <input placeholder="Bio Here" value={bio} onChange={e => setBio(e.target.value)}/>
-      <button onClick={handleSave}>Save</button>
-    </>
-      )
-    } else {
-      return (
-        <></>
-      )
-    }
+            {url ? (
+              <button onClick={() => setUrl("")}>edit</button>
+            ) : (
+              <div className="dropzone">
+                <Dropzone
+                  className="dropzone"
+                  onDropAccepted={getSignedRequest}
+                  accept="image/*"
+                  multiple={false}
+                >
+                  {isUploading ? (
+                    <GridLoader />
+                  ) : (
+                    <p>Drop File or Click Here</p>
+                  )}
+                </Dropzone>
+              </div>
+            )}
+            <br />
+            {/* <input id='email' placeholder='Email' value={email} onChange={e => setEmail(e.target.value)}/> */}
+            <input
+              id="username"
+              placeholder="Username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+            <input
+              id="location"
+              placeholder="Location"
+              value={location}
+              onChange={e => setLocation(e.target.value)}
+            />
+            <br />
+            <input
+              id="bio"
+              placeholder="Bio Here"
+              value={bio}
+              onChange={e => setBio(e.target.value)}
+            />
+            <button onClick={handleSave}>Save</button>
+          </>
+        ) : (
+          <>
+            <img className='profile' src={props.picture} alt="profile img" />
+            <h4>Username:</h4> {props.username}
+            <h4>Location:</h4> {props.location}
+            <h4>Bio:</h4> {props.bio}
+            <button onClick={handleEdit}>Edit</button>
+          </>
+        )}
+      </>
+    );
+  } else {
+    return <></>;
+  }
 }
 
 const mapStateToProps = reduxState => {
@@ -122,7 +162,10 @@ const mapStateToProps = reduxState => {
     location: reduxState.location,
     picture: reduxState.picture,
     bio: reduxState.bio
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, {updateUser})(User);
+export default connect(
+  mapStateToProps,
+  { updateUser }
+)(User);

@@ -5,6 +5,7 @@ const initialState = {
   location: ``,
   picture: ``,
   bio: ``,
+  experience: ``,
   ranking: ``
 }
 
@@ -19,12 +20,12 @@ export function updateUser(user) {
 
 export default function reducer(state = initialState, action) {
   const { type, payload } = action
-  console.log(1111111, action)
   switch (type) {
     case UPDATE_USER:
+    const {bio, username, location, picture, ranking, experience, email, user_id} = payload;
       return {
         ...state,
-        ...payload
+        bio, username, location, picture, ranking, email, user_id, experience
       }
 
     default:
