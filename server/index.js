@@ -129,7 +129,7 @@ app.get(`/auth/callback`, async (req, res, next) => {
 //--------------------------- Endpoints ----------------------------//
 
 app.get("/auth/current", ctrl.checkCurrent)
-app.get("/auth/user", ctrl.getUser)
+app.get("/auth/account", ctrl.getAuth)
 app.post("/auth/logout", ctrl.logout)
 
 massive(CONNECTION_STRING).then(db => {
