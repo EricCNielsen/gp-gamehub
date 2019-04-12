@@ -8,14 +8,15 @@ import "./user.css";
 function User(props) {
   const [isUploading, setUploading] = useState(false),
     [url, setUrl] = useState(url),
-    [experience, setExperience] = useState("beginner");
+    // [experience, setExperience] = useState(0),
+    [username, setUsername] = useState(username),
+    [email, setEmail] = useState(email),
+    [location, setLocation] = useState(''),
+    [bio, setBio] = useState('');
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
-    // We are creating a file name that consists of a random string, and the name of the file that was just uploaded with the spaces removed and hyphens inserted instead. This is done using the .replace function with a specific regular expression. This will ensure that each file uploaded has a unique name which will prevent files from overwriting other files due to duplicate names.
     const fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
-
-    // We will now send a request to our server to get a "signed url" from Amazon. We are essentially letting AWS know that we are going to upload a file soon. We are only sending the file-name and file-type as strings. We are not sending the file itself at this point.
     axios
       .get("/api/signs3", {
         params: {
@@ -41,10 +42,9 @@ function User(props) {
 
     axios
       .put(signedRequest, file, options)
-      .then(response => {
+      .then(() => {
         setUploading(false);
         setUrl(url);
-        // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
       })
       .catch(err => {
         setUploading({
@@ -62,9 +62,22 @@ function User(props) {
       });
   };
 
-  let handleSave = () => {
-    
-    axios.put()
+  let handleSave = async () => {
+    let user = {
+      user_id: props.user_id,
+      picture: url,
+      bio,
+      location,
+      email,
+      username
+    };
+    console.log(user)
+    try {
+     let res = await axios.put('/api/user', user);
+     console.log(res.data);
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   if (props.user_id) {
@@ -87,17 +100,9 @@ function User(props) {
           </Dropzone>
         </div>
       )}
-      <p>Select Expereince Level: </p>
-      <select value={experience} onChange={e => setExperience(e.target.value)}>
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
-        <option value={4}>4</option>
-        <option value={5}>5</option>
-      </select>
       <br/>
-      <input placeholder="Bio Here" />
-      <button>Save</button>
+      <input placeholder="Bio Here" value={bio} onChange={e => setBio(e.target.value)}/>
+      <button onClick={handleSave}>Save</button>
     </>
       )
     }
