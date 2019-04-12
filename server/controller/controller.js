@@ -36,7 +36,7 @@ module.exports = {
       console.log(11, req.body);
       //   const { id } = req.session.user;
       const db = req.app.get("db");
-      let user = await db.updateUser({
+      let user = await db.update_user({
         user_id,
         username,
         email,
@@ -58,4 +58,10 @@ module.exports = {
       res.sendStatus(200);
     });
   }
+  // getTop5Users: async (req, res) => {
+  //   const db = req.app.get("db");
+  //   let gettop5users = await db.get_top5users();
+  //   console.log(gettop5users);
+  //   res.status(200).send(gettop5users);
+  // }
 };
