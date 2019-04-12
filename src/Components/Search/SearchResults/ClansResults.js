@@ -19,17 +19,17 @@ const Clan = styled.div`
     overflow: auto;
     `
 
-const ClansResults = ({clans}) => {
+const ClansResults = ({clans, openSearch}) => {
     const results = clans
     .map((clan, i) => {
         return(
-            <Clan key ={i}>
+            openSearch ? <Clan key ={i}>
                 <h3>Clans</h3>
                 <hr/>
                 <img src={clan.avatar} alt="clan picture"/>
                 <h1>{clan.name}</h1>
                 <h3>{clan.ranking}</h3>
-            </Clan>
+            </Clan> :null
         )
     })
     return(
