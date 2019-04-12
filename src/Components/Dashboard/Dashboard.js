@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import Group from "../Group/Group"
 import Search from "../Search/Search"
 import GamingNews from "../GamingNews/GamingNews"
