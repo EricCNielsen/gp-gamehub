@@ -11,7 +11,6 @@ const Rankings = () => {
 
   const getTop5Users = async () => {
     let top5 = await axios.get("/api/top5users");
-    console.log(top5.data);
     setTop5Users(top5.data);
   };
 
