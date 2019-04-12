@@ -57,11 +57,11 @@ module.exports = {
     req.session.destroy(function() {
       res.sendStatus(200);
     });
+  },
+  top5Users: async (req, res) => {
+    const db = req.app.get("db");
+    let gettop5users = await db.get_top5users();
+    console.log(gettop5users);
+    res.status(200).send(gettop5users);
   }
-  // getTop5Users: async (req, res) => {
-  //   const db = req.app.get("db");
-  //   let gettop5users = await db.get_top5users();
-  //   console.log(gettop5users);
-  //   res.status(200).send(gettop5users);
-  // }
 };
