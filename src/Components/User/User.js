@@ -83,7 +83,6 @@ function User(props) {
   if (props.user_id) {
   return (
     <>
-      <h1>Avatar</h1>
       <img src={url} alt="profile img" />
 
       {url ? (
