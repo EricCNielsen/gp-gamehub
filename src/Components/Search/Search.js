@@ -73,7 +73,8 @@ const Search = () => {
                     style={{ 
                         width: openSearch ? "80vw":"0", 
                         borderStyle: openSearch ? "solid":"none",
-                        padding: openSearch ? "5px":"0"
+                        padding: openSearch ? "5px":"0",
+                        textAlign: "left",
                     }}
                 />
                 <SearchResults>
