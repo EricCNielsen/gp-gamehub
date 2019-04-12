@@ -4,6 +4,8 @@ import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import "./user.css";
+import {updateUser} from '../../ducks/reducer';
+import {connect} from 'react-redux';
 
 function User(props) {
   const [isUploading, setUploading] = useState(false),
@@ -104,7 +106,22 @@ function User(props) {
       <button onClick={handleSave}>Save</button>
     </>
       )
+    } else {
+      return (
+        <></>
+      )
     }
 }
 
-export default User;
+const mapStateToProps = reduxState => {
+  return {
+    user_id: reduxState.user_id,
+    username: reduxState.username,
+    email: reduxState.email,
+    location: reduxState.location,
+    picture: reduxState.picture,
+    bio: reduxState.bio
+  }
+}
+
+export default connect(mapStateToProps, {updateUser})(User);

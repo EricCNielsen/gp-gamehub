@@ -2,7 +2,7 @@ module.exports = {
   search: async (req, res) => {
     const db = req.app.get("db")
     const { search } = req.query
-    console.log(111, search)
+    // console.log(111, search)
     let searchResults = {}
 
     searchResults.users = await db.get_users(search)
@@ -12,7 +12,7 @@ module.exports = {
   },
   checkCurrent: (req, res) => {
     try {
-      console.log(req.session.user)
+      // console.log(req.session.user)
       const { user } = req.session
       if (!user) {
         res.redirect("/")
