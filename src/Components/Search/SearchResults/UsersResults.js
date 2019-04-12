@@ -21,17 +21,17 @@ const User = styled.div`
     `
 
 
-const UserResults = ({users}) => {
+const UserResults = ({users, openSearch}) => {
      const results = users
      .map((user, i) => {
         return(
             // <Link to="/user/:${id}">
-                <User key={i}>
-                    
+               openSearch ? <User key={i}>
                     <img src={user.picture} alt="profile picture"/>
+                    <h1>{user.ranking}</h1>
                     <h1>{user.username}</h1>
                     <h2>{user.location}</h2>
-                </User>
+                </User> : null
             // </Link>
         )
     })
