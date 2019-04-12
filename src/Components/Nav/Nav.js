@@ -11,8 +11,6 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
 
 const styles = {
   root: {
@@ -49,8 +47,8 @@ function Nav(props) {
   async function handleCurrent() {
     const { updateUser, history, location } = props
     const user = await axios.get("/auth/current")
+    updateUser(user.data)
     if (user && location.pathname === "/") {
-      updateUser(user.data)
       history.push("/dashboard")
     }
   }
@@ -60,13 +58,9 @@ function Nav(props) {
     <div className={classes.root}>
       <AppBar className={classes.navbar}>
         <Toolbar>
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-          >
-            <MenuIcon />
-          </IconButton>
+          {/* {location.pathname !== "/" && (
+            
+          )} */}
           <Typography variant="h6" color="inherit" className={classes.grow}>
             GameHub
           </Typography>

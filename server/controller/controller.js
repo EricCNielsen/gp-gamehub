@@ -21,11 +21,11 @@ module.exports = {
       console.log(err)
     }
   },
-  getUser: async (req, res) => {
+  getAuth: async (req, res) => {
     try {
       const { auth_id } = req.session.user
       const db = req.app.get("db")
-      const user = await db.get_user(auth_id)
+      const user = await db.get_auth(auth_id)
       res.status(200).send(user)
     } catch (err) {
       console.log(err)
