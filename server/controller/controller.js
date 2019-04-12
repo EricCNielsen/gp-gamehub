@@ -15,9 +15,9 @@ module.exports = {
       // console.log(req.session.user)
       const { user } = req.session
       if (!user) {
-        res.redirect("/")
+        res.sendStatus(500)
       }
-      res.redirect("/dashboard")
+      res.status(200).send(user)
     } catch (err) {
       console.log(err)
     }
@@ -54,5 +54,10 @@ module.exports = {
       console.log("error updating user:", error)
       res.status(500).send("error updating user")
     }
+  },
+  logout: (req, res) => {
+    req.session.destroy(function() {
+      res.sendStatus(200)
+    })
   }
 }
