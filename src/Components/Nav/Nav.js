@@ -1,4 +1,8 @@
 import React, { useEffect } from "react"
+import axios from "axios"
+
+import { connect } from "react-redux"
+import { updateUser } from "../../ducks/reducer"
 
 //MaterialUI
 import PropTypes from "prop-types"
@@ -33,12 +37,25 @@ function Nav(props) {
     handleCurrent()
   })
 
-  function handleCurrent() {
-    if (props.pathname !== "/") {
+  function handleLogout() {
+    try {
+      props.auth.logout()
+      axios.post("/auth/logout")
+    } catch (err) {
+      console.log(err)
     }
   }
 
-  const { classes } = props
+  async function handleCurrent() {
+    const { updateUser, history, location } = props
+    const user = await axios.get("/auth/current")
+    if (user && location.pathname === "/") {
+      updateUser(user.data)
+      history.push("/dashboard")
+    }
+  }
+
+  const { classes, location, username, picture } = props
   return (
     <div className={classes.root}>
       <AppBar className={classes.navbar}>
@@ -53,9 +70,23 @@ function Nav(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             GameHub
           </Typography>
-          <Button onClick={props.auth.login} color="inherit">
-            Login
-          </Button>
+          {location.pathname === "/" ? (
+            <Button onClick={props.auth.login} color="inherit">
+              Login
+            </Button>
+          ) : (
+            <div>
+              <img
+                src={picture}
+                alt={username}
+                style={{ width: "3.5em", height: "3.5em" }}
+              />
+              <h5>{username}</h5>
+              <Button onClick={handleLogout} color="inherit">
+                Logout
+              </Button>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>
@@ -65,5 +96,19 @@ function Nav(props) {
 Nav.propTypes = {
   classes: PropTypes.object.isRequired
 }
+const mapSateToProps = reduxState => {
+  const { username, picture } = reduxState
+  return {
+    username,
+    picture
+  }
+}
 
-export default withStyles(styles)(Nav)
+const mapDispatchToProps = {
+  updateUser
+}
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Nav))

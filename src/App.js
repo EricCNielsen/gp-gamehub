@@ -1,10 +1,16 @@
 import React, { Component } from "react"
 import "./App.css"
+
+//routing props
+import { withRouter } from "react-router-dom"
+
+//components
 import routes from "./routes"
 import Nav from "./Components/Nav/Nav"
 import Auth from "./utils/Auth/Auth"
+
+//icons
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 
 // Setting redux store:
@@ -15,11 +21,12 @@ library.add(faSearch)
 
 class App extends Component {
   render() {
-    const auth = new Auth(this.props.history)
+    const auth = new Auth()
+    const { history, location } = this.props
     return (
       <Provider store={store}>
         <div className="App">
-          <Nav auth={auth} />
+          <Nav auth={auth} history={history} location={location} />
           {routes}
         </div>
       </Provider>
@@ -27,4 +34,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withRouter(App)
