@@ -49,9 +49,6 @@ function AccountImage(props) {
             <Paper>
               <ClickAwayListener onClickAway={popupState.close}>
                 <MenuList>
-                  <MenuItem button onClick={popupState.close}>
-                    Profile
-                  </MenuItem>
                   <NavLink to="user">
                     <MenuItem onClick={popupState.close}> My account</MenuItem>
                   </NavLink>
