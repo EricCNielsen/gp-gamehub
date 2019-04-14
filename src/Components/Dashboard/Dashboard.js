@@ -4,10 +4,14 @@ import Search from "../Search/Search"
 import GamingNews from "../GamingNews/GamingNews"
 import Rankings from "../Rankings/Rankings"
 import axios from "axios"
+import Main from './../Styles/Main'
+import styled from './../Styles/Main'
 //redux:
 
 import { connect } from "react-redux"
 import { updateUser } from "../../ducks/reducer"
+
+
 
 function Dashboard(props) {
   useEffect(() => {
@@ -23,12 +27,14 @@ function Dashboard(props) {
   }
 
   return (
-    <div>
-      <Search />
+    <Main >
+      <div>
+        <Search />
+        <GamingNews />
+      </div>
       <Group />
-      <GamingNews />
       <Rankings />
-    </div>
+    </Main>
   )
 }
 

@@ -12,7 +12,7 @@ const User = styled.div`
     height: fit-content;
     img {
         border: 1px solid black;
-        border-radius: 50%;
+        /* border-radius: 50%; */
         height:10vh;
         width:10vh;
         object-fit: cover

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import UsersResults from './SearchResults/UsersResults';
 import ClansResults from './SearchResults/ClansResults';
-
+import Main from './../Styles/Main'
 
 const SearchContainer = styled.div`
     position: relative;
@@ -61,7 +61,7 @@ const Search = () => {
         <div>
             <SearchContainer>
                 <SearchIcon>
-                    <FontAwesomeIcon icon="search" onClick={_ => setOpenSearch(!openSearch)}/>
+                    <FontAwesomeIcon icon="search" onClick={_ => setOpenSearch(!openSearch)} style={{cursor: 'pointer'}}/>
                 </SearchIcon>
                 <input 
                     onKeyDown={handleKeyDown} 
