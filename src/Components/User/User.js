@@ -11,8 +11,8 @@ function User(props) {
     // [experience, setExperience] = useState(0),
     [username, setUsername] = useState(username),
     [email, setEmail] = useState(email),
-    [location, setLocation] = useState(''),
-    [bio, setBio] = useState('');
+    [location, setLocation] = useState(""),
+    [bio, setBio] = useState("");
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
@@ -71,40 +71,44 @@ function User(props) {
       email,
       username
     };
-    console.log(user)
+    console.log(user);
     try {
-     let res = await axios.put('/api/user', user);
-     console.log(res.data);
+      let res = await axios.put("/api/user", user);
+      console.log(res.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   if (props.user_id) {
-  return (
-    <>
-      <img src={url} alt="profile img" />
+    return (
+      <>
+        <img className="userimg" src={url} alt="profile img" />
 
-      {url ? (
-        <button onClick={() => setUrl("")}>edit</button>
-      ) : (
-        <div className="dropzone">
-          <Dropzone
-            className="dropzone"
-            onDropAccepted={getSignedRequest}
-            accept="image/*"
-            multiple={false}
-          >
-            {isUploading ? <GridLoader /> : <p>Drop File or Click Here</p>}
-          </Dropzone>
-        </div>
-      )}
-      <br/>
-      <input placeholder="Bio Here" value={bio} onChange={e => setBio(e.target.value)}/>
-      <button onClick={handleSave}>Save</button>
-    </>
-      )
-    }
+        {url ? (
+          <button onClick={() => setUrl("")}>edit</button>
+        ) : (
+          <div className="dropzone">
+            <Dropzone
+              className="dropzone"
+              onDropAccepted={getSignedRequest}
+              accept="image/*"
+              multiple={false}
+            >
+              {isUploading ? <GridLoader /> : <p>Drop File or Click Here</p>}
+            </Dropzone>
+          </div>
+        )}
+        <br />
+        <input
+          placeholder="Bio Here"
+          value={bio}
+          onChange={e => setBio(e.target.value)}
+        />
+        <button onClick={handleSave}>Save</button>
+      </>
+    );
+  }
 }
 
 export default User;
