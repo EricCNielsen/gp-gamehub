@@ -1,4 +1,4 @@
-.profile {
+.userimg {
   border-radius: 50%;
   width: 200px;
   height: 200px;
@@ -8,9 +8,9 @@
 }
 
 button {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .dropzone {

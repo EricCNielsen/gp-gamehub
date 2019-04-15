@@ -28,7 +28,6 @@ const ListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   position: fixed;
-  margin-top: 200px;
   left: 0;
   @media (max-width: 600px) {
     display: none;
