@@ -27,7 +27,7 @@ function Menu(props) {
     <div>
       <List>
         <NavLink to="/group">
-          <ListItem button key="Clans">
+          <ListItem button onClick={toggleDrawer} key="Clans">
             <ListItemIcon>
               <FontAwesomeIcon icon={faUsers} size="lg" />
             </ListItemIcon>
@@ -35,11 +35,11 @@ function Menu(props) {
           </ListItem>
         </NavLink>
         <NavLink to="/dashboard">
-          <ListItem button key="Main">
+          <ListItem button onClick={toggleDrawer} key="Main">
             <ListItemIcon>
               <FontAwesomeIcon icon={faHome} size="lg" />
             </ListItemIcon>
-            <ListItemText primary="Main" />
+            <ListItemText onClick={toggleDrawer} primary="Main" />
           </ListItem>
         </NavLink>
       </List>
@@ -54,7 +54,7 @@ function Menu(props) {
             <ListItemIcon>
               <FontAwesomeIcon icon={faUserCog} size="lg" />
             </ListItemIcon>
-            <ListItemText primary="Account" />
+            <ListItemText onClick={toggleDrawer} primary="Account" />
           </ListItem>
         </NavLink>
       </List>
