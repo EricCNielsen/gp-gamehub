@@ -98,7 +98,7 @@ function User(props) {
       <>
         {edit ? (
           <>
-            <img className="profile" src={url} alt="profile img" />
+            <img className="userimg" src={url} alt="profile img" />
 
             {url ? (
               <button onClick={() => setUrl("")}>edit</button>
