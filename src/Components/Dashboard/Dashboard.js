@@ -4,8 +4,7 @@ import Search from "../Search/Search"
 import GamingNews from "../GamingNews/GamingNews"
 import Rankings from "../Rankings/Rankings"
 import axios from "axios"
-import Main from './../Styles/Main'
-import styled from './../Styles/Main'
+
 //redux:
 
 import { connect } from "react-redux"
@@ -27,14 +26,14 @@ function Dashboard(props) {
   }
 
   return (
-    <Main >
+    <> 
       <div>
         <Search />
         <GamingNews />
       </div>
       <Group />
       <Rankings />
-    </Main>
+      </>
   )
 }
 

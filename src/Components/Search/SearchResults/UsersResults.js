@@ -1,8 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 const User = styled.div`
+    padding: 1%;
+    position: relative;
+    margin-bottom: 2vh;
+    /* margin-left: 10vw;
+    margin-right: 10vw; */
+    height: fit-content;
+    border-top: 2px solid black;
+    width: 98%;
+    img {
+        border: 1px solid black;
+        border-radius: 50%;
+        height:10vh;
+        width:10vh;
+        object-fit: cover
+    }
+    overflow: auto;
+`
+const SearchTitle = styled.div`
     background-color: rgba(229,229,229, .9) ;
     border: 2px solid black;
     border-radius: 10px;
@@ -10,35 +29,33 @@ const User = styled.div`
     margin-left: 10vw;
     margin-right: 10vw;
     height: fit-content;
-    img {
-        border: 1px solid black;
-        /* border-radius: 50%; */
-        height:10vh;
-        width:10vh;
-        object-fit: cover
-    }
-    overflow: auto;
-    `
+`
 
 
 const UserResults = ({users, openSearch}) => {
      const results = users
      .map((user, i) => {
         return(
-            // <Link to="/user/:${id}">
-               openSearch ? <User key={i}>
-                    <img src={user.picture} alt="profile picture"/>
-                    <h1>{user.ranking}</h1>
-                    <h1>{user.username}</h1>
-                    <h2>{user.location}</h2>
-                </User> : null
-            // </Link>
+            openSearch ? 
+                <Link to="/user/19" style={{width: "80vw"}}>
+                    <User key={i}>
+                        <div>
+                            <img src={user.picture} alt="profile picture"/>
+                            <h1>{user.ranking}</h1>
+                            <h1>{user.username}</h1>
+                            <h2>{user.location}</h2>
+                            <p>{user.user_id}</p>
+                        </div>
+                    </User> 
+                </Link> : null
         )
     })
     return (
-        <div>
-            {results}
-        </div>
+        openSearch ? 
+            <SearchTitle>
+                <h1>Users</h1>
+                {results}
+            </SearchTitle> : null    
     )
 }
 

@@ -30,6 +30,18 @@ module.exports = {
       console.log(err);
     }
   },
+  getUser: (req, res) => {
+    console.log(req.body)
+    const db = req.app.get('db')
+    const {id} = req.params
+
+    db.get_user([id])
+      .then(resp => {
+        res.status(200).send(resp)
+      console.log(11111, resp)
+    })
+    .catch(err => res.status(500).send(err))
+  },
   updateUser: async (req, res) => {
     try {
       const { user_id, username, email, location, picture, bio } = req.body;

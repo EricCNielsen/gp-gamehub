@@ -14,6 +14,8 @@ function User(props) {
     [location, setLocation] = useState(''),
     [bio, setBio] = useState('');
 
+    
+
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
     const fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
@@ -80,7 +82,7 @@ function User(props) {
     }
   }
 
-  if (props.user_id) {
+  // if (props.user_id) {
   return (
     <>
       <img src={url} alt="profile img" />
@@ -104,7 +106,7 @@ function User(props) {
       <button onClick={handleSave}>Save</button>
     </>
       )
-    }
+    // }
 }
 
 export default User;
