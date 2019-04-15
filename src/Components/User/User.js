@@ -11,7 +11,7 @@ function User(props) {
   const [isUploading, setUploading] = useState(false),
     [url, setUrl] = useState(""),
     [edit, setEdit] = useState(false),
-    [exp, setExp] = useState(''),
+    [exp, setExp] = useState(""),
     [username, setUsername] = useState(""),
     // [email, setEmail] = useState(props.email),
     [location, setLocation] = useState(""),
@@ -92,7 +92,7 @@ function User(props) {
     setUrl(props.picture);
     setExp(props.exp);
   };
-  console.log('herpa derpa', props.exp)
+  console.log("herpa derpa", props.exp);
   if (props.user_id) {
     return (
       <>
@@ -134,9 +134,9 @@ function User(props) {
             />
 
             <select value={exp} onChange={e => setExp(e.target.value)}>
-              <option value='beginner'>Beginner</option>
-              <option value='intermediate'>Intermediate</option>
-              <option value='expert'>Expert</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Expert">Expert</option>
             </select>
             <br />
             <input
@@ -149,7 +149,7 @@ function User(props) {
           </>
         ) : (
           <>
-            <img className='profile' src={props.picture} alt="profile img" />
+            <img className="profile" src={props.picture} alt="profile img" />
             <h4>Username:</h4> {props.username}
             <h4>Location:</h4> {props.location}
             <h4>Expereince:</h4> {props.exp}

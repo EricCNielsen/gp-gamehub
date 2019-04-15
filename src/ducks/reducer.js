@@ -20,6 +20,7 @@ export function updateUser(user) {
 
 export default function reducer(state = initialState, action) {
   const { type, payload } = action
+  console.log('we in the reducer', payload);
   switch (type) {
     case UPDATE_USER:
     const {bio, username, location, picture, ranking, exp, email, user_id} = payload;
