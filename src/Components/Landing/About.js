@@ -4,15 +4,39 @@ import styled from "styled-components";
 const AboutWrapper = styled.div`
   background-image: url("https://images.pexels.com/photos/929831/pexels-photo-929831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
   background-size: cover;
-  border: 0.1px solid transparent;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 600px) {
+    background-image: url("https://images.pexels.com/photos/1337247/pexels-photo-1337247.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-position: center;
+  }
 `;
+
+const WelcomeMessage = styled.h1`
+  color: white;
+`;
+
+const MessageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  width: 300px;
+  border: 2px solid white;
+  justify-content: center;
+  align-items: center;
+`;
+
 function About({ id }) {
   return (
     <div id={id}>
       <AboutWrapper>
-        <h1>This is where the about stuff will go </h1>
-        <p>asdfghjk </p>
+        <MessageWrapper>
+          <WelcomeMessage>
+            <h1>Welcome to GameHub</h1>
+          </WelcomeMessage>
+        </MessageWrapper>
       </AboutWrapper>
     </div>
   );
