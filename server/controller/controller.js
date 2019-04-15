@@ -33,7 +33,7 @@ module.exports = {
   },
   updateUser: async (req, res) => {
     try {
-      const { user_id, username, email, location, picture, bio, exp } = req.body;
+      const { user_id, username, email, location, picture, bio, exp} = req.body;
       console.log(11, req.body);
       //   const { id } = req.session.user;
       const db = req.app.get("db");
@@ -46,9 +46,7 @@ module.exports = {
         bio,
         exp
       });
-      console.log(22, user);
-      //   user = user[0];
-      //   req.session.user = user;
+      
       res.status(200).send(user);
     } catch (error) {
       console.log("error updating user:", error);
@@ -63,7 +61,7 @@ module.exports = {
   top5Users: async (req, res) => {
     const db = req.app.get("db");
     let gettop5users = await db.get_top5users();
-    console.log(gettop5users);
+    // console.log(gettop5users);
     res.status(200).send(gettop5users);
   }
 };

@@ -74,7 +74,6 @@ function User(props) {
       username,
       exp
     };
-    console.log("hello", user);
     try {
       let res = await axios.put("/api/user", user);
       props.updateUser(res.data[0]);
@@ -92,7 +91,7 @@ function User(props) {
     setUrl(props.picture);
     setExp(props.exp);
   };
-  console.log("herpa derpa", props.exp);
+
   if (props.user_id) {
     return (
       <>
@@ -153,6 +152,7 @@ function User(props) {
             <h4>Username:</h4> {props.username}
             <h4>Location:</h4> {props.location}
             <h4>Expereince:</h4> {props.exp}
+            {/* <h4>Preferred Console:</h4> {props.console} */}
             <h4>Bio:</h4> {props.bio}
             <button onClick={handleEdit}>Edit</button>
           </>
@@ -172,7 +172,8 @@ const mapStateToProps = reduxState => {
     location: reduxState.location,
     picture: reduxState.picture,
     bio: reduxState.bio,
-    exp: reduxState.exp
+    exp: reduxState.exp,
+    console: reduxState.console
   };
 };
 
