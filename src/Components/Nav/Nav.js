@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { updateUser } from "../../ducks/reducer";
@@ -38,7 +39,7 @@ const styles = {
 function Nav(props) {
   useEffect(() => {
     handleCurrent();
-  });
+  }, []);
 
   function handleLogout() {
     try {
