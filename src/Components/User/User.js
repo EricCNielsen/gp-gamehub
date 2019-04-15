@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
@@ -12,12 +12,58 @@ function User(props) {
     [url, setUrl] = useState(""),
     [edit, setEdit] = useState(false),
     [exp, setExp] = useState(""),
+    [picture, setPicture] = useState(""),
     [username, setUsername] = useState(""),
     // [email, setEmail] = useState(props.email),
     [location, setLocation] = useState(""),
     [bio, setBio] = useState("");
 
-    
+  useEffect(() => {
+    getUser()
+  }, [props.match.params.id])
+
+const getUser = () => {
+  console.log(123123, props)
+  const {id} = props.match.params
+  if (id){
+  axios.get(`/api/user/${id}`)
+  .then(res => {
+    setPicture(
+      res.data[0].picture
+    )
+    setUsername(
+      res.data[0].username
+    )
+    setLocation(
+      res.data[0].location
+    )
+    setExp(
+      res.data[0].exp
+    )
+    setBio(
+      res.data[0].bio
+    )
+    console.log(res)
+  })
+}else{
+  const {picture, username, location, exp, bio} = props
+  setPicture(
+    picture
+  )
+  setUsername(
+    username
+  )
+  setLocation(
+    location
+  )
+  setExp(
+    exp
+  )
+  setBio(
+    bio
+  )
+}
+}
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
@@ -94,6 +140,9 @@ function User(props) {
     setExp(props.exp);
   };
 
+  console.log(11111, props.user_id)
+  console.log(22222, props.match.params.id)
+
   if (props.user_id) {
     return (
       <>
@@ -150,13 +199,13 @@ function User(props) {
           </>
         ) : (
           <>
-            <img className="profile" src={props.picture} alt="profile img" />
-            <h4>Username:</h4> {props.username}
-            <h4>Location:</h4> {props.location}
-            <h4>Expereince:</h4> {props.exp}
+            <img className="profile" src={picture} alt="profile img" />
+            <h4>Username:</h4> {username}
+            <h4>Location:</h4> {location}
+            <h4>Expereince:</h4> {exp}
             {/* <h4>Preferred Console:</h4> {props.console} */}
-            <h4>Bio:</h4> {props.bio}
-            <button onClick={handleEdit}>Edit</button>
+            <h4>Bio:</h4> {bio}
+            {props.user_id == props.match.params.id ? <button onClick={handleEdit}>Edit</button> : null}
           </>
         )}
       </>

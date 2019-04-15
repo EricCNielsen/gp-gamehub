@@ -32,12 +32,12 @@ const SearchTitle = styled.div`
 `
 
 
-const UserResults = ({users, openSearch}) => {
+const UserResults = ({users, openSearch}, props) => {
      const results = users
      .map((user, i) => {
         return(
             openSearch ? 
-                <Link to="/user/19" style={{width: "80vw"}}>
+                <Link to={`/user/${user.user_id}`} style={{width: "80vw"}}>
                     <User key={i}>
                         <div>
                             <img src={user.picture} alt="profile picture"/>
