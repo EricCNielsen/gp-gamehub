@@ -1,4 +1,4 @@
-img {
+.profile {
   border-radius: 50%;
   width: 200px;
   height: 200px;
@@ -24,7 +24,7 @@ button {
   margin: 0 auto;
 }
 
-input {
+#bio {
   width: 400px;
   height: 100px;
   background: transparent;

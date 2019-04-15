@@ -1,9 +1,9 @@
 module.exports = {
   search: async (req, res) => {
-    const db = req.app.get("db");
-    const { search } = req.query;
-    console.log(111, search);
-    let searchResults = {};
+    const db = req.app.get("db")
+    const { search } = req.query
+    // console.log(111, search)
+    let searchResults = {}
 
     searchResults.users = await db.get_users(search);
     searchResults.clans = await db.get_clans(search);
@@ -11,7 +11,8 @@ module.exports = {
   },
   checkCurrent: (req, res) => {
     try {
-      const { user } = req.session;
+      // console.log(req.session.user)
+      const { user } = req.session
       if (!user) {
         res.sendStatus(500);
       }
@@ -32,7 +33,7 @@ module.exports = {
   },
   updateUser: async (req, res) => {
     try {
-      const { user_id, username, email, location, picture, bio } = req.body;
+      const { user_id, username, email, location, picture, bio, exp } = req.body;
       console.log(11, req.body);
       //   const { id } = req.session.user;
       const db = req.app.get("db");
@@ -42,7 +43,8 @@ module.exports = {
         email,
         location,
         picture,
-        bio
+        bio,
+        exp
       });
       console.log(22, user);
       //   user = user[0];
