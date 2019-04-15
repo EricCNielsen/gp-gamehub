@@ -11,7 +11,7 @@ function User(props) {
   const [isUploading, setUploading] = useState(false),
     [url, setUrl] = useState(""),
     [edit, setEdit] = useState(false),
-    [experience, setExperience] = useState(''),
+    [exp, setExp] = useState(''),
     [username, setUsername] = useState(""),
     // [email, setEmail] = useState(props.email),
     [location, setLocation] = useState(""),
@@ -71,9 +71,10 @@ function User(props) {
       picture: url,
       bio,
       location,
-      username
+      username,
+      exp
     };
-    // console.log("hello", user);
+    console.log("hello", user);
     try {
       let res = await axios.put("/api/user", user);
       props.updateUser(res.data[0]);
@@ -89,7 +90,9 @@ function User(props) {
     setLocation(props.location);
     setBio(props.bio);
     setUrl(props.picture);
+    setExp(props.exp);
   };
+  console.log('herpa derpa', props.exp)
   if (props.user_id) {
     return (
       <>
@@ -129,6 +132,12 @@ function User(props) {
               value={location}
               onChange={e => setLocation(e.target.value)}
             />
+
+            <select value={exp} onChange={e => setExp(e.target.value)}>
+              <option value='beginner'>Beginner</option>
+              <option value='intermediate'>Intermediate</option>
+              <option value='expert'>Expert</option>
+            </select>
             <br />
             <input
               id="bio"
@@ -143,6 +152,7 @@ function User(props) {
             <img className='profile' src={props.picture} alt="profile img" />
             <h4>Username:</h4> {props.username}
             <h4>Location:</h4> {props.location}
+            <h4>Expereince:</h4> {props.exp}
             <h4>Bio:</h4> {props.bio}
             <button onClick={handleEdit}>Edit</button>
           </>
@@ -161,7 +171,8 @@ const mapStateToProps = reduxState => {
     email: reduxState.email,
     location: reduxState.location,
     picture: reduxState.picture,
-    bio: reduxState.bio
+    bio: reduxState.bio,
+    exp: reduxState.exp
   };
 };
 
