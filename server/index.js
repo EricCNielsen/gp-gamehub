@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config()
 
 const express = require("express"),
   massive = require("massive"),
@@ -7,7 +7,7 @@ const express = require("express"),
   session = require("express-session"),
   pg = require("pg"),
   axios = require("axios"),
-  pgSession = require("connect-pg-simple")(session);
+  pgSession = require("connect-pg-simple")(session)
 
 const app = express(),
   {
@@ -20,13 +20,13 @@ const app = express(),
     REACT_APP_CLIENT_ID,
     REACT_APP_DOMAIN,
     CLIENT_SECRET
-  } = process.env;
+  } = process.env
 
 const pgPool = new pg.Pool({
   connectionString: CONNECTION_STRING
-});
+})
 
-app.use(express.json());
+app.use(express.json())
 
 app.use(
   session({
@@ -40,13 +40,13 @@ app.use(
       maxAge: 1000 * 60 * 60 * 60
     }
   })
-);
+)
 
 //-------------- API CONTROLLER ------------------//
 
-app.get("/api/search", ctrl.search);
-app.put("/api/user", ctrl.updateUser);
-app.get("/api/user/:id", ctrl.getUser);
+app.get("/api/search", ctrl.search)
+app.put("/api/user", ctrl.updateUser)
+app.get("/api/user/:id", ctrl.getUser)
 
 //-------------- AMAZONS3 ------------------//
 
@@ -55,32 +55,32 @@ app.get("/api/signs3", (req, res) => {
     region: "us-west-1",
     accessKeyId: AWS_ACCESS_KEY_ID,
     secretAccessKey: AWS_SECRET_ACCESS_KEY
-  };
+  }
 
-  const s3 = new aws.S3();
-  const fileName = req.query["file-name"];
-  const fileType = req.query["file-type"];
+  const s3 = new aws.S3()
+  const fileName = req.query["file-name"]
+  const fileType = req.query["file-type"]
   const s3Params = {
     Bucket: S3_BUCKET,
     Key: fileName,
     Expires: 60,
     ContentType: fileType,
     ACL: "public-read"
-  };
+  }
 
   s3.getSignedUrl("putObject", s3Params, (err, data) => {
     if (err) {
-      console.log(err);
-      return res.end();
+      console.log(err)
+      return res.end()
     }
     const returnData = {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-    };
+    }
 
-    return res.send(returnData);
-  });
-});
+    return res.send(returnData)
+  })
+})
 
 //--------------------------- AUTH0 ----------------------------//
 
@@ -95,47 +95,48 @@ app.get(`/auth/callback`, async (req, res, next) => {
       redirect_uri: `${process.env.PROTOCOL}://${
         req.headers.host
       }/auth/callback`
-    };
+    }
     // trade code for token
     let resWithToken = await axios.post(
       `https://${REACT_APP_DOMAIN}/oauth/token`,
       payload
-    );
+    )
 
     // use token to get user data
     let resWithUserData = await axios.get(
       `https://${REACT_APP_DOMAIN}/userinfo?access_token=${
         resWithToken.data.access_token
       }`
-    );
+    )
     // console.log('user data', resWithUserData.data);
 
-    let { email, name, picture, sub } = resWithUserData.data;
-    const db = req.app.get("db");
-    let foundUser = await db.find_user([sub]);
+    let { email, name, picture, sub } = resWithUserData.data
+    const db = req.app.get("db")
+    let foundUser = await db.find_user([sub])
 
     if (foundUser[0]) {
-      req.session.user = foundUser[0];
-      res.redirect("/dashboard");
+      req.session.user = foundUser[0]
+      res.redirect("/dashboard")
     } else {
-      let createdUser = await db.create_user([name, email, picture, sub]);
-      req.session.user = createdUser[0];
-      res.redirect("/user");
+      let createdUser = await db.create_user([name, email, picture, sub])
+      req.session.user = createdUser[0]
+      res.redirect("/user")
     }
   } catch (err) {
-    console.log(err);
+    console.log(err)
   }
-});
+})
 
 //--------------------------- Endpoints ----------------------------//
 
-app.get("/auth/current", ctrl.checkCurrent);
-app.get("/auth/account", ctrl.getAuth);
-app.post("/auth/logout", ctrl.logout);
-app.get("/api/top5users", ctrl.top5Users);
+app.get("/auth/current", ctrl.checkCurrent)
+app.get("/auth/account", ctrl.getAuth)
+app.post("/auth/logout", ctrl.logout)
+app.get("/api/top5users", ctrl.top5Users)
+app.get("/api/consoles", ctrl.getConsoles)
 
 massive(CONNECTION_STRING).then(db => {
-  app.set("db", db);
-  console.log("db is running!");
-  app.listen(SERVER_PORT, () => console.log(`cruising on port ${SERVER_PORT}`));
-});
+  app.set("db", db)
+  console.log("db is running!")
+  app.listen(SERVER_PORT, () => console.log(`cruising on port ${SERVER_PORT}`))
+})
