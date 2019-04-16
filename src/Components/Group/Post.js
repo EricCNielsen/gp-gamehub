@@ -1,16 +1,17 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import { v4 as randomString } from "uuid";
-import Dropzone from "react-dropzone";
-import { GridLoader } from "react-spinners";
 import styled from "styled-components";
+import AddImage from "./AddIMage/AddImage";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
+import Icon from "@material-ui/core/Icon";
 
 const styles = theme => ({
   container: {
@@ -20,23 +21,14 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 });
-
-// const customStyles = {
-//   control: (base, state) => ({
-//     ...base,
-//     background: "transparent",
-//     // Overwrittes the different states of border
-//     borderColor: state.isFocused ? "blue" : "grey",
-//     // Removes weird border around container
-//     boxShadow: state.isFocused ? null : null,
-//     "&:hover": {
-//       // Overwrittes the different states of border
-//       borderColor: state.isFocused ? "blue" : "blue"
-//     }
-//   })
-// };
 
 const Editor = {};
 Editor.modules = {};
@@ -82,51 +74,51 @@ Editor.formats = [
 ];
 
 const BodyWrapper = styled.div`
-  height: 100vh,
-  width: 100%,
-  background: blue;
+  height: 100vh;
+  width: 100%;
 `;
 
-class Post extends Component {
-  constructor() {
-    super();
-    this.state = {
-      title: "",
-      content: "",
-      picture: "",
-      date: "",
-      imageToUpload: null,
-      isUploading: false,
-      url: "",
-      important: false
-    };
+// const propTypes = {
+//   initial: PropTypes.bool,
+//   onToggle: PropTypes.func.isRequired,
+//   width: PropTypes.number.isRequired,
+//   padding: PropTypes.number.isRequired,
+//   ballColor: PropTypes.string.isRequired,
+//   ballColorActive: PropTypes.string.isRequired,
+//   bgToggled: PropTypes.string.isRequired,
+//   borderColor: PropTypes.string.isRequired
+// };
 
-    this.quillRef = null;
-    this.reactQuillRef = null;
-  }
+function Post(props) {
+  const { classes } = props;
+  const [quillRef, setQuillRef] = useState(null);
+  const [reactQuillRef, setReactQuillRef] = useState({});
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [picture, setpicture] = useState("");
+  const [important, setImportant] = useState(false);
 
-  componentDidMount() {
-    this.attachQuillRefs();
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     title: "",
+  //     content: "",
+  //     picture: "",
+  //     important: false
+  //   };
 
-  componentDidUpdate() {
-    this.attachQuillRefs();
-  }
+  useEffect(() => {
+    attachQuillRefs();
+  });
 
-  attachQuillRefs() {
-    if (typeof this.reactQuillRef.getEditor !== "function") return;
-    if (this.quillRef != null) return;
-    const quillRef = this.reactQuillRef.getEditor();
-    if (quillRef != null) this.quillRef = quillRef;
-  }
+  const attachQuillRefs = () => {
+    if (typeof reactQuillRef.getEditor !== "function") return;
+    if (quillRef != null) return;
+    const copyOfQuillRef = reactQuillRef.getEditor();
+    if (quillRef != null) setQuillRef(quillRef);
+  };
 
-  handleChange(prop, val) {
-    this.setState({
-      [prop]: val
-    });
-  }
-
-  create = async () => {
+  const create = async () => {
     let post = {
       title: this.state.title,
       content: this.state.content,
@@ -140,122 +132,43 @@ class Post extends Component {
     }
   };
 
-  //S3 stuff
-
-  // getSignedRequest = ([file]) => {
-  //   this.setState({ isUploading: true });
-  //   // We are creating a file name that consists of a random string, and the name of the file that was just uploaded with the spaces removed and hyphens inserted instead. This is done using the .replace function with a specific regular expression. This will ensure that each file uploaded has a unique name which will prevent files from overwriting other files due to duplicate names.
-  //   const fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
-
-  //   // We will now send a request to our server to get a "signed url" from Amazon. We are essentially letting AWS know that we are going to upload a file soon. We are only sending the file-name and file-type as strings. We are not sending the file itself at this point.
-  //   axios
-  //     .get("/api/signs3", {
-  //       params: {
-  //         "file-name": fileName,
-  //         "file-type": file.type
-  //       }
-  //     })
-  //     .then(response => {
-  //       const { signedRequest, url } = response.data;
-  //       this.uploadFile(file, signedRequest, url);
-  //       this.setState({
-  //         url
-  //       });
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // uploadFile = (file, signedRequest, url) => {
-  //   const options = {
-  //     headers: {
-  //       "Content-Type": file.type
-  //     }
-  //   };
-
-  //   axios
-  //     .put(signedRequest, file, options)
-  //     .then(response => {
-  //       console.log(response);
-  //       // let picUrl = response.config.url
-  //       // picUrl = picUrl.substring(0,picUrl.indexOf('?'))
-  //       this.setState({ isUploading: false, picture: url });
-  //       console.log(url);
-  //     })
-  //     .catch(err => {
-  //       this.setState({
-  //         isUploading: false
-  //       });
-  //       if (err.response.status === 403) {
-  //         alert(
-  //           `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
-  //             err.stack
-  //           }`
-  //         );
-  //       } else {
-  //         alert(`ERROR: ${err.status}\n ${err.stack}`);
-  //       }
-  //     });
-  // };
-
-  render() {
-    const { classes } = this.props;
-    const { url, isUploading } = this.state;
-    return (
-      <BodyWrapper>
-        <div>
-          <TextField
-            id="outlined-name"
-            label="Title"
-            className={classes.textField}
-            value={this.state.name}
-            // onChange={this.handleChange("title")}
-            margin="normal"
-            variant="outlined"
-          />
-          <ReactQuill
-            ref={el => {
-              this.reactQuillRef = el;
-            }}
-            theme={"snow"}
-            onChange={this.handleQuillChange}
-            modules={Editor.modules}
-            formats={Editor.formats}
-            defaultValue={this.state.content}
-            value={this.state.content}
-            placeholder="Testing Grounds"
-            className="quillbox"
-          />
-        </div>
-        <Dropzone
-          onDropAccepted={this.getSignedRequest}
-          style={{
-            position: "relative",
-            width: 150,
-            height: 100,
-            borderWidth: 2,
-            // marginTop: 100,
-            borderColor: "rgb(102, 102, 102)",
-            borderStyle: "dashed",
-            borderRadius: 5,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: 15
+  return (
+    <BodyWrapper>
+      <div>
+        <TextField
+          id="outlined-name"
+          label="Title"
+          className={styles.textField}
+          value={title}
+          onChange={e => {
+            setTitle(e.target.value);
           }}
-          accept="image/*"
-          multiple={false}
-        >
-          {isUploading ? (
-            <GridLoader />
-          ) : (
-            <div>Drop File or Click Here to add photos</div>
-          )}
-        </Dropzone>
-      </BodyWrapper>
-    );
-  }
+          margin="normal"
+          variant="outlined"
+        />
+        <ReactQuill
+          ref={el => {
+            setReactQuillRef(el);
+          }}
+          theme={"snow"}
+          onChange={html => {
+            setContent(html);
+          }}
+          modules={Editor.modules}
+          formats={Editor.formats}
+          defaultValue={content}
+          value={content}
+          placeholder="Testing Grounds"
+          className="quillbox"
+        />
+      </div>
+      <AddImage />
+      <Button variant="contained" color="primary" className={classes.button}>
+        Send
+        <Icon className={classes.rightIcon}>send</Icon>
+      </Button>
+    </BodyWrapper>
+  );
 }
 
 export default withStyles(styles)(Post);
