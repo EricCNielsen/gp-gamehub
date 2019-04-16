@@ -90,10 +90,22 @@ module.exports = {
   },
   createClan: async (req, res) => {
     try {
-      const { name, bio, avatar, competitive, privateClan } = req.body
-      const { user_id } = req.user
+      const { clanName, bio, avatar, competitive, privateClan } = req.body
+      console.log(req.session.user)
+      const { user_id } = req.session.user
       const db = req.app.get("db")
-      const clan = await db.create_clan()
-    } catch (err) {}
+      const clan = await db.create_clan({
+        name: clanName,
+        bio,
+        avatar,
+        competitive,
+        private: privateClan,
+        owner_id: user_id
+      })
+      
+      console.log(clan)
+    } catch (err) {
+      console.log(`error creating clan: ${err}`)
+    }
   }
 }
