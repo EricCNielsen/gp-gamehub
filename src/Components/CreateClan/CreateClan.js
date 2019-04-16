@@ -8,6 +8,8 @@ import DialogTitle from "@material-ui/core/DialogTitle"
 import ConsolesSelector from "../ConsolesSelector/ConsolesSelector"
 import AddImage from "./AddIMage/AddImage"
 
+import axios from "axios"
+
 import Checkbox from "@material-ui/core/Checkbox"
 import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
@@ -54,12 +56,34 @@ export default function CreateClan() {
   }
 
   function handleClickOpen() {
-    setOpen(true)
+    console.log('hit')
+    setOpen(!open)
+    setClanName('')
+    setBio('')
+    setAvatar('')
+    setCompetitive(false)
+    setPrivateClan(false)
   }
 
-  // async function createClan(){
-
-  // }
+  async function createClan() {
+    try {
+      if (clanName === '' || bio === "" || gamingConsoles[0] === "") {
+        return alert("all fields must be completed before submitting")
+      } else if( avatar === "" ) {
+        return alert("Add an image before submitting")
+      }
+      handleClickOpen()
+      const clan = await axios.post("/api/clan", {
+        clanName,
+        bio,
+        avatar,
+        competitive,
+        privateClan
+      })
+    } catch (err) {
+      console.log(`there was a problem creating the clan ${err}`)
+    }
+  }
 
   function handleClose() {
     setOpen(false)
@@ -120,7 +144,7 @@ export default function CreateClan() {
           <ConsolesSelector handleGamingConsoles={handleGamingConsoles} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={createClan} color="primary">
             Create
           </Button>
         </DialogActions>

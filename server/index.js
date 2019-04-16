@@ -129,6 +129,7 @@ app.get(`/auth/callback`, async (req, res, next) => {
 
 //--------------------------- Endpoints ----------------------------//
 
+app.post("/api/clan", ctrl.createClan)
 app.get("/auth/current", ctrl.checkCurrent)
 app.get("/auth/account", ctrl.getAuth)
 app.post("/auth/logout", ctrl.logout)
