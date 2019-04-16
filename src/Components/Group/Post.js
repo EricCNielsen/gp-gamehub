@@ -95,7 +95,7 @@ function Post(props) {
   const [reactQuillRef, setReactQuillRef] = useState({});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [picture, setpicture] = useState("");
+  const [picture, setPicture] = useState("");
   const [important, setImportant] = useState(false);
 
   // constructor() {
@@ -110,6 +110,10 @@ function Post(props) {
   useEffect(() => {
     attachQuillRefs();
   });
+
+  function setPostImage(url) {
+    setPicture(url);
+  }
 
   const attachQuillRefs = () => {
     if (typeof reactQuillRef.getEditor !== "function") return;
@@ -128,7 +132,8 @@ function Post(props) {
     try {
       await axios.post("/api/post", post);
     } catch (err) {
-      alert("Please fill out the required feilds");
+      console.log(err);
+      alert("Please fill out the required fields");
     }
   };
 
@@ -162,12 +167,15 @@ function Post(props) {
           className="quillbox"
         />
       </div>
-      <AddImage />
-      <Button variant="contained" color="primary" className={classes.button}>
+      <AddImage setPostImage={setPostImage} />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={create}
+        className={classes.button}
+      >
         Send
-        <Icon className={classes.rightIcon} onClick={create}>
-          send
-        </Icon>
+        <Icon className={classes.rightIcon}>send</Icon>
       </Button>
     </BodyWrapper>
   );
