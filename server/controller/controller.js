@@ -2,7 +2,7 @@ module.exports = {
   search: async (req, res) => {
     const db = req.app.get("db")
     const { search } = req.query
-    console.log(111, search)
+    // console.log(111, search)
     let searchResults = {}
 
     searchResults.users = await db.get_users(search)
@@ -11,8 +11,8 @@ module.exports = {
   },
   checkCurrent: (req, res) => {
     try {
+      // console.log(req.session.user)
       const { user } = req.session
-      console.log(`THIS`, user.user_id)
       if (!user) {
         res.sendStatus(500)
       }
@@ -31,9 +31,22 @@ module.exports = {
       console.log(err)
     }
   },
+  getUser: (req, res) => {
+    console.log(req.body)
+    const db = req.app.get("db")
+    const { id } = req.params
+
+    db.get_user([id])
+      .then(resp => {
+        res.status(200).send(resp)
+        console.log(11111, resp)
+      })
+      .catch(err => res.status(500).send(err))
+  },
   updateUser: async (req, res) => {
     try {
-      const { user_id, username, email, location, picture, bio } = req.body
+      const { user_id, username, email, location, picture, bio, exp } = req.body
+      const { session } = req
       console.log(11, req.body)
       //   const { id } = req.session.user;
       const db = req.app.get("db")
@@ -43,11 +56,11 @@ module.exports = {
         email,
         location,
         picture,
-        bio
+        bio,
+        exp
       })
-      console.log(22, user)
-      //   user = user[0];
-      //   req.session.user = user;
+
+      session.user = user
       res.status(200).send(user)
     } catch (error) {
       console.log("error updating user:", error)

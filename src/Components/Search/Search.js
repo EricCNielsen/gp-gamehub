@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import axios from 'axios';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import UsersResults from './SearchResults/UsersResults';
 import ClansResults from './SearchResults/ClansResults';
 
@@ -9,6 +10,7 @@ import ClansResults from './SearchResults/ClansResults';
 const SearchContainer = styled.div`
     position: relative;
     height: 5vh;
+    width: 100vw;
     input {
         transition: width .5s;
         border-radius:10px;
@@ -24,8 +26,6 @@ const SearchIcon = styled.div`
     top: 1vh;
     left: 1.5vw;
     width: fit-content;
-    
-    
 `;
 
 const SearchResults = styled.div`
@@ -38,30 +38,34 @@ const Search = () => {
     const [searchInput, setSearchInput] = useState('')
     const [openSearch, setOpenSearch] = useState(false)
     const [searchResults, setSearchResults] = useState({users:[], clans:[], posts:[]})
+    
+
 
     const fireSearch = async () => {
-
         let searchData = await axios.get(`/api/search?search=${searchInput}`)
-
         setSearchResults(searchData.data)
-        
     }
     const handleInput = (e) => {
         setSearchInput(e.target.value)
     }
-     const handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
           fireSearch();
         }
-      }
+    }
+    const handleClickAway = () => {
+        if(openSearch) {
+            setOpenSearch(!openSearch)
+        }
+    }
 
     console.log(searchInput)
 
     return(
-        <div>
+        <ClickAwayListener onClickAway={handleClickAway}>
             <SearchContainer>
                 <SearchIcon>
-                    <FontAwesomeIcon icon="search" onClick={_ => setOpenSearch(!openSearch)}/>
+                    <FontAwesomeIcon icon="search" onClick={_ => setOpenSearch(!openSearch)} style={{cursor: 'pointer'}}/>
                 </SearchIcon>
                 <input 
                     onKeyDown={handleKeyDown} 
@@ -77,12 +81,12 @@ const Search = () => {
                         textAlign: "left",
                     }}
                 />
-                <SearchResults>
-                    <UsersResults users = {searchResults.users}  openSearch={openSearch}/>
-                    <ClansResults clans = {searchResults.clans} openSearch={openSearch}/>  
-                </SearchResults>
+                    <SearchResults>
+                        <UsersResults users = {searchResults.users}  openSearch={openSearch}/>
+                        <ClansResults clans = {searchResults.clans} openSearch={openSearch}/>  
+                    </SearchResults>
             </SearchContainer>
-        </div>
+        </ClickAwayListener>
     );
 };
 

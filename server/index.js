@@ -46,6 +46,7 @@ app.use(
 
 app.get("/api/search", ctrl.search)
 app.put("/api/user", ctrl.updateUser)
+app.get("/api/user/:id", ctrl.getUser)
 
 //-------------- AMAZONS3 ------------------//
 
