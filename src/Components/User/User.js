@@ -19,51 +19,30 @@ function User(props) {
     [bio, setBio] = useState("");
 
   useEffect(() => {
-    getUser()
-  }, [props.match.params.id])
+    getUser();
+  }, [props.match.params.id]);
 
-const getUser = () => {
-  console.log(123123, props)
-  const {id} = props.match.params
-  if (id){
-  axios.get(`/api/user/${id}`)
-  .then(res => {
-    setPicture(
-      res.data[0].picture
-    )
-    setUsername(
-      res.data[0].username
-    )
-    setLocation(
-      res.data[0].location
-    )
-    setExp(
-      res.data[0].exp
-    )
-    setBio(
-      res.data[0].bio
-    )
-    console.log(res)
-  })
-}else{
-  const {picture, username, location, exp, bio} = props
-  setPicture(
-    picture
-  )
-  setUsername(
-    username
-  )
-  setLocation(
-    location
-  )
-  setExp(
-    exp
-  )
-  setBio(
-    bio
-  )
-}
-}
+  const getUser = () => {
+    console.log(123123, props);
+    const { id } = props.match.params;
+    if (id) {
+      axios.get(`/api/user/${id}`).then(res => {
+        setPicture(res.data[0].picture);
+        setUsername(res.data[0].username);
+        setLocation(res.data[0].location);
+        setExp(res.data[0].exp);
+        setBio(res.data[0].bio);
+        console.log(res);
+      });
+    } else {
+      const { picture, username, location, exp, bio } = props;
+      setPicture(picture);
+      setUsername(username);
+      setLocation(location);
+      setExp(exp);
+      setBio(bio);
+    }
+  };
 
   let getSignedRequest = ([file]) => {
     setUploading({ isUploading: true });
@@ -140,9 +119,6 @@ const getUser = () => {
     setExp(props.exp);
   };
 
-  console.log(11111, props.user_id)
-  console.log(22222, props.match.params.id)
-
   if (props.user_id) {
     return (
       <>
@@ -205,7 +181,9 @@ const getUser = () => {
             <h4>Expereince:</h4> {exp}
             {/* <h4>Preferred Console:</h4> {props.console} */}
             <h4>Bio:</h4> {bio}
-            {props.user_id == props.match.params.id ? <button onClick={handleEdit}>Edit</button> : null}
+            {props.user_id == props.match.params.id ? (
+              <button onClick={handleEdit}>Edit</button>
+            ) : null}
           </>
         )}
       </>

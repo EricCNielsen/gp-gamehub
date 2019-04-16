@@ -8,29 +8,46 @@ const initialState = {
   exp: ``,
   ranking: ``,
   console: ``
-}
+};
 
-const UPDATE_USER = `UPDATE_USER`
+const UPDATE_USER = `UPDATE_USER`;
 
 export function updateUser(user) {
   return {
     type: UPDATE_USER,
     payload: user
-  }
+  };
 }
 
 export default function reducer(state = initialState, action) {
-  const { type, payload } = action
-  console.log('we in the reducer', payload);
+  const { type, payload } = action;
+  console.log("we in the reducer", payload);
   switch (type) {
     case UPDATE_USER:
-    const {bio, username, location, picture, ranking, exp, email, user_id, console} = payload;
+      const {
+        user_id,
+        username,
+        email,
+        location,
+        picture,
+        bio,
+        exp,
+        ranking,
+        console
+      } = payload;
       return {
         ...state,
-        bio, username, location, picture, ranking, email, user_id, exp, console
-      }
-
+        user_id,
+        username,
+        email,
+        location,
+        picture,
+        bio,
+        exp,
+        ranking,
+        console
+      };
     default:
-      return state
+      return state;
   }
 }
