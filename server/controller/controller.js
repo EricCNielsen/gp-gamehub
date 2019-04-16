@@ -107,5 +107,15 @@ module.exports = {
     } catch (err) {
       console.log(`error creating clan: ${err}`)
     }
+  },
+  getClan(req, res) {
+    const db = req.app.get("db")
+    const { id } = req.params
+    db.getClan(owner_id)
+      .then(resp => {
+        res.status(200).send(resp)
+        console.log(11111, resp)
+      })
+      .catch(err => res.status(500).send(err))
   }
 }

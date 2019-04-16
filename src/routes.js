@@ -6,6 +6,7 @@ import GroupMini from "./Components/Group/GroupMini";
 import Signup from "./Components/Signup/Signup";
 import User from "./Components/User/User";
 import Post from "./Components/Group/Post";
+import Group from './Components/Group/Group';
 
 export default (
   <Switch>
@@ -13,7 +14,8 @@ export default (
     <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/group" component={GroupMini} />
     <Route exact path="/signup" component={Signup} />
-    <Route exact path="/user" component={User} />
+    {/* <Route exact path="/user" component={User} /> */}
+    <Route path='/clan' component={Group}/>
     <Route path="/group/post" component={Post} />
     <Route path="/user/:id" component={User} />
   </Switch>
