@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 
 import { connect } from "react-redux"
 import { NavLink } from "react-router-dom"
@@ -24,7 +24,7 @@ function AccountImage(props) {
 
   return (
     <div>
-      <div id="account-img" style={{ display: "flex", flexFlow: "column" }}>
+      <div id="account-img" style={{ display: "flex", flexFlow: "column", cursor: 'pointer' }}>
         <img
           variant="contained"
           {...bindToggle(popupState)}
