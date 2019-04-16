@@ -56,7 +56,6 @@ export default function CreateClan() {
   }
 
   function handleClickOpen() {
-    console.log('hit')
     setOpen(!open)
     setClanName('')
     setBio('')
