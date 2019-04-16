@@ -42,12 +42,6 @@ app.use(
   })
 );
 
-//-------------- API CONTROLLER ------------------//
-
-app.get("/api/search", ctrl.search);
-app.put("/api/user", ctrl.updateUser);
-app.get("/api/user/:id", ctrl.getUser);
-
 //-------------- AMAZONS3 ------------------//
 
 app.get("/api/signs3", (req, res) => {
@@ -120,7 +114,7 @@ app.get(`/auth/callback`, async (req, res, next) => {
     } else {
       let createdUser = await db.create_user([name, email, picture, sub]);
       req.session.user = createdUser[0];
-      res.redirect("/user");
+      res.redirect(`/user/${req.session.user.user_id}`);
     }
   } catch (err) {
     console.log(err);
@@ -129,13 +123,16 @@ app.get(`/auth/callback`, async (req, res, next) => {
 
 //--------------------------- Endpoints ----------------------------//
 
-app.post("/api/post", ctrl.createPost);
 app.post("/api/clan", ctrl.createClan);
 app.get("/auth/current", ctrl.checkCurrent);
 app.get("/auth/account", ctrl.getAuth);
 app.post("/auth/logout", ctrl.logout);
 app.get("/api/top5users", ctrl.top5Users);
 app.get("/api/consoles", ctrl.getConsoles);
+app.get("/api/search", ctrl.search);
+app.put("/api/user", ctrl.updateUser);
+app.get("/api/user/:id", ctrl.getUser);
+app.get("/api/clan/:id", ctrl.getClan);
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);

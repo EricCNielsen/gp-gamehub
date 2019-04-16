@@ -46,6 +46,9 @@ module.exports = {
   },
   getAuth: async (req, res) => {
     try {
+      if (req.session.user[0]) {
+        req.session.user = req.session.user[0];
+      }
       const { auth_id } = req.session.user;
       const db = req.app.get("db");
       const user = await db.get_auth(auth_id);
@@ -55,14 +58,12 @@ module.exports = {
     }
   },
   getUser: (req, res) => {
-    console.log(req.body);
     const db = req.app.get("db");
     const { id } = req.params;
 
     db.get_user([id])
-      .then(resp => {
-        res.status(200).send(resp);
-        console.log(11111, resp);
+      .then(user => {
+        res.status(200).send(user);
       })
       .catch(err => res.status(500).send(err));
   },
@@ -78,7 +79,6 @@ module.exports = {
         exp
       } = req.body;
       const { session } = req;
-      console.log(11, req.body);
       //   const { id } = req.session.user;
       const db = req.app.get("db");
       let user = await db.update_user({
@@ -90,8 +90,6 @@ module.exports = {
         bio,
         exp
       });
-
-      session.user = user;
       res.status(200).send(user);
     } catch (error) {
       console.log("error updating user:", error);
@@ -122,10 +120,9 @@ module.exports = {
   createClan: async (req, res) => {
     try {
       const { clanName, bio, avatar, competitive, privateClan } = req.body;
-      console.log(req.session.user);
       const { user_id } = req.session.user;
       const db = req.app.get("db");
-      const clan = await db.create_clan({
+      let clan = await db.create_clan({
         name: clanName,
         bio,
         avatar,
@@ -133,8 +130,14 @@ module.exports = {
         private: privateClan,
         owner_id: user_id
       });
+      const { clan_id } = clan[0];
+      console.log(11111, clan);
+      const newClan = await db.add_clan_owner_admin({
+        user_id,
+        clan_id
+      });
 
-      console.log(clan);
+      // console.log(clan, newClan)
     } catch (err) {
       console.log(`error creating clan: ${err}`);
     }
@@ -151,5 +154,17 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
+  },
+  getClan: (req, res) => {
+    console.log(req.body);
+    const db = req.app.get("db");
+    const { id } = req.params;
+
+    db.get_clan([id])
+      .then(resp => {
+        res.status(200).send(resp);
+        console.log(11111, resp);
+      })
+      .catch(err => res.status(500).send(err));
   }
 };

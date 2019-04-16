@@ -79,6 +79,7 @@ export default function CreateClan() {
         competitive,
         privateClan
       })
+      
     } catch (err) {
       console.log(`there was a problem creating the clan ${err}`)
     }
