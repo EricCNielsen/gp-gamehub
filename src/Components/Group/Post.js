@@ -120,9 +120,9 @@ function Post(props) {
 
   const create = async () => {
     let post = {
-      title: this.state.title,
-      content: this.state.content,
-      photo: this.state.url
+      title,
+      content,
+      picture
     };
     console.log(post);
     try {
@@ -165,7 +165,9 @@ function Post(props) {
       <AddImage />
       <Button variant="contained" color="primary" className={classes.button}>
         Send
-        <Icon className={classes.rightIcon}>send</Icon>
+        <Icon className={classes.rightIcon} onClick={create}>
+          send
+        </Icon>
       </Button>
     </BodyWrapper>
   );

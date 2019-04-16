@@ -44,14 +44,7 @@ export default function AddImage(props) {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center"
-      }}
-    >
+    <div>
       <img
         style={{ width: "6em", height: "6em" }}
         src={url}
