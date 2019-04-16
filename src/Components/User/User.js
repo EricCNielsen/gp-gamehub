@@ -140,8 +140,6 @@ const getUser = () => {
     setExp(props.exp);
   };
 
-  console.log(11111, props.user_id)
-  console.log(22222, props.match.params.id)
 
   if (props.user_id) {
     return (
@@ -189,7 +187,7 @@ const getUser = () => {
               <option value="Expert">Expert</option>
             </select>
             <br />
-            <input
+            <input  
               id="bio"
               placeholder="Bio Here"
               value={bio}
