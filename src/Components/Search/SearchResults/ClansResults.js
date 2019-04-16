@@ -19,7 +19,7 @@ const Clan = styled.div`
         object-fit: cover
     }
     overflow: auto;
-    `
+`
 const ClanTitle = styled.div`
     background-color: rgba(229,229,229, .9) ;
     border: 2px solid black;
@@ -28,7 +28,6 @@ const ClanTitle = styled.div`
     margin-left: 10vw;
     margin-right: 10vw;
     height: fit-content;
-
 `
 
 const ClansResults = ({clans, openSearch}) => {
