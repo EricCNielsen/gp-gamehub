@@ -1,3 +1,3 @@
 select *
 from clan
-where name = $1
+where name ilike '%' || $1 || '%'

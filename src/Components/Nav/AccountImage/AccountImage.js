@@ -49,7 +49,7 @@ function AccountImage(props) {
             <Paper>
               <ClickAwayListener onClickAway={popupState.close}>
                 <MenuList>
-                  <NavLink to="user">
+                  <NavLink to={`/user/${props.id}`}>
                     <MenuItem onClick={popupState.close}> My account</MenuItem>
                   </NavLink>
                   <MenuItem button onClick={handleLogout}>
@@ -66,8 +66,9 @@ function AccountImage(props) {
 }
 
 const mapSateToProps = reduxState => {
-  const { username, picture } = reduxState
+  const { username, picture, user_id } = reduxState
   return {
+    id: user_id,
     username,
     picture
   }

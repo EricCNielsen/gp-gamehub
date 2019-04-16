@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+
 const Clan = styled.div`
     background-color: rgba(229,229,229, .9) ;
     border: 2px solid black;
@@ -9,15 +10,26 @@ const Clan = styled.div`
     margin-left: 10vw;
     margin-right: 10vw;
     height: fit-content;
+    box-shadow: 0px 0px 5px 1px grey;
     img {
         border: 1px solid black;
-        border-radius: 50%;
+        /* border-radius: 50%; */
         height:10vh;
         width:10vh;
         object-fit: cover
     }
     overflow: auto;
     `
+const ClanTitle = styled.div`
+    background-color: rgba(229,229,229, .9) ;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 2vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    height: fit-content;
+
+`
 
 const ClansResults = ({clans, openSearch}) => {
     const results = clans
@@ -33,9 +45,11 @@ const ClansResults = ({clans, openSearch}) => {
         )
     })
     return(
-        <div>
-            {results}
-        </div>
+        openSearch? 
+            <ClanTitle>
+                <h1>Clans</h1>
+                {results}
+            </ClanTitle> : null
     )
 }
 

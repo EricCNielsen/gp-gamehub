@@ -1,3 +1,7 @@
-select u.*, r.ranking
+select u.*, (
+        select trunc(avg(r.ranking), 2) as ar
+        from rankings r
+        where r.user_id = u.user_id
+) ranking
 from users u
-join rankings r on u.user_id =  r.user_id
+where u.user_id = $1

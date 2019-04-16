@@ -77,26 +77,33 @@ CREATE TABLE "session"
    "expire" timestamp
 	(6) NOT NULL
 )
-	WITH
-	(OIDS=FALSE);
-	ALTER TABLE "Posts" ADD CONSTRAINT "Posts_fk0" FOREIGN KEY ("clan_id") REFERENCES "Clan"("clan_id");
-	ALTER TABLE "Posts" ADD CONSTRAINT "Posts_fk1" FOREIGN KEY ("parent_id") REFERENCES "Posts"("post_id");
-	ALTER TABLE "Posts" ADD CONSTRAINT "Posts_fk2" FOREIGN KEY ("user_id") REFERENCES "Users"("user_id");
-	ALTER TABLE "Clan" ADD CONSTRAINT "Clan_fk0" FOREIGN KEY ("owner_id") REFERENCES "Users"("user_id");
-	ALTER TABLE "users_consoles" ADD CONSTRAINT "users_consoles_fk0" FOREIGN KEY ("user_id") REFERENCES "Users"("user_id");
-	ALTER TABLE "users_consoles" ADD CONSTRAINT "users_consoles_fk1" FOREIGN KEY ("console_id") REFERENCES "Consoles"("id");
-	ALTER TABLE "clans_consoles" ADD CONSTRAINT "clans_consoles_fk0" FOREIGN KEY ("clan_id") REFERENCES "Clan"("clan_id");
-	ALTER TABLE "clans_consoles" ADD CONSTRAINT "clans_consoles_fk1" FOREIGN KEY ("console_id") REFERENCES "Consoles"("id");
-	ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
-	NOT DEFERRABLE INITIALLY IMMEDIATE;
+WITH
+(OIDS=FALSE);
+ALTER TABLE "Posts" ADD CONSTRAINT "Posts_fk0" FOREIGN KEY ("clan_id") REFERENCES "Clan"("clan_id");
+ALTER TABLE "Posts" ADD CONSTRAINT "Posts_fk1" FOREIGN KEY ("parent_id") REFERENCES "Posts"("post_id");
+ALTER TABLE "Posts" ADD CONSTRAINT "Posts_fk2" FOREIGN KEY ("user_id") REFERENCES "Users"("user_id");
+ALTER TABLE "Clan" ADD CONSTRAINT "Clan_fk0" FOREIGN KEY ("owner_id") REFERENCES "Users"("user_id");
+ALTER TABLE "users_consoles" ADD CONSTRAINT "users_consoles_fk0" FOREIGN KEY ("user_id") REFERENCES "Users"("user_id");
+ALTER TABLE "users_consoles" ADD CONSTRAINT "users_consoles_fk1" FOREIGN KEY ("console_id") REFERENCES "Consoles"("id");
+ALTER TABLE "clans_consoles" ADD CONSTRAINT "clans_consoles_fk0" FOREIGN KEY ("clan_id") REFERENCES "Clan"("clan_id");
+ALTER TABLE "clans_consoles" ADD CONSTRAINT "clans_consoles_fk1" FOREIGN KEY ("console_id") REFERENCES "Consoles"("id");
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
+NOT DEFERRABLE INITIALLY IMMEDIATE;
 
 
-	INSERT INTO "public"."Users"
-		("username", "password", "email", "location", "avatar", "bio", "ranking")
-	VALUES('test', 't', 'email@email.com', 'Orem, UT', 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/2322568/1160/772/m1/fpnw/wm0/gamer-p0-.jpg?1506988905&s=c9c1d836b2945fd988c0b48669e23f9c', 'This is the first user', 5)
-	RETURNING "user_id", "username", "password", "email", "location", "avatar", "bio", "ranking";
+INSERT INTO "public"."Users"
+	("username", "password", "email", "location", "avatar", "bio", "ranking")
+VALUES('test', 't', 'email@email.com', 'Orem, UT', 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/2322568/1160/772/m1/fpnw/wm0/gamer-p0-.jpg?1506988905&s=c9c1d836b2945fd988c0b48669e23f9c', 'This is the first user', 5)
+RETURNING "user_id", "username", "password", "email", "location", "avatar", "bio", "ranking";
 
-	INSERT INTO "public"."Clan"
-		("name", "bio", "avatar", "competitive", "owner_id", "private", "ranking")
-	VALUES('Utah Maniacs', 'We are the best clan in the world!', 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/2322568/1160/772/m1/fpnw/wm0/gamer-p0-.jpg?1506988905&s=c9c1d836b2945fd988c0b48669e23f9c', FALSE, 1, FALSE, 5)
-	RETURNING "clan_id", "name", "bio", "avatar", "competitive", "owner_id", "private", "ranking";
+INSERT INTO "public"."Clan"
+	("name", "bio", "avatar", "competitive", "owner_id", "private", "ranking")
+VALUES('Utah Maniacs', 'We are the best clan in the world!', 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/2322568/1160/772/m1/fpnw/wm0/gamer-p0-.jpg?1506988905&s=c9c1d836b2945fd988c0b48669e23f9c', FALSE, 1, FALSE, 5)
+RETURNING "clan_id", "name", "bio", "avatar", "competitive", "owner_id", "private", "ranking";
+
+CREATE TABLE users_clans (
+    user_id integer REFERENCES users(user_id),
+    clan_id integer REFERENCES clan(clan_id),
+    admin boolean DEFAULT false,
+    accepted boolean DEFAULT false
+);

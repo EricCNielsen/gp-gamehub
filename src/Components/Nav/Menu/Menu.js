@@ -7,6 +7,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
+import {connect} from 'react-redux'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUserCog } from "@fortawesome/free-solid-svg-icons"
@@ -49,7 +50,7 @@ function Menu(props) {
   const EditAccount = (
     <div>
       <List>
-        <NavLink to="/user">
+        <NavLink to={`/user/${props.id}`}>
           <ListItem button key="Account">
             <ListItemIcon>
               <FontAwesomeIcon icon={faUserCog} size="lg" />
@@ -87,4 +88,10 @@ function Menu(props) {
   )
 }
 
-export default Menu
+function mapStateToProps (state) {
+  return{
+    id: state.user_id
+  }
+}
+
+export default connect(mapStateToProps,null)(Menu)
