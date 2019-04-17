@@ -67,6 +67,17 @@ module.exports = {
       })
       .catch(err => res.status(500).send(err));
   },
+  getClan: (req, res) => {
+    const db = req.app.get("db");
+    const { id } = req.params;
+
+    db.get_clan([id])
+      .then(resp => {
+        res.status(200).send(resp);
+        console.log(11111, resp);
+      })
+      .catch(err => res.status(500).send(err));
+  },
   updateUser: async (req, res) => {
     try {
       const {
@@ -142,6 +153,26 @@ module.exports = {
       console.log(`error creating clan: ${err}`);
     }
   },
+  updateClan: async (req, res) => {
+    try {
+      const { clan_id, bio, url, name } = req.body;
+      console.log("body of clan", req.body);
+      const { session } = req;
+      //   const { id } = req.session.clan;
+      const db = req.app.get("db");
+      let clan = await db.updateClan({
+        clan_id,
+        bio,
+        avatar: url,
+        name
+      });
+      console.log("updating clan", clan[0]);
+      res.status(200).send(clan);
+    } catch (error) {
+      console.log("error updating user:", error);
+      res.status(500).send("error updating user");
+    }
+  },
   createPost: async (req, res) => {
     try {
       const { title, content, picture } = req.body;
@@ -154,17 +185,5 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
-  },
-  getClan: (req, res) => {
-    console.log(req.body);
-    const db = req.app.get("db");
-    const { id } = req.params;
-
-    db.get_clan([id])
-      .then(resp => {
-        res.status(200).send(resp);
-        console.log(11111, resp);
-      })
-      .catch(err => res.status(500).send(err));
   }
 };

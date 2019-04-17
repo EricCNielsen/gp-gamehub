@@ -15,7 +15,6 @@ export function updateUser(user) {
   if (user[0]) {
     user = user[0];
   }
-  console.log(user);
   return {
     type: UPDATE_USER,
     payload: user

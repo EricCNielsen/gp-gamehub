@@ -3,19 +3,21 @@
   justify-content: center;
   flex-direction: column;
   border: solid;
-  margin: 0 30% 0
+  margin: 0 30% 0;
 }
 
-#logo {
-    margin: 50px auto;
-  width: 200px;
+.clan {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.logo {
+  margin: 50px auto;
+  width: 300px;
   height: 200px;
 }
 
 .feed {
-  border: solid;
-}
-
-.ranking {
   border: solid;
 }
