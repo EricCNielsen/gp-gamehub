@@ -25,7 +25,10 @@ class App extends Component {
     const { history, location } = this.props
     return (
       <Provider store={store}>
-        <div className="App">
+        <div
+          className="App"
+          // style={{ backgroundColor: "#24283E" }}
+        >
           <Nav auth={auth} history={history} location={location} />
           {routes}
         </div>

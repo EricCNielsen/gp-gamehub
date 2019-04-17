@@ -1,24 +1,24 @@
-import React, { useEffect } from "react";
-import GroupMini from "../Group/GroupMini";
-import Search from "../Search/Search";
-import GamingNews from "../GamingNews/GamingNews";
-import Rankings from "../Rankings/Rankings";
-import axios from "axios";
+import React, { useEffect } from "react"
+import GroupMini from "../Group/GroupMini"
+import Search from "../Search/Search"
+import GamingNews from "../GamingNews/GamingNews"
+import Rankings from "../Rankings/Rankings"
+import axios from "axios"
 
-import { connect } from "react-redux";
-import { updateUser } from "../../ducks/reducer";
+import { connect } from "react-redux"
+import { updateUser } from "../../ducks/reducer"
 
 function Dashboard(props) {
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    getUserInfo()
+  }, [])
 
   async function getUserInfo() {
-    const { updateUser } = props;
+    const { updateUser } = props
     if (!props.username) {
-      const user = await axios.get("/auth/account");
+      const user = await axios.get("/auth/account")
       console.log(user)
-      updateUser(user.data[0]);
+      updateUser(user.data[0])
     }
   }
 
@@ -29,21 +29,21 @@ function Dashboard(props) {
       <GamingNews />
       <Rankings />
     </div>
-  );
+  )
 }
 
 const mapSateToProps = reduxState => {
-  const { username } = reduxState;
+  const { username } = reduxState
   return {
     username
-  };
-};
+  }
+}
 
 const mapDispatchToProps = {
   updateUser
-};
+}
 
 export default connect(
   null,
   mapDispatchToProps
-)(Dashboard);
+)(Dashboard)
