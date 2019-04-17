@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import MobileContainer from "../Styles/MobileContainer";
 import axios from "axios";
+import Rating from "react-rating";
+import { faStar } from "@fortawesome/free-regular-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 
-const Rankings = () => {
+const Rankings = props => {
   useEffect(() => {
     getTop5Users();
   }, []);
@@ -23,7 +27,16 @@ const Rankings = () => {
         {top5Users.map(user => {
           return (
             <li key={user.username} style={{ textAlign: "left" }}>
-              {user.username} : {user.a_r}
+              {user.username} :{" "}
+              <div>
+                <Rating
+                  {...props}
+                  initialRating={+user.a_r}
+                  emptySymbol={faStarRegular}
+                  fullSymbol={faStarSolid}
+                  fractions={2}
+                />
+              </div>
             </li>
           );
         })}

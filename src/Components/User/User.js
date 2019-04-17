@@ -12,7 +12,7 @@ function User(props) {
     [url, setUrl] = useState(""),
     [edit, setEdit] = useState(false),
     [exp, setExp] = useState(""),
-    [picture, setPicture] = useState(""),
+    [picture, setPicture] = useState(props.picture),
     [username, setUsername] = useState(""),
     // [email, setEmail] = useState(props.email),
     [location, setLocation] = useState(""),
@@ -104,6 +104,7 @@ function User(props) {
     try {
       let res = await axios.put("/api/user", user)
       props.updateUser(res.data[0])
+      setPicture(url)
       setEdit(false)
     } catch (err) {
       console.log(err)
@@ -119,15 +120,23 @@ function User(props) {
     setExp(props.exp)
   }
 
+  const handleCancel = () => {
+    setEdit(false)
+  }
+
   if (props.user_id) {
     return (
       <>
         {edit ? (
           <>
-            <img className="profileimg" src={url} alt="profile img" />
+            {url === "" ? (
+              <img className="profileimg" src={picture} alt="profile img" />
+            ) : (
+              <img className="profileimg" src={url} alt="profile img" />
+            )}
 
             {url ? (
-              <button onClick={() => setUrl("")}>edit</button>
+              <button onClick={() => setUrl("")}>Change picture</button>
             ) : (
               <div className="dropzone">
                 <Dropzone
@@ -172,6 +181,7 @@ function User(props) {
               onChange={e => setBio(e.target.value)}
             />
             <button onClick={handleSave}>Save</button>
+            <button onClick={handleCancel}>Cancel</button>
           </>
         ) : (
           <>
