@@ -34,9 +34,7 @@ function About({ id }) {
     <div id={id}>
       <AboutWrapper>
         <MessageWrapper>
-          <WelcomeMessage>
-            <h1>Welcome to GameHub</h1>
-          </WelcomeMessage>
+          <WelcomeMessage>Welcome to GameHub</WelcomeMessage>
         </MessageWrapper>
       </AboutWrapper>
     </div>

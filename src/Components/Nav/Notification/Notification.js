@@ -22,6 +22,7 @@ import {
   bindToggle,
   bindPopper
 } from "material-ui-popup-state/hooks";
+import CardImage from "./notificationbanner.jpeg";
 
 const styles = {
   card: {
@@ -87,10 +88,9 @@ function Notification(props) {
                   <CardActionArea>
                     <CardMedia
                       className={styles.media}
-                      image="/static/images/cards/contemplative-reptile.jpg"
-                      title="Contemplative Reptile"
+                      image={CardImage}
+                      title="switch"
                     />
-                    x
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
                         Lizard
