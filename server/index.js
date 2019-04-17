@@ -133,6 +133,7 @@ app.get("/api/search", ctrl.search);
 app.put("/api/user", ctrl.updateUser);
 app.get("/api/user/:id", ctrl.getUser);
 app.get("/api/clan/:id", ctrl.getClan);
+app.post("/api/post", ctrl.createPost)
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
