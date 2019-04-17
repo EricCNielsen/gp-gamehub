@@ -1,0 +1,21 @@
+.clanInfo {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: solid;
+  margin: 0 30% 0
+}
+
+#logo {
+    margin: 50px auto;
+  width: 200px;
+  height: 200px;
+}
+
+.feed {
+  border: solid;
+}
+
+.ranking {
+  border: solid;
+}
