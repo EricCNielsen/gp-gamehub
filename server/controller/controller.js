@@ -32,18 +32,17 @@ module.exports = {
     searchResults.clans = await db.get_clans(search)
     res.status(200).send(searchResults)
   },
-  checkCurrent: (req, res) => {
-    try {
-      // console.log(req.session.user)
-      const { user } = req.session
-      if (!user) {
-        res.sendStatus(500)
-      }
-      res.status(200).send(user)
-    } catch (err) {
-      console.log(err)
-    }
-  },
+  // checkCurrent: (req, res) => {
+  //   try {
+  //     const { user } = req.session
+  //     if (!user) {
+  //       res.sendStatus(500)
+  //     }
+  //     res.status(200).send(user)
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // },
   getAuth: async (req, res) => {
     try {
       if (req.session.user[0]) {
@@ -55,6 +54,7 @@ module.exports = {
       res.status(200).send(user)
     } catch (err) {
       console.log(err)
+      res.sendStatus(500)
     }
   },
   getUser: (req, res) => {
@@ -148,21 +148,23 @@ module.exports = {
     }
   },
   getClan: (req, res) => {
-    console.log(req.body)
     const db = req.app.get("db")
     const { id } = req.params
 
     db.get_clan([id])
       .then(resp => {
         res.status(200).send(resp)
-        console.log(11111, resp)
       })
       .catch(err => res.status(500).send(err))
   },
   getRegisteredClans: async (req, res) => {
     try {
+      const db = req.app.get("db"),
+        { user_id } = req.session.user
+      const registeredClans = await db.get_registered_clans({ user_id })
+      res.status(200).send(registeredClans)
     } catch (err) {
-      console.log(`There was an error getting registered `)
+      console.log(`There was an error getting registered clans, ${err} `)
     }
   }
 }
