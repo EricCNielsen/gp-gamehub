@@ -19,7 +19,7 @@ const GroupMini = () => {
   async function getRegisteredClans() {
     try {
       const getRegisteredClans = await axios.get("/api/registeredclans")
-      console.log(getRegisteredClans.data)
+      // console.log(getRegisteredClans.data)
     } catch (err) {
       console.log(`there was an error getting your registered clan: ${err}`)
     }

@@ -32,18 +32,17 @@ module.exports = {
     searchResults.clans = await db.get_clans(search)
     res.status(200).send(searchResults)
   },
-  checkCurrent: (req, res) => {
-    try {
-      // console.log(req.session.user)
-      const { user } = req.session
-      if (!user) {
-        res.sendStatus(500)
-      }
-      res.status(200).send(user)
-    } catch (err) {
-      console.log(err)
-    }
-  },
+  // checkCurrent: (req, res) => {
+  //   try {
+  //     const { user } = req.session
+  //     if (!user) {
+  //       res.sendStatus(500)
+  //     }
+  //     res.status(200).send(user)
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // },
   getAuth: async (req, res) => {
     try {
       if (req.session.user[0]) {
@@ -55,6 +54,7 @@ module.exports = {
       res.status(200).send(user)
     } catch (err) {
       console.log(err)
+      res.sendStatus(500)
     }
   },
   getUser: (req, res) => {
