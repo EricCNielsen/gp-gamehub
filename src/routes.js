@@ -7,6 +7,7 @@ import Signup from "./Components/Signup/Signup";
 import User from "./Components/User/User";
 import Post from "./Components/Group/Post";
 import Group from './Components/Group/Group';
+import GamingNews from "./Components/GamingNews/GamingNews";
 
 export default (
   <Switch>
@@ -18,5 +19,6 @@ export default (
     <Route path='/clan' component={Group}/>
     <Route path="/group/post" component={Post} />
     <Route path="/user/:id" component={User} />
+    <Route path="/gamingnews" component={GamingNews} />
   </Switch>
 );
