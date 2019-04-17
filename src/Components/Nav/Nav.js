@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { updateUser } from "../../ducks/reducer";
 import AccountImage from "./AccountImage/AccountImage";
+import Notification from "./Notification/Notification";
 
 //MaterialUI
 import PropTypes from "prop-types";
@@ -15,6 +15,10 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Menu from "./Menu/Menu";
 import logo from "./gamehub.png";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import Badge from "@material-ui/core/Badge";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = {
   root: {
@@ -30,9 +34,8 @@ const styles = {
     position: "relative",
     top: 0
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
+  card: {
+    maxWidth: 345
   }
 };
 
@@ -80,7 +83,10 @@ function Nav(props) {
               Login
             </Button>
           ) : (
-            <AccountImage handleLogout={handleLogout} />
+            <>
+              <Notification />
+              <AccountImage handleLogout={handleLogout} />
+            </>
           )}
         </Toolbar>
       </AppBar>
