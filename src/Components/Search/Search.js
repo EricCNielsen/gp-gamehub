@@ -19,7 +19,6 @@ const SearchContainer = styled.div`
         background-color: white;
         height: 2vh;
     };
-    z-index:1000;
 `;
 
 const SearchIcon = styled.div`
@@ -27,7 +26,6 @@ const SearchIcon = styled.div`
     top: 1vh;
     left: 1.5vw;
     width: fit-content;
-    z-index: 1000;
 `;
 
 const SearchResults = styled.div`
