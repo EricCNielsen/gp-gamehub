@@ -123,9 +123,8 @@ app.get(`/auth/callback`, async (req, res, next) => {
 
 //--------------------------- Endpoints ----------------------------//
 
+// app.get("/auth/current", ctrl.checkCurrent)
 app.post("/api/clan", ctrl.createClan);
-app.put("/api/clan", ctrl.updateClan);
-app.get("/auth/current", ctrl.checkCurrent);
 app.get("/auth/account", ctrl.getAuth);
 app.post("/auth/logout", ctrl.logout);
 app.get("/api/top5users", ctrl.top5Users);
@@ -134,6 +133,8 @@ app.get("/api/search", ctrl.search);
 app.put("/api/user", ctrl.updateUser);
 app.get("/api/user/:id", ctrl.getUser);
 app.get("/api/clan/:id", ctrl.getClan);
+app.get("/api/registeredclans", ctrl.getRegisteredClans);
+app.post("/api/post", ctrl.createPost);
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);

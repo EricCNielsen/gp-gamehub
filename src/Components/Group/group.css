@@ -6,10 +6,10 @@
   margin: 0 30% 0;
 }
 
-.clan {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+#logo {
+  margin: 50px auto;
+  width: 200px;
+  height: 200px;
 }
 
 .logo {

@@ -12,11 +12,9 @@ export default (
   <Switch>
     <Route exact path="/" component={Landing} />
     <Route exact path="/dashboard" component={Dashboard} />
-    <Route exact path="/group" component={GroupMini} />
     <Route exact path="/signup" component={Signup} />
     {/* <Route exact path="/user" component={User} /> */}
-    <Route path="/clan" component={Group} />
-    <Route path="/group/post" component={Post} />
+    <Route path="/group" component={Group} />
     <Route path="/user/:id" component={User} />
   </Switch>
 );

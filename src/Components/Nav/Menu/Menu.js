@@ -1,27 +1,26 @@
-import React, { useState } from "react"
-import Drawer from "@material-ui/core/Drawer"
-import Divider from "@material-ui/core/Divider"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
-import ListItemText from "@material-ui/core/ListItemText"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import {connect} from 'react-redux'
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUserCog } from "@fortawesome/free-solid-svg-icons"
-import { faUsers } from "@fortawesome/free-solid-svg-icons"
-import { faHome } from "@fortawesome/free-solid-svg-icons"
+import React, { useState } from "react";
+import Drawer from "@material-ui/core/Drawer";
+import Divider from "@material-ui/core/Divider";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCog } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 //Routing:
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 
 function Menu(props) {
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(false);
 
   function toggleDrawer() {
-    setToggle(!toggle)
+    setToggle(!toggle);
   }
 
   const sideList = (
@@ -45,7 +44,7 @@ function Menu(props) {
         </NavLink>
       </List>
     </div>
-  )
+  );
 
   const EditAccount = (
     <div>
@@ -60,7 +59,7 @@ function Menu(props) {
         </NavLink>
       </List>
     </div>
-  )
+  );
 
   return (
     <div>
@@ -85,13 +84,16 @@ function Menu(props) {
         </div>
       </Drawer>
     </div>
-  )
+  );
 }
 
-function mapStateToProps (state) {
-  return{
+function mapStateToProps(state) {
+  return {
     id: state.user_id
-  }
+  };
 }
 
-export default connect(mapStateToProps,null)(Menu)
+export default connect(
+  mapStateToProps,
+  null
+)(Menu);

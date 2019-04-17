@@ -24,13 +24,21 @@ function AccountImage(props) {
 
   return (
     <div>
-      <div id="account-img" style={{ display: "flex", flexFlow: "column", cursor: 'pointer' }}>
+      <div
+        id="account-img"
+        style={{ display: "flex", flexFlow: "column", cursor: "pointer" }}
+      >
         <img
           variant="contained"
           {...bindToggle(popupState)}
           src={picture}
           alt={username}
-          style={{ width: "3.5em", height: "3.5em", padding: ".1em" }}
+          style={{
+            width: "3.5em",
+            height: "3.5em",
+            padding: ".1em",
+            borderRadius: "50%"
+          }}
         />
         <h5 style={{ margin: ".1em 0 .7em 0" }}>{username}</h5>
       </div>
@@ -50,7 +58,9 @@ function AccountImage(props) {
               <ClickAwayListener onClickAway={popupState.close}>
                 <MenuList>
                   <NavLink to={`/user/${props.id}`}>
-                    <MenuItem onClick={popupState.close}> My account</MenuItem>
+                    <MenuItem button onClick={popupState.close}>
+                      My account
+                    </MenuItem>
                   </NavLink>
                   <MenuItem button onClick={handleLogout}>
                     Logout
