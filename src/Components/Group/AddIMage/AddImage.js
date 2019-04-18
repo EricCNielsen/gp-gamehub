@@ -45,11 +45,7 @@ export default function AddImage(props) {
 
   return (
     <div>
-      <img
-        style={{ width: "6em", height: "6em" }}
-        src={url}
-        alt="clan-post-image"
-      />
+      <img style={{ width: "6em", height: "6em" }} src={url} alt="clan-post" />
 
       <Dropzone
         style={{ postion: "inherit" }}

@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import About from "./About.js";
 import Creators from "./Creators.js";
@@ -7,8 +7,8 @@ import Auth from "../../utils/Auth/Auth";
 import { Link, animateScroll as scroll } from "react-scroll";
 import green from "@material-ui/core/colors/green";
 import Radio from "@material-ui/core/Radio";
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
-import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
+// import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
+// import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 
 const styles = {
   root: {

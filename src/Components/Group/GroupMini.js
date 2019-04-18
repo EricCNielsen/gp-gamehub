@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react"
-import MobileContainer from "../Styles/MobileContainer"
-import { Link } from "react-router-dom"
-import CreateClan from "../CreateClan/CreateClan"
-import styled from "styled-components"
+import React, { useEffect } from "react";
+import MobileContainer from "../Styles/MobileContainer";
+import { Link } from "react-router-dom";
+import CreateClan from "../CreateClan/CreateClan";
+import styled from "styled-components";
 
-import axios from "axios"
+import axios from "axios";
 
 const ClanMiniContainer = styled.div`
   background-color: white;
   margin: 0;
-`
+`;
 
 const GroupMini = () => {
   useEffect(() => {
-    getRegisteredClans()
-  })
+    getRegisteredClans();
+  });
 
   async function getRegisteredClans() {
     try {
-      const getRegisteredClans = await axios.get("/api/registeredclans")
+      const getRegisteredClans = await axios.get("/api/registeredclans");
       // console.log(getRegisteredClans.data)
     } catch (err) {
-      console.log(`there was an error getting your registered clan: ${err}`)
+      console.log(`there was an error getting your registered clan: ${err}`);
     }
   }
   return (
@@ -33,7 +33,7 @@ const GroupMini = () => {
         <Link to="/group/post">create a post</Link>
       </MobileContainer>
     </ClanMiniContainer>
-  )
-}
+  );
+};
 
-export default GroupMini
+export default GroupMini;
