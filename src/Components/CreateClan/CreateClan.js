@@ -14,6 +14,8 @@ import Checkbox from "@material-ui/core/Checkbox"
 import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 
+
+
 export default function CreateClan() {
   const [open, setOpen] = useState(false)
   const [avatar, setAvatar] = useState("")

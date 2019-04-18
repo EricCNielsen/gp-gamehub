@@ -20,7 +20,6 @@ const app = express(),
     REACT_APP_CLIENT_ID,
     REACT_APP_DOMAIN,
     CLIENT_SECRET,
-    NEWS_API
   } = process.env;
 
 const pgPool = new pg.Pool({
