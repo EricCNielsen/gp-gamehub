@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { updateUser } from "../../ducks/reducer"
 import AccountImage from "./AccountImage/AccountImage"
@@ -15,10 +15,10 @@ import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 import Menu from "./Menu/Menu"
 import logo from "./gamehub.png"
-import NotificationsIcon from "@material-ui/icons/Notifications"
-import Badge from "@material-ui/core/Badge"
-import MenuItem from "@material-ui/core/MenuItem"
-import IconButton from "@material-ui/core/IconButton"
+// import NotificationsIcon from "@material-ui/icons/Notifications"
+// import Badge from "@material-ui/core/Badge"
+// import MenuItem from "@material-ui/core/MenuItem"
+// import IconButton from "@material-ui/core/IconButton"
 
 const styles = {
   root: {
@@ -45,7 +45,7 @@ const styles = {
 function Nav(props) {
   useEffect(() => {
     handleCurrent()
-  }, [])
+  })
 
   function handleLogout() {
     try {
@@ -57,11 +57,17 @@ function Nav(props) {
   }
 
   async function handleCurrent() {
-    const { updateUser, history, location } = props
-    const user = await axios.get("/auth/current")
-    if (user && location.pathname === "/") {
+    try {
+      const { updateUser, history, location } = props
+      const user = await axios.get("/auth/account")
       updateUser(user.data)
-      history.push("/dashboard")
+      if (user && location.pathname === "/") {
+        history.push("/dashboard")
+      }
+    } catch (err) {
+      if (location.pathname !== "/") {
+        props.history.push("/")
+      }
     }
   }
 
