@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MobileContainer from "../Styles/MobileContainer";
 import axios from "axios";
-import StarRatings from "./react-star-ratings";
+import StarRatings from "react-star-ratings";
 
 const Rankings = props => {
   useEffect(() => {
@@ -27,9 +27,9 @@ const Rankings = props => {
               {user.username} :
               <div>
                 <StarRatings
-                  rating={2.403}
-                  starDimension="40px"
-                  starSpacing="15px"
+                  rating={+user.a_r}
+                  starDimension="20px"
+                  starSpacing="10px"
                 />
               </div>
             </li>
