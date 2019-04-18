@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MobileContainer from "../Styles/MobileContainer";
 import axios from "axios";
-import Rating from "react-rating";
-import { faStar } from "@fortawesome/free-regular-svg-icons";
-import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
-import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
+import StarRatings from "./react-star-ratings";
 
 const Rankings = props => {
   useEffect(() => {
@@ -27,14 +24,12 @@ const Rankings = props => {
         {top5Users.map(user => {
           return (
             <li key={user.username} style={{ textAlign: "left" }}>
-              {user.username} :{" "}
+              {user.username} :
               <div>
-                <Rating
-                  {...props}
-                  initialRating={+user.a_r}
-                  emptySymbol={faStarRegular}
-                  fullSymbol={faStarSolid}
-                  fractions={2}
+                <StarRatings
+                  rating={2.403}
+                  starDimension="40px"
+                  starSpacing="15px"
                 />
               </div>
             </li>
