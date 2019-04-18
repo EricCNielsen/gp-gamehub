@@ -205,5 +205,44 @@ module.exports = {
     } catch (err) {
       console.log(`There was an error getting registered clans, ${err} `);
     }
+  },
+  getUserRanking: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { id } = req.params
+      const { user_id } = req.session.user
+      const ranking = await db.get_user_ranking({ id, user_id })
+      res.status(200).send(ranking)
+    } catch (err) {
+      console.log(`there was an error getting the user ranking: ${err}`)
+    }
+  },
+  updateRanking: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { ranking, ranking_id } = req.body
+      console.log(ranking, ranking_id)
+      const dbRanking = await db.update_ranking({ ranking, ranking_id })
+      console.log(dbRanking)
+      res.status(200).send(dbRanking)
+    } catch (err) {
+      console.log(`there was an error updating the user ranking: ${err}`)
+    }
+  },
+  postRanking: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { newRanking, id } = req.body,
+        { user_id } = req.session.user
+      console.log(newRanking)
+      const dbRanking = await db.create_ranking({
+        ranking: newRanking,
+        user_id: id,
+        rater_id: user_id
+      })
+      res.status(200).send(dbRanking)
+    } catch (err) {
+      console.log(`there was an error posting the user ranking: ${err}`)
+    }
   }
 };
