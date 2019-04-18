@@ -14,7 +14,7 @@ export default (
     <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/signup" component={Signup} />
     {/* <Route exact path="/user" component={User} /> */}
-    <Route path="/group" component={Group} />
+    <Route path="/group/:id" component={Group} />
     <Route path="/user/:id" component={User} />
   </Switch>
 );
