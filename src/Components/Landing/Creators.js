@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -22,7 +22,6 @@ const CreatorsWrapper = styled.div`
 `;
 
 function Creators(props, { id }) {
-  const { classes } = props;
   return (
     <CreatorsWrapper>
       <h1>this is where the creator stuff will go</h1>
