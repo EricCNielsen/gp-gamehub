@@ -6,6 +6,7 @@ import { GridLoader } from "react-spinners"
 import "./user.css"
 import { updateUser } from "../../ducks/reducer"
 import { connect } from "react-redux"
+import StarRating from "../StarRating/StarRating"
 
 function User(props) {
   const [isUploading, setUploading] = useState(false),
@@ -23,7 +24,6 @@ function User(props) {
   }, [props.match.params.id])
 
   const getUser = () => {
-    console.log(123123, props)
     const { id } = props.match.params
     if (id) {
       axios.get(`/api/user/${id}`).then(res => {
@@ -32,7 +32,6 @@ function User(props) {
         setLocation(res.data[0].location)
         setExp(res.data[0].exp)
         setBio(res.data[0].bio)
-        console.log(res)
       })
     } else {
       const { picture, username, location, exp, bio } = props
@@ -186,6 +185,9 @@ function User(props) {
         ) : (
           <>
             <img className="profileimg" src={picture} alt="profile img" />
+            {props.user_id != props.match.params.id ? (
+              <StarRating id={props.match.params.id} />
+            ) : null}
             <h4>Username:</h4> {username}
             <h4>Location:</h4> {location}
             <h4>Expereince:</h4> {exp}

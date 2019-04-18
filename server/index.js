@@ -133,8 +133,11 @@ app.get("/api/search", ctrl.search)
 app.put("/api/user", ctrl.updateUser)
 app.get("/api/user/:id", ctrl.getUser)
 app.get("/api/clan/:id", ctrl.getClan)
-app.get("/api/registeredclans", ctrl.getRegisteredClans)
+app.get("/api/registeredclans/", ctrl.getRegisteredClans)
 app.post("/api/post", ctrl.createPost)
+app.get("/api/user-ranking/:id", ctrl.getUserRanking)
+app.put("/api/update-ranking", ctrl.updateRanking)
+app.post("/api/new-ranking", ctrl.postRanking)
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db)
