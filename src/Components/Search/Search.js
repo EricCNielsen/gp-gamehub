@@ -63,33 +63,33 @@ const Search = () => {
   console.log(searchInput);
 
   return (
-    <SearchContainer>
-        <SearchIcon>
-          <FontAwesomeIcon
-            icon="search"
-            onClick={_ => setOpenSearch(!openSearch)}
-            style={{ cursor: "pointer" }}
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <SearchContainer>
+          <SearchIcon>
+            <FontAwesomeIcon
+              icon="search"
+              onClick={_ => setOpenSearch(!openSearch)}
+              style={{ cursor: "pointer" }}
+            />
+          </SearchIcon>
+          <input
+            onKeyDown={handleKeyDown}
+            val={searchInput}
+            onChange={handleInput}
+            placeholder={openSearch ? "Search" : null}
+            style={{
+              width: openSearch ? "80vw" : "0",
+              borderStyle: openSearch ? "solid" : "none",
+              padding: openSearch ? "5px" : "0",
+              textAlign: "left"
+            }}
           />
-        </SearchIcon>
-      <ClickAwayListener onClickAway={handleClickAway}>
-        <input
-          onKeyDown={handleKeyDown}
-          val={searchInput}
-          onChange={handleInput}
-          placeholder={openSearch ? "Search" : null}
-          style={{
-            width: openSearch ? "80vw" : "0",
-            borderStyle: openSearch ? "solid" : "none",
-            padding: openSearch ? "5px" : "0",
-            textAlign: "left"
-          }}
-        />
-        <SearchResults>
-          <UsersResults users={searchResults.users} openSearch={openSearch} />
-          <ClansResults clans={searchResults.clans} openSearch={openSearch} />
-        </SearchResults>
-      </ClickAwayListener>
+
+            <UsersResults users={searchResults.users} openSearch={openSearch} />
+            <ClansResults clans={searchResults.clans} openSearch={openSearch} />
+
       </SearchContainer>
+    </ClickAwayListener>
   );
 };
 

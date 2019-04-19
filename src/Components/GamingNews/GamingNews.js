@@ -37,7 +37,7 @@ const GamingNews = (props) => {
     
     const getNews = async () => {
         const {REACT_APP_NEWS_API} = process.env
-        const targetUrl = "https://newsapi.org/v2/everything?q=gaming&apiKey="
+        const targetUrl = "https://newsapi.org/v2/everything?q=video+games&sortBy=relevancy&pageSize=5&apiKey="
         const res = await axios.get(targetUrl + REACT_APP_NEWS_API);
         setArticles(res.data.articles)
       };

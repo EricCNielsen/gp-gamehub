@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 //Routing:
 import { NavLink } from "react-router-dom";
@@ -65,7 +66,6 @@ function Menu(props) {
     <div>
       <IconButton
         onClick={toggleDrawer}
-        onKeyDown={toggleDrawer}
         color="inherit"
         aria-label="Menu"
       >
@@ -73,7 +73,7 @@ function Menu(props) {
       </IconButton>
       <Drawer open={toggle} onClose={() => setToggle(false)}>
         <div>
-          <h2>GameHub</h2>
+          <Link to="/dashboard" onClick={toggleDrawer}><h2>GameHub</h2></Link>
         </div>
         <Divider />
         <div tabIndex={0} role="button">
