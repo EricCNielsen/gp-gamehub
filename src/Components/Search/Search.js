@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import axios from "axios";
@@ -63,8 +63,7 @@ const Search = () => {
   console.log(searchInput);
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <SearchContainer>
+    <SearchContainer>
         <SearchIcon>
           <FontAwesomeIcon
             icon="search"
@@ -72,6 +71,7 @@ const Search = () => {
             style={{ cursor: "pointer" }}
           />
         </SearchIcon>
+      <ClickAwayListener onClickAway={handleClickAway}>
         <input
           onKeyDown={handleKeyDown}
           val={searchInput}
@@ -88,8 +88,8 @@ const Search = () => {
           <UsersResults users={searchResults.users} openSearch={openSearch} />
           <ClansResults clans={searchResults.clans} openSearch={openSearch} />
         </SearchResults>
+      </ClickAwayListener>
       </SearchContainer>
-    </ClickAwayListener>
   );
 };
 
