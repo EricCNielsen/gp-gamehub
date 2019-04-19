@@ -14,25 +14,38 @@ const Group = props => {
     [isUploading, setUploading] = useState(""),
     [name, setName] = useState(""),
     [edit, setEdit] = useState(false),
-    [bio, setBio] = useState("");
+    [bio, setBio] = useState(""),
+  [members, setMembers] = useState([]);
 
-  useEffect(() => {
-    getClan();
-  }, []
+  useEffect(
+    () => {
+      getClan();
+      getMembers();
+    },
+    []
+    // [props.match.params.id]
   );
+
+  const getMembers = () => {
+    const {id} = props.match.params;
+   axios.get(`/api/clan/${id}/members`).then(res => {
+     console.log('herpa', res.data);
+
+     setMembers(res.data);
+   });
+  };
 
   const getClan = () => {
     const { id } = props.match.params;
     if (id) {
       axios.get(`/api/clan/${id}`).then(res => {
-        console.log("hello in getClan", typeof res.data[0]);
         setName(res.data[0].name);
         setBio(res.data[0].bio);
         setUrl(res.data[0].avatar);
         props.updateClan(res.data[0]);
       });
     } else {
-      const {clanName, clanBio, clanAvatar} = props
+      const { clanName, clanBio, clanAvatar } = props;
       setName(clanName);
       setBio(clanBio);
       setUrl(clanAvatar);
@@ -89,7 +102,7 @@ const Group = props => {
 
   let handleSave = async () => {
     let clan = {
-      clan_id: props.clan_id ,
+      clan_id: props.clan_id,
       url,
       bio,
       name
@@ -114,62 +127,79 @@ const Group = props => {
   console.log(props.clan_id)
 
   if (props.user_id) {
-  return (
-    <div className="clan">
-      <div className="clanInfo">
-        {edit ? (
-          <>
-            <img className="logo" src={url} alt="logo" />
+    return (
+      <div className="clan">
+        <div className="two">
+          <div className="clanInfo">
+            {edit ? (
+              <>
+                <img className="logo" src={url} alt="logo" />
 
-            {url ? (
-              <button onClick={() => setUrl("")}>edit</button>
+                {url ? (
+                  <button onClick={() => setUrl("")}>edit</button>
+                ) : (
+                  <div className="dropzone">
+                    <Dropzone
+                      className="dropzone"
+                      onDropAccepted={getSignedRequest}
+                      accept="image/*"
+                      multiple={false}
+                    >
+                      {isUploading ? (
+                        <GridLoader />
+                      ) : (
+                        <p>Drop File or Click Here</p>
+                      )}
+                    </Dropzone>
+                  </div>
+                )}
+                <br />
+                <input
+                  id="name"
+                  placeholder="Clan Name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                />
+                <textarea
+                  id="bio"
+                  placeholder="Bio Here"
+                  value={bio}
+                  onChange={e => setBio(e.target.value)}
+                />
+                <button onClick={handleSave}>Save</button>
+              </>
             ) : (
-              <div className="dropzone">
-                <Dropzone
-                  className="dropzone"
-                  onDropAccepted={getSignedRequest}
-                  accept="image/*"
-                  multiple={false}
-                >
-                  {isUploading ? (
-                    <GridLoader />
-                  ) : (
-                    <p>Drop File or Click Here</p>
-                  )}
-                </Dropzone>
-              </div>
+              <>
+                <img className="logo" src={url} alt="logo" />
+                <h1>{name}</h1>
+                <p id="bio">{bio}</p>
+                {props.user_id === props.owner_id ? (
+                  <button onClick={handleEdit}>Edit</button>
+                ) : null}
+              </>
             )}
-            <br />
-            <input
-              id="name"
-              placeholder="Clan Name"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            <input
-              id="bio"
-              placeholder="Bio Here"
-              value={bio}
-              onChange={e => setBio(e.target.value)}
-            />
-            <button onClick={handleSave}>Save</button>
-          </>
-        ) : (
-          <>
-            <img className="logo" src={url} alt="logo" />
-            <h1>{name}</h1>
-            <h4>About the Clan:</h4> {bio}
-            {props.user_id === props.owner_id ? (
-            <button onClick={handleEdit}>Edit</button>
-            ) : null}
-          </>
-        )}
+          </div>
+          <div className="members">
+            <h2>Members</h2>
+            <div className='member'>
+            {members.map((member, i) => {
+              return (
+                <div id='mem' key={i}>
+                <img id='memImg' src={member.picture} alt='picture'/>
+                <br/>
+                  <p> 
+                  {member.username}
+                  </p>
+                </div>
+              )
+            })}
+            </div>
+          </div>
+        </div>
+        <div className="feed">
+          <h1>Posts Go Here</h1>
+        </div>
       </div>
-      <div className="feed">
-        <h1>Posts Go Here</h1>
-      </div>
-      <InGroupMini clan_id={props.clan_id}/>
-    </div>
     );
   } else {
     return <></>;

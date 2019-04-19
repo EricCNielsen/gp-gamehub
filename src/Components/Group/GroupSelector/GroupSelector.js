@@ -6,8 +6,9 @@ import { withRouter } from "react-router-dom"
 import PostViewer from "../../PostsViewer/PostViewer"
 
 function GroupSelector(props) {
-  const [selectedClan, setSelectedClan] = useState(0)
-  const [showPosts, setShowPosts] = useState(false)
+  const [selectedClan, setSelectedClan] = useState(props.clans[0].clan_id)
+  const [showPosts, setShowPosts] = useState(true)
+
   function handleChange(event) {
     if (event.target.value === "") {
       setShowPosts(false)
@@ -18,7 +19,7 @@ function GroupSelector(props) {
     }
   }
 
-  const clansList = props.clans.map(clan => {
+  const clansList = props.clans.map((clan, i) => {
     return (
       <option key={clan.name} value={clan.clan_id}>
         {clan.name}
@@ -29,11 +30,11 @@ function GroupSelector(props) {
   function handleClanView() {
     props.history.push(`group/${selectedClan}`)
   }
+
   return (
     <div>
       <FormControl>
         <NativeSelect value={selectedClan} onChange={handleChange} name="clans">
-          <option value="">Select a Clan</option>
           {clansList}
         </NativeSelect>
       </FormControl>

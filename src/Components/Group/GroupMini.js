@@ -33,8 +33,11 @@ const GroupMini = () => {
   return (
     <ClanMiniContainer>
       <MobileContainer>
-        {showSelector && <GroupSelector clans={registeredclans} />}
-        <CreateClan />
+        {showSelector ? (
+          <GroupSelector clans={registeredclans} />
+        ) : (
+          <CreateClan />
+        )}
       </MobileContainer>
     </ClanMiniContainer>
   )

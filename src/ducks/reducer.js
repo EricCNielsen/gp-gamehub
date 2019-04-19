@@ -64,7 +64,6 @@ export default function reducer(state = initialState, action) {
       };
     case UPDATE_CLAN:
       const { owner_id, clan_id, bio: clanBio, avatar: clanAvatar, name: clanName } = payload;
-      console.log("reducin", payload);
       return { ...state, owner_id, clan_id, clanBio, clanAvatar, clanName };
     default:
       return state;
