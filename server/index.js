@@ -19,7 +19,7 @@ const app = express(),
     AWS_SECRET_ACCESS_KEY,
     REACT_APP_CLIENT_ID,
     REACT_APP_DOMAIN,
-    CLIENT_SECRET
+    CLIENT_SECRET,
   } = process.env;
 
 const pgPool = new pg.Pool({
@@ -121,6 +121,15 @@ app.get(`/auth/callback`, async (req, res, next) => {
   }
 });
 
+
+
+//--------------------------- NEWS API ----------------------------//
+
+app.get('/api/news', async (req, res) => {
+  
+})
+
+
 //--------------------------- Endpoints ----------------------------//
 
 // app.get("/auth/current", ctrl.checkCurrent)
@@ -141,6 +150,7 @@ app.get("/api/user-ranking/:id", ctrl.getUserRanking)
 app.put("/api/user", ctrl.updateUser)
 app.put("/api/update-ranking", ctrl.updateRanking)
 app.put('/api/clan', ctrl.updateClan);
+
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
