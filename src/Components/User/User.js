@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { v4 as randomString } from "uuid";
-import Dropzone from "react-dropzone";
-import { GridLoader } from "react-spinners";
-import "./user.css";
-import { updateUser } from "../../ducks/reducer";
-import { connect } from "react-redux";
-import StarRating from "../StarRating/StarRating";
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import { v4 as randomString } from "uuid"
+import Dropzone from "react-dropzone"
+import { GridLoader } from "react-spinners"
+import "./user.css"
+import { updateUser } from "../../ducks/reducer"
+import { connect } from "react-redux"
+import StarRating from "../StarRating/StarRating"
 
 function User(props) {
   const [isUploading, setUploading] = useState(false),
@@ -17,35 +17,35 @@ function User(props) {
     [username, setUsername] = useState(""),
     // [email, setEmail] = useState(props.email),
     [location, setLocation] = useState(""),
-    [bio, setBio] = useState("");
+    [bio, setBio] = useState("")
 
   useEffect(() => {
-    getUser();
-  }, [props.match.params.id]);
+    getUser()
+  }, [props.match.params.id])
 
   const getUser = () => {
-    const { id } = props.match.params;
+    const { id } = props.match.params
     if (id) {
       axios.get(`/api/user/${id}`).then(res => {
-        setPicture(res.data[0].picture);
-        setUsername(res.data[0].username);
-        setLocation(res.data[0].location);
-        setExp(res.data[0].exp);
-        setBio(res.data[0].bio);
-      });
+        setPicture(res.data[0].picture)
+        setUsername(res.data[0].username)
+        setLocation(res.data[0].location)
+        setExp(res.data[0].exp)
+        setBio(res.data[0].bio)
+      })
     } else {
-      const { picture, username, location, exp, bio } = props;
-      setPicture(picture);
-      setUsername(username);
-      setLocation(location);
-      setExp(exp);
-      setBio(bio);
+      const { picture, username, location, exp, bio } = props
+      setPicture(picture)
+      setUsername(username)
+      setLocation(location)
+      setExp(exp)
+      setBio(bio)
     }
-  };
+  }
 
   let getSignedRequest = ([file]) => {
-    setUploading({ isUploading: true });
-    const fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
+    setUploading({ isUploading: true })
+    const fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`
     axios
       .get("/api/signs3", {
         params: {
@@ -54,42 +54,42 @@ function User(props) {
         }
       })
       .then(response => {
-        const { signedRequest, url } = response.data;
-        uploadFile(file, signedRequest, url);
+        const { signedRequest, url } = response.data
+        uploadFile(file, signedRequest, url)
       })
       .catch(err => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   let uploadFile = (file, signedRequest, url) => {
     const options = {
       headers: {
         "Content-Type": file.type
       }
-    };
+    }
 
     axios
       .put(signedRequest, file, options)
       .then(() => {
-        setUploading(false);
-        setUrl(url);
+        setUploading(false)
+        setUrl(url)
       })
       .catch(err => {
         setUploading({
           isUploading: false
-        });
+        })
         if (err.response.status === 403) {
           alert(
             `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
               err.stack
             }`
-          );
+          )
         } else {
-          alert(`ERROR: ${err.status}\n ${err.stack}`);
+          alert(`ERROR: ${err.status}\n ${err.stack}`)
         }
-      });
-  };
+      })
+  }
 
   let handleSave = async () => {
     let user = {
@@ -99,29 +99,29 @@ function User(props) {
       location,
       username,
       exp
-    };
-    try {
-      let res = await axios.put("/api/user", user);
-      props.updateUser(res.data[0]);
-      setPicture(url);
-      setEdit(false);
-    } catch (err) {
-      console.log(err);
     }
-  };
+    try {
+      let res = await axios.put("/api/user", user)
+      props.updateUser(res.data[0])
+      setPicture(url)
+      setEdit(false)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   let handleEdit = async () => {
-    setEdit(!edit);
-    setUsername(props.username);
-    setLocation(props.location);
-    setBio(props.bio);
-    setUrl(props.picture);
-    setExp(props.exp);
-  };
+    setEdit(!edit)
+    setUsername(props.username)
+    setLocation(props.location)
+    setBio(props.bio)
+    setUrl(props.picture)
+    setExp(props.exp)
+  }
 
   const handleCancel = () => {
-    setEdit(false);
-  };
+    setEdit(false)
+  }
 
   if (props.user_id) {
     return (
@@ -185,7 +185,7 @@ function User(props) {
         ) : (
           <>
             <img className="profileimg" src={picture} alt="profile img" />
-            {props.user_id !== props.match.params.id ? (
+            {props.user_id != props.match.params.id ? (
               <StarRating id={props.match.params.id} />
             ) : null}
             <h4>Username:</h4> {username}
@@ -193,15 +193,15 @@ function User(props) {
             <h4>Experience:</h4> {exp}
             {/* <h4>Preferred Console:</h4> {props.console} */}
             <h4>Bio:</h4> {bio}
-            {props.user_id === props.match.params.id ? (
+            {+props.user_id === +props.match.params.id ? (
               <button onClick={handleEdit}>Edit</button>
             ) : null}
           </>
         )}
       </>
-    );
+    )
   } else {
-    return <></>;
+    return <></>
   }
 }
 
@@ -215,10 +215,10 @@ const mapStateToProps = reduxState => {
     bio: reduxState.bio,
     exp: reduxState.exp,
     console: reduxState.console
-  };
-};
+  }
+}
 
 export default connect(
   mapStateToProps,
   { updateUser }
-)(User);
+)(User)
