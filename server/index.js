@@ -138,6 +138,7 @@ app.post("/api/post", ctrl.createPost)
 app.get("/api/user-ranking/:id", ctrl.getUserRanking)
 app.put("/api/update-ranking", ctrl.updateRanking)
 app.post("/api/new-ranking", ctrl.postRanking)
+app.get("/api/clan-posts/:id", ctrl.getClanPosts)
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);

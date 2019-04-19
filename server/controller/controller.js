@@ -244,5 +244,15 @@ module.exports = {
     } catch (err) {
       console.log(`there was an error posting the user ranking: ${err}`)
     }
+  },
+  getClanPosts: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { id } = req.params
+      const clanPosts = await db.get_clan_posts({ clan_id: id })
+      res.status(200).send(clanPosts)
+    } catch (err) {
+      console.log(`there was an error getting the clan posts: ${err}`)
+    }
   }
 };
