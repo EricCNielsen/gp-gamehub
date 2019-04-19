@@ -6,6 +6,8 @@ import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import { updateClan } from "../../ducks/reducer";
 import { connect } from "react-redux";
+import { getType } from "mime";
+import InGroupMini from "./InGroupMini";
 
 const Group = props => {
   const [url, setUrl] = useState(""),
@@ -17,14 +19,13 @@ const Group = props => {
   useEffect(() => {
     getClan();
   }, []
-  // [props.match.params.id]
   );
 
   const getClan = () => {
     const { id } = props.match.params;
     if (id) {
       axios.get(`/api/clan/${id}`).then(res => {
-        console.log("hello in getClan", res.data[0]);
+        console.log("hello in getClan", typeof res.data[0]);
         setName(res.data[0].name);
         setBio(res.data[0].bio);
         setUrl(res.data[0].avatar);
@@ -110,6 +111,8 @@ const Group = props => {
     setUrl(url);
   };
 
+  console.log(props.clan_id)
+
   if (props.user_id) {
   return (
     <div className="clan">
@@ -165,6 +168,7 @@ const Group = props => {
       <div className="feed">
         <h1>Posts Go Here</h1>
       </div>
+      <InGroupMini clan_id={props.clan_id}/>
     </div>
     );
   } else {
