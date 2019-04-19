@@ -67,17 +67,6 @@ module.exports = {
       })
       .catch(err => res.status(500).send(err));
   },
-  getClan: (req, res) => {
-    const db = req.app.get("db");
-    const { id } = req.params;
-
-    db.get_clan([id])
-      .then(resp => {
-        res.status(200).send(resp);
-        console.log(11111, resp);
-      })
-      .catch(err => res.status(500).send(err));
-  },
   updateUser: async (req, res) => {
     try {
       const {
@@ -166,11 +155,11 @@ module.exports = {
         avatar: url,
         name
       });
-      console.log("updating clan", clan[0]);
+      console.log("updating clan", clan);
       res.status(200).send(clan);
     } catch (error) {
-      console.log("error updating user:", error);
-      res.status(500).send("error updating user");
+      console.log("error updating clan:", error);
+      res.status(500).send("error updating clan");
     }
   },
   createPost: async (req, res) => {
@@ -188,10 +177,12 @@ module.exports = {
   },
   getClan: (req, res) => {
     const db = req.app.get("db");
-    const { id } = req.params;
-
+    let { id } = req.params;
+    id = +id;
+    // {user_id} = req.session.user;
     db.get_clan([id])
       .then(resp => {
+        // console.log("qwer", resp);
         res.status(200).send(resp);
       })
       .catch(err => res.status(500).send(err));
@@ -208,41 +199,41 @@ module.exports = {
   },
   getUserRanking: async (req, res) => {
     try {
-      const db = req.app.get("db")
-      const { id } = req.params
-      const { user_id } = req.session.user
-      const ranking = await db.get_user_ranking({ id, user_id })
-      res.status(200).send(ranking)
+      const db = req.app.get("db");
+      const { id } = req.params;
+      const { user_id } = req.session.user;
+      const ranking = await db.get_user_ranking({ id, user_id });
+      res.status(200).send(ranking);
     } catch (err) {
-      console.log(`there was an error getting the user ranking: ${err}`)
+      console.log(`there was an error getting the user ranking: ${err}`);
     }
   },
   updateRanking: async (req, res) => {
     try {
-      const db = req.app.get("db")
-      const { ranking, ranking_id } = req.body
-      console.log(ranking, ranking_id)
-      const dbRanking = await db.update_ranking({ ranking, ranking_id })
-      console.log(dbRanking)
-      res.status(200).send(dbRanking)
+      const db = req.app.get("db");
+      const { ranking, ranking_id } = req.body;
+      console.log(ranking, ranking_id);
+      const dbRanking = await db.update_ranking({ ranking, ranking_id });
+      console.log(dbRanking);
+      res.status(200).send(dbRanking);
     } catch (err) {
-      console.log(`there was an error updating the user ranking: ${err}`)
+      console.log(`there was an error updating the user ranking: ${err}`);
     }
   },
   postRanking: async (req, res) => {
     try {
-      const db = req.app.get("db")
+      const db = req.app.get("db");
       const { newRanking, id } = req.body,
-        { user_id } = req.session.user
-      console.log(newRanking)
+        { user_id } = req.session.user;
+      console.log(newRanking);
       const dbRanking = await db.create_ranking({
         ranking: newRanking,
         user_id: id,
         rater_id: user_id
-      })
-      res.status(200).send(dbRanking)
+      });
+      res.status(200).send(dbRanking);
     } catch (err) {
-      console.log(`there was an error posting the user ranking: ${err}`)
+      console.log(`there was an error posting the user ranking: ${err}`);
     }
   },
   getClanPosts: async (req, res) => {
