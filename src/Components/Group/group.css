@@ -43,7 +43,9 @@
 }
 
 #mem {
+  max-width: 50px;
   margin: 3%;
+  overflow: auto;
 }
 
 .member p {
