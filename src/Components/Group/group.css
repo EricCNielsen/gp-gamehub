@@ -1,23 +1,74 @@
+.clan {
+  display: flex;
+  flex-direction: row;
+  margin: 2% 2% 0 2%;
+}
+
 .clanInfo {
   display: flex;
   justify-content: center;
   flex-direction: column;
   border: solid;
-  margin: 0 30% 0;
+  height: 440px;
+  width: 353px;
 }
 
-#logo {
-  margin: 50px auto;
-  width: 200px;
-  height: 200px;
+.clanInfo h1 {
+  margin: 5px;
+}
+
+#bio {
+  margin: 0 auto;
+  width: 350px;
+  height: 75px;
+}
+
+.members {
+  border: solid;
+  margin-top: 2%;
+  height: 180px;
+  width: 353px;
+  overflow: auto;
+}
+
+.member {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+#mem {
+  margin: 3%;
+}
+
+.member p {
+  font-size: 12px;
+  margin: 0;
+}
+
+#memImg {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+.members h2 {
+  margin: 0;
 }
 
 .logo {
-  margin: 50px auto;
+  margin: 10px auto;
   width: 300px;
   height: 200px;
 }
 
 .feed {
   border: solid;
+  margin-left: 2.5%;
+  height: 630px;
+  width: 915px;
 }

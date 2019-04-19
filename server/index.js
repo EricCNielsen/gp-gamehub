@@ -132,6 +132,7 @@ app.post("/api/clan", ctrl.createClan)
 app.post("/auth/logout", ctrl.logout)
 app.post("/api/post", ctrl.createPost)
 app.post("/api/new-ranking", ctrl.postRanking)
+app.post("/api/new-ranking", ctrl.postRanking)
 
 app.get("/auth/account", ctrl.getAuth)
 app.get("/api/top5users", ctrl.top5Users)
@@ -141,11 +142,11 @@ app.get("/api/user/:id", ctrl.getUser)
 app.get("/api/clan/:id", ctrl.getClan)
 app.get("/api/registeredclans/", ctrl.getRegisteredClans)
 app.get("/api/user-ranking/:id", ctrl.getUserRanking)
+app.get("/api/clan-posts/:id", ctrl.getClanPosts)
+app.get('/api/clan/:id/members', ctrl.getMembers);
 
 app.put("/api/user", ctrl.updateUser)
 app.put("/api/update-ranking", ctrl.updateRanking)
-app.post("/api/new-ranking", ctrl.postRanking)
-app.get("/api/clan-posts/:id", ctrl.getClanPosts)
 app.put("/api/clan", ctrl.updateClan)
 
 massive(CONNECTION_STRING).then(db => {
