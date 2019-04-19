@@ -93,6 +93,13 @@ module.exports = {
       res.sendStatus(200)
     })
   },
+  getMembers: async (req, res) => {
+    const db = req.app.get('db'),
+    {id} = req.params,
+    members = await db.getClanMembers(id)
+    console.log('we in the ctrl.getMem', members)
+    res.status(200).send(members);
+  },
   top5Users: async (req, res) => {
     const db = req.app.get("db")
     let gettop5users = await db.get_top5users()
