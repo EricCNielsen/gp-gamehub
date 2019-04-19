@@ -193,7 +193,7 @@ function User(props) {
             <h4>Experience:</h4> {exp}
             {/* <h4>Preferred Console:</h4> {props.console} */}
             <h4>Bio:</h4> {bio}
-            {props.user_id === props.match.params.id ? (
+            {+props.user_id === +props.match.params.id ? (
               <button onClick={handleEdit}>Edit</button>
             ) : null}
           </>
