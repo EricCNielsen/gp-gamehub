@@ -1,3 +1,3 @@
 SELECT *
-FROM clans
+FROM clan
 WHERE clan_id = $1

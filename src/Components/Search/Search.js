@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import axios from "axios";
@@ -7,26 +7,26 @@ import UsersResults from "./SearchResults/UsersResults";
 import ClansResults from "./SearchResults/ClansResults";
 
 const SearchContainer = styled.div`
-  position: relative;
-  height: 5vh;
-  width: 100vw;
-  input {
-    transition: width 0.5s;
-    border-radius: 10px;
-    padding: 0.5%;
-    outline: none;
-    background-color: white;
-    height: 2vh;
-  }
-  z-index: 1000;
+    position: relative;
+    height: 5vh;
+    width: 100vw;
+    input {
+        transition: width .5s;
+        border-radius:10px;
+        padding: .5%;
+        outline:none;
+        background-color: white;
+        height: 2vh;
+    };
+    z-index:1;
 `;
 
 const SearchIcon = styled.div`
-  position: relative;
-  top: 1vh;
-  left: 1.5vw;
-  width: fit-content;
-  z-index: 1000;
+    position: relative;
+    top: 1vh;
+    left: 1.5vw;
+    width: fit-content;
+    z-index:2;
 `;
 
 const SearchResults = styled.div`
@@ -63,8 +63,7 @@ const Search = () => {
   console.log(searchInput);
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <SearchContainer>
+    <SearchContainer>
         <SearchIcon>
           <FontAwesomeIcon
             icon="search"
@@ -72,6 +71,7 @@ const Search = () => {
             style={{ cursor: "pointer" }}
           />
         </SearchIcon>
+      <ClickAwayListener onClickAway={handleClickAway}>
         <input
           onKeyDown={handleKeyDown}
           val={searchInput}
@@ -88,8 +88,8 @@ const Search = () => {
           <UsersResults users={searchResults.users} openSearch={openSearch} />
           <ClansResults clans={searchResults.clans} openSearch={openSearch} />
         </SearchResults>
+      </ClickAwayListener>
       </SearchContainer>
-    </ClickAwayListener>
   );
 };
 
