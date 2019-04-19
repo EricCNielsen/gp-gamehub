@@ -88,7 +88,7 @@ const BodyWrapper = styled.div`
 //   borderColor: PropTypes.string.isRequired
 // };
 
-function Post(props) {
+function CreatePost(props) {
   const { classes } = props;
   const [quillRef, setQuillRef] = useState(null);
   const [reactQuillRef, setReactQuillRef] = useState({});
@@ -180,4 +180,4 @@ function Post(props) {
   );
 }
 
-export default withStyles(styles)(Post);
+export default withStyles(styles)(CreatePost);
