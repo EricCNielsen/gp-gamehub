@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react"
-import Button from "@material-ui/core/Button"
-import TextField from "@material-ui/core/TextField"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import ConsolesSelector from "../ConsolesSelector/ConsolesSelector"
-import AddImage from "./AddIMage/AddImage"
+import React, { useState, useEffect } from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import ConsolesSelector from "../ConsolesSelector/ConsolesSelector";
+import AddImage from "./AddIMage/AddImage";
 
-import axios from "axios"
+import axios from "axios";
 
-import Checkbox from "@material-ui/core/Checkbox"
-import FormGroup from "@material-ui/core/FormGroup"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 
 
 export default function CreateClan() {
-  const [open, setOpen] = useState(false)
-  const [avatar, setAvatar] = useState("")
-  const [privateClan, setPrivateClan] = useState(false)
-  const [competitive, setCompetitive] = useState(false)
-  const [clanName, setClanName] = useState("")
-  const [bio, setBio] = useState("")
-  const [gamingConsoles, setGamingConsoles] = useState([])
+  const [open, setOpen] = useState(false);
+  const [avatar, setAvatar] = useState("");
+  const [privateClan, setPrivateClan] = useState(false);
+  const [competitive, setCompetitive] = useState(false);
+  const [clanName, setClanName] = useState("");
+  const [bio, setBio] = useState("");
+  const [gamingConsoles, setGamingConsoles] = useState([]);
   useEffect(() => {
     return () => {
       console.log(
@@ -34,12 +34,12 @@ export default function CreateClan() {
         competitive,
         clanName,
         bio
-      )
-    }
-  }, [gamingConsoles, avatar, privateClan, competitive, clanName, bio])
+      );
+    };
+  }, [gamingConsoles, avatar, privateClan, competitive, clanName, bio]);
 
   function setClanAvatar(url) {
-    setAvatar(url)
+    setAvatar(url);
   }
 
   function handleGamingConsoles(consoleDb, selectedConsoles) {
@@ -52,43 +52,42 @@ export default function CreateClan() {
       .map(gameConsole => {
         return {
           console_id: gameConsole.id
-        }
-      })
-    setGamingConsoles(consolesObj)
+        };
+      });
+    setGamingConsoles(consolesObj);
   }
 
   function handleClickOpen() {
-    setOpen(!open)
-    setClanName('')
-    setBio('')
-    setAvatar('')
-    setCompetitive(false)
-    setPrivateClan(false)
+    setOpen(!open);
+    setClanName("");
+    setBio("");
+    setAvatar("");
+    setCompetitive(false);
+    setPrivateClan(false);
   }
 
   async function createClan() {
     try {
-      if (clanName === '' || bio === "" || gamingConsoles[0] === "") {
-        return alert("all fields must be completed before submitting")
-      } else if( avatar === "" ) {
-        return alert("Add an image before submitting")
+      if (clanName === "" || bio === "" || gamingConsoles[0] === "") {
+        return alert("all fields must be completed before submitting");
+      } else if (avatar === "") {
+        return alert("Add an image before submitting");
       }
-      handleClickOpen()
-      const clan = await axios.post("/api/clan", {
+      handleClickOpen();
+      await axios.post("/api/clan", {
         clanName,
         bio,
         avatar,
         competitive,
         privateClan
-      })
-      
+      });
     } catch (err) {
-      console.log(`there was a problem creating the clan ${err}`)
+      console.log(`there was a problem creating the clan ${err}`);
     }
   }
 
   function handleClose() {
-    setOpen(false)
+    setOpen(false);
   }
 
   return (
@@ -152,5 +151,5 @@ export default function CreateClan() {
         </DialogActions>
       </Dialog>
     </div>
-  )
+  );
 }

@@ -4,7 +4,7 @@ import axios from "axios";
 import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
-import { updateUser } from "../../ducks/reducer";
+import { updateClan } from "../../ducks/reducer";
 import { connect } from "react-redux";
 
 const Group = props => {
@@ -16,20 +16,25 @@ const Group = props => {
 
   useEffect(() => {
     getClan();
-  }, [props.match.params.id]);
+  }, []
+  // [props.match.params.id]
+  );
 
   const getClan = () => {
     const { id } = props.match.params;
     if (id) {
       axios.get(`/api/clan/${id}`).then(res => {
-        console.log("hello in getClan", res.data);
-        // setName(res.data[0].name);
-        // setBio(res.data[0].bio);
-        // setUrl(res.data[0].avatar);
+        console.log("hello in getClan", res.data[0]);
+        setName(res.data[0].name);
+        setBio(res.data[0].bio);
+        setUrl(res.data[0].avatar);
+        props.updateClan(res.data[0]);
       });
     } else {
-      setName(name);
-      setBio(bio);
+      const {clanName, clanBio, clanAvatar} = props
+      setName(clanName);
+      setBio(clanBio);
+      setUrl(clanAvatar);
     }
   };
 
@@ -83,7 +88,7 @@ const Group = props => {
 
   let handleSave = async () => {
     let clan = {
-      // clan_id,
+      clan_id: props.clan_id ,
       url,
       bio,
       name
@@ -91,7 +96,7 @@ const Group = props => {
     try {
       let res = await axios.put("/api/clan", clan);
       console.log("handleSave", res.data);
-      // props.updateUser(res.data[0]);
+      props.updateClan(res.data);
       setEdit(false);
     } catch (err) {
       console.log(err);
@@ -105,7 +110,7 @@ const Group = props => {
     setUrl(url);
   };
 
-  // if (props.clan_id) {
+  if (props.user_id) {
   return (
     <div className="clan">
       <div className="clanInfo">
@@ -149,10 +154,11 @@ const Group = props => {
         ) : (
           <>
             <img className="logo" src={url} alt="logo" />
+            <h1>{name}</h1>
             <h4>About the Clan:</h4> {bio}
-            {/* {props.user_id == props.match.params.id ? ( */}
+            {props.user_id === props.owner_id ? (
             <button onClick={handleEdit}>Edit</button>
-            {/* ) : null} */}
+            ) : null}
           </>
         )}
       </div>
@@ -160,19 +166,24 @@ const Group = props => {
         <h1>Posts Go Here</h1>
       </div>
     </div>
-  );
-  // } else {
-  //   return <></>;
-  // }
+    );
+  } else {
+    return <></>;
+  }
 };
 
 const mapStateToProps = reduxState => {
   return {
-    user_id: reduxState.user_id
+    user_id: reduxState.user_id,
+    clan_id: reduxState.clan_id,
+    owner_id: reduxState.owner_id,
+    clanBio: reduxState.clanBio,
+    clanAvatar: reduxState.clanAvatar,
+    clanName: reduxState.clanName
   };
 };
 
 export default connect(
   mapStateToProps,
-  { updateUser }
+  { updateClan }
 )(Group);

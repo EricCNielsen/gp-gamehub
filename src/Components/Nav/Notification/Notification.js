@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
@@ -12,7 +10,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -56,7 +53,6 @@ function Notification(props) {
     popupId: "account-img"
   });
   // const {  } = props
-  const { classes } = props;
   return (
     <div>
       <div>
