@@ -121,6 +121,10 @@ app.get(`/auth/callback`, async (req, res, next) => {
   }
 })
 
+//--------------------------- NEWS API ----------------------------//
+
+app.get("/api/news", async (req, res) => {})
+
 //--------------------------- Endpoints ----------------------------//
 
 // app.get("/auth/current", ctrl.checkCurrent)

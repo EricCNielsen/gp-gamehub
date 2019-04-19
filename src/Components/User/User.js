@@ -190,7 +190,7 @@ function User(props) {
             ) : null}
             <h4>Username:</h4> {username}
             <h4>Location:</h4> {location}
-            <h4>Expereince:</h4> {exp}
+            <h4>Experience:</h4> {exp}
             {/* <h4>Preferred Console:</h4> {props.console} */}
             <h4>Bio:</h4> {bio}
             {props.user_id === props.match.params.id ? (

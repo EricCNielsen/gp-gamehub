@@ -4,6 +4,7 @@ import Landing from "./Components/Landing/Landing"
 import Dashboard from "./Components/Dashboard/Dashboard"
 import User from "./Components/User/User"
 import Group from "./Components/Group/Group"
+import GamingNews from "./Components/GamingNews/GamingNews"
 
 export default (
   <Switch>
@@ -12,5 +13,6 @@ export default (
     {/* <Route exact path="/user" component={User} /> */}
     <Route path="/group/:id" component={Group} />
     <Route path="/user/:id" component={User} />
+    <Route path="/gamingnews" component={GamingNews} />
   </Switch>
 )
