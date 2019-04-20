@@ -6,8 +6,7 @@ const User = styled.div`
   padding: 1%;
   position: relative;
   margin-bottom: 2vh;
-  /* margin-left: 10vw;
-    margin-right: 10vw; */
+  background: rgb(229,229,229);
   height: fit-content;
   border-top: 2px solid black;
   width: 98%;
@@ -21,7 +20,7 @@ const User = styled.div`
   overflow: auto;
 `;
 const SearchTitle = styled.div`
-  background-color: rgba(229, 229, 229, 0.9);
+  background-color: rgb(229, 229, 229);
   border: 2px solid black;
   border-radius: 10px;
   margin-top: 2vh;
