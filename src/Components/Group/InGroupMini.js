@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from "react"
-import MobileContainer from "../Styles/MobileContainer"
-import CreateClan from "../CreateClan/CreateClan"
-import styled from "styled-components"
-import axios from "axios"
-import { connect } from "react-redux"
-import { updateClan } from "./../../ducks/reducer"
+import React from "react";
+import './group.css';
+import styled from "styled-components";
+import { connect } from "react-redux";
+import { updateClan } from "./../../ducks/reducer";
+import PostViewer from "./../PostsViewer/PostViewer";
 
 const ClanMiniContainer = styled.div`
   background-color: white;
   margin: 0;
 `
 
-const InGroupMini = ({clan_id}) => {
-  const [group, setGroup] = useState()
-  console.log(clan_id)
-
-  useEffect(() => {
-    getGroup()
-  }, [])
-
-  const getGroup =  async () => {
-    const id = clan_id
-    const res = await axios.get(`/api/clan/${id}`)
-    console.log(res.data)
-    setGroup(res.data)
-  }
-
-
-  console.log(group)
+const InGroupMini = (props) => {
+  console.log(props)
   return (
-    <div>
-      <h1>InGroupMini</h1>
+    <div className="feed">
+      <h1 style={{textAlign:"left", paddingLeft:"3%"}}>{props.clanName}</h1>
+      <hr/>
+      <PostViewer id={props.clan_id}/>
     </div>
   )
 }
