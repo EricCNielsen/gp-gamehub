@@ -9,7 +9,7 @@ const User = styled.div`
   background: rgb(229,229,229);
   height: fit-content;
   border-top: 2px solid black;
-  width: 98%;
+  width: 98%
   img {
     border: 1px solid black;
     border-radius: 50%;
