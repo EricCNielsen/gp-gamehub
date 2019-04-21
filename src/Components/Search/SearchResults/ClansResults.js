@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Clan = styled.div`
-  background-color: rgba(229, 229, 229, 0.9);
-  border: 2px solid black;
-  border-radius: 10px;
-  margin-top: 2vh;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  padding: 1%;
+  background: rgb(229,229,229);
+  position: relative;
+  margin-bottom: 2vh;
   height: fit-content;
-  box-shadow: 0px 0px 5px 1px grey;
+  border-top: 2px solid black;
+  width: 98%;
   img {
     border: 1px solid black;
-    /* border-radius: 50%; */
+    border-radius: 50%;
     height: 10vh;
     width: 10vh;
     object-fit: cover;
@@ -20,7 +20,7 @@ const Clan = styled.div`
   overflow: auto;
 `;
 const ClanTitle = styled.div`
-  background-color: rgba(229, 229, 229, 0.9);
+  background-color: rgb(229, 229, 229);
   border: 2px solid black;
   border-radius: 10px;
   margin-top: 2vh;
@@ -32,13 +32,15 @@ const ClanTitle = styled.div`
 const ClansResults = ({ clans, openSearch }) => {
   const results = clans.map((clan, i) => {
     return openSearch ? (
-      <Clan key={i}>
-        <h3>Clans</h3>
-        <hr />
-        <img src={clan.avatar} alt="clan" />
-        <h1>{clan.name}</h1>
-        <h3>{clan.ranking}</h3>
-      </Clan>
+      <Link to={`/group/${clan.clan_id}`} style={{ width: "80vw" }}>
+        <Clan key={i}>
+          <h3>Clans</h3>
+          <hr />
+          <img src={clan.avatar} alt="clan" />
+          <h1>{clan.name}</h1>
+          <h3>{clan.ranking}</h3>
+        </Clan>
+      </Link>
     ) : null;
   });
   return openSearch ? (
