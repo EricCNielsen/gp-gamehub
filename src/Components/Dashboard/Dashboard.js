@@ -4,9 +4,21 @@ import Search from "../Search/Search";
 import GamingNews from "../GamingNews/GamingNews";
 import Rankings from "../Rankings/Rankings";
 import axios from "axios";
-
 import { connect } from "react-redux";
 import { updateUser } from "../../ducks/reducer";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  @media screen and (min-width:700px) {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100vw;
+    overflow:hidden;
+  }
+`
+
 
 function Dashboard(props) {
   useEffect(() => {
@@ -22,12 +34,14 @@ function Dashboard(props) {
   }
 
   return (
-    <div>
+    <>
       <Search />
-      <GroupMini />
-      <GamingNews />
-      <Rankings />
-    </div>
+      <Wrapper>
+        <GroupMini />
+        <Rankings />
+        <GamingNews />
+      </Wrapper>
+    </>
   );
 }
 
