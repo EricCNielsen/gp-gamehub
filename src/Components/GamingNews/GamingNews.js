@@ -10,12 +10,24 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
-const HeightContainer = styled.div`
+const NewsContainer = styled.div`
   height: 40vh;
   overflow: auto;
   margin-left: 25vw;
   margin-right: 25vw;
   padding: 1%;
+  @media screen and (min-width: 700px) {
+    margin: 0 auto;
+    width: 20vw;
+    position: absolute;
+    top: 25%;
+    left: 0.1%;
+    h1 {
+      background: white;
+    }
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+  }
 `;
 
 const styles = {
@@ -87,9 +99,10 @@ const GamingNews = props => {
   });
 
   return (
-    <MobileContainer>
-      <HeightContainer>{newsArticles}</HeightContainer>
-    </MobileContainer>
+    <NewsContainer>
+      <h1>News</h1>
+      {newsArticles}
+    </NewsContainer>
   );
 };
 

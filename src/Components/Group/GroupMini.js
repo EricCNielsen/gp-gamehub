@@ -9,6 +9,18 @@ import axios from "axios"
 const ClanMiniContainer = styled.div`
   background-color: white;
   margin: 0;
+  border-bottom: 1px solid black;
+    @media screen and (min-width:700px) {
+        margin: 0 auto;
+        width: 52vw;
+        position: absolute;
+        top:15%;
+        left:23.65%;
+        border: 1px solid lightgrey;
+        border-radius: 10px;
+        max-height: 98vh;
+        min-height: 80vh;
+    }
 `
 
 const GroupMini = () => {
@@ -32,13 +44,11 @@ const GroupMini = () => {
   }
   return (
     <ClanMiniContainer>
-      <MobileContainer>
         {showSelector ? (
           <GroupSelector clans={registeredclans} />
         ) : (
           <CreateClan />
         )}
-      </MobileContainer>
     </ClanMiniContainer>
   )
 }

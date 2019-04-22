@@ -27,20 +27,20 @@ function Menu(props) {
   const sideList = (
     <div>
       <List>
-        <NavLink to="/group">
-          <ListItem button onClick={toggleDrawer} key="Clans">
-            <ListItemIcon>
-              <FontAwesomeIcon icon={faUsers} size="lg" />
-            </ListItemIcon>
-            <ListItemText primary="Clans" />
-          </ListItem>
-        </NavLink>
         <NavLink to="/dashboard">
           <ListItem button onClick={toggleDrawer} key="Main">
             <ListItemIcon>
               <FontAwesomeIcon icon={faHome} size="lg" />
             </ListItemIcon>
             <ListItemText onClick={toggleDrawer} primary="Main" />
+          </ListItem>
+        </NavLink>
+        <NavLink to="/group">
+          <ListItem button onClick={toggleDrawer} key="Clans">
+            <ListItemIcon>
+              <FontAwesomeIcon icon={faUsers} size="lg" />
+            </ListItemIcon>
+            <ListItemText primary="Clans" />
           </ListItem>
         </NavLink>
       </List>
