@@ -102,9 +102,9 @@ module.exports = {
     });
   },
   getMembers: async (req, res) => {
-    const db = req.app.get('db'),
-    {id} = req.params,
-    members = await db.getClanMembers(id)
+    const db = req.app.get("db"),
+      { id } = req.params,
+      members = await db.getClanMembers(id);
     res.status(200).send(members);
   },
   top5Users: async (req, res) => {
@@ -254,6 +254,7 @@ module.exports = {
       // console.log(req.params);
       let { id } = req.params;
       let getpost = await db.get_post([id]);
+      let getreplies;
       // console.log(getpost);
       console.log(getpost[0]);
       res.status(200).send(getpost[0]);
@@ -278,6 +279,17 @@ module.exports = {
       const { id } = req.params;
       const db = req.app.get("db");
       await db.delete_post([id]);
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  getReplies: async (req, res) => {
+    try {
+      console.log("going");
+      const { id } = req.params;
+      const db = req.app.get("db");
+      await db.get_replies([id]);
       res.sendStatus(200);
     } catch (err) {
       console.log(err);

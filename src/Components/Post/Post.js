@@ -65,6 +65,7 @@ function Post(props) {
   const [quillRef, setQuillRef] = useState(null);
   const [reactQuillRef, setReactQuillRef] = useState({});
   const [post, setPost] = useState({});
+  const [replies, setReplies] = useState({});
   const [postQuillValue, setPostQuillValue] = useState("");
   const [showPostQuill, setShowPostQuill] = useState(false);
 
@@ -84,6 +85,12 @@ function Post(props) {
     let res = await axios.get(`/api/post/${props.match.params.id}`);
     console.log(res.data);
     setPost(res.data);
+  };
+
+  const getReplies = async () => {
+    let res = await axios.get(`/api/postreplies`);
+    console.log(res.data);
+    setReplies(res.data);
   };
 
   const handlePostQuillChange = html => {
