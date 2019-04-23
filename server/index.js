@@ -123,32 +123,52 @@ app.get(`/auth/callback`, async (req, res, next) => {
 
 //--------------------------- Endpoints ----------------------------//
 
-// app.get("/auth/current", ctrl.checkCurrent)
-app.post("/api/clan", ctrl.createClan);
-app.post("/auth/logout", ctrl.logout);
-app.post("/api/post", ctrl.createPost);
-app.post("/api/new-ranking", ctrl.postRanking);
+// Authentication --------------------
+app.post("/auth/logout", ctrl.logout)
+app.get("/auth/account", ctrl.getAuth)
 
-app.get("/auth/account", ctrl.getAuth);
-app.get("/api/top5users", ctrl.top5Users);
-app.get("/api/consoles", ctrl.getConsoles);
-app.get("/api/search", ctrl.search);
-app.get("/api/user/:id", ctrl.getUser);
-app.get("/api/clan/:id", ctrl.getClan);
-app.get("/api/registeredclans/", ctrl.getRegisteredClans);
-app.get("/api/user-ranking/:id", ctrl.getUserRanking);
 
+// Posts -----------------------------
+app.get("/api/clan-posts/:id", ctrl.getClanPosts)
+app.get("/api/clan-posts/:id", ctrl.getClanPosts);
 app.get("/api/post/:id", ctrl.getPost);
 app.put("/api/post", ctrl.updatePost);
+app.post("/api/post", ctrl.createPost)
+app.post("/api/reply", ctrl.createReply);
 app.delete("/api/reply/:id", ctrl.deleteReply);
 app.delete("/api/post/:id", ctrl.deletePost);
-app.post("/api/reply", ctrl.createReply);
 
-app.put("/api/user", ctrl.updateUser);
-app.put("/api/update-ranking", ctrl.updateRanking);
+// clans -----------------------------
+app.get("/api/clan/:id", ctrl.getClan)
+app.get("/api/registeredclans/", ctrl.getRegisteredClans)
+app.get('/api/clan/:id/members', ctrl.getMembers);
+app.put("/api/clan", ctrl.updateClan)
+app.post("/api/clan", ctrl.createClan)
+
+// ranks -----------------------------
+app.get("/api/top5users", ctrl.top5Users)
+app.get("/api/user-ranking/:id", ctrl.getUserRanking)
+app.put("/api/update-ranking", ctrl.updateRanking)
 app.post("/api/new-ranking", ctrl.postRanking);
-app.get("/api/clan-posts/:id", ctrl.getClanPosts);
-app.put("/api/clan", ctrl.updateClan);
+
+// users -----------------------------
+app.get("/api/user/:id", ctrl.getUser)
+app.get("/api/user-membership/:id", ctrl.checkUserMembership)
+app.put("/api/user", ctrl.updateUser)
+
+// search ----------------------------
+app.get("/api/search", ctrl.search)
+
+
+// consoles --------------------------
+app.get("/api/consoles", ctrl.getConsoles)
+
+// invites ---------------------------
+app.get("/api/invites/", ctrl.getInvitations)
+app.put("/api/accept-invite", ctrl.acceptInvite)
+app.post("/api/create-invite", ctrl.createInvite)
+app.delete("/api/decline-invite", ctrl.declineInvite)
+
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);

@@ -102,10 +102,14 @@ module.exports = {
     });
   },
   getMembers: async (req, res) => {
-    const db = req.app.get("db"),
-      { id } = req.params,
-      members = await db.get_clan_members(id);
-    res.status(200).send(members);
+    try {
+      const db = req.app.get("db"),
+        { id } = req.params,
+        members = await db.getClanMembers(id)
+      res.status(200).send(members)
+    } catch (err) {
+      console.log("error getting members:", err)
+    }
   },
   top5Users: async (req, res) => {
     const db = req.app.get("db");
@@ -304,6 +308,65 @@ module.exports = {
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
+    }
+  },
+  getInvitations: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { user_id } = req.session.user
+      const invitations = await db.get_invitations({ user_id })
+      res.status(200).send(invitations)
+    } catch (err) {
+      console.log(`there was an error getting the invitations: ${err}`)
+    }
+  }, 
+  acceptInvite: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { id, clan_id } = req.body
+      const { user_id } = req.session.user
+      await db.delete_invitation({ id })
+      const registeredClans = await db.add_user_to_clan({user_id, clan_id })
+      res.status(200).send(registeredClans)
+    } catch (err) {
+      console.log(`there was an error accepting the invitation: ${err}`)
+    }
+  }, 
+  declineInvite: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { id } = req.params
+      await db.delete_invitation({ id })
+      res.sendStatus(200)
+    } catch (err) {
+      console.log(`there was an error deleting the invitation: ${err}`)
+    }
+  }, checkUserMembership: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const { id } = req.params
+      const userMembership = await db.check_user_clans_invitations({ user_id: id })
+      console.log(userMembership)
+      res.status(200).send(userMembership)
+    } catch (err) {
+      console.log(`there was an error checking user membership: ${err}`)
+    }
+  },
+  createInvite: async (req, res) => {
+    try {
+      const db = req.app.get("db")
+      const  invites  = req.body
+      const { user_id } = req.session.user
+      // console.log(invites)
+      for(let propName in invites) {
+        if(invites.hasOwnProperty(propName)) {
+            let propValue = invites[propName];
+            await db.create_invite({ clan_id: propValue.clan_id, inviter_id: user_id, invitee_id: propValue.user})
+        }
+      }
+      res.sendStatus(200)
+    } catch (err) {
+      console.log(`there was an error creating the invitation: ${err}`)
     }
   }
 };
