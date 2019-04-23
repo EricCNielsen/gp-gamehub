@@ -30,7 +30,13 @@ const SearchIcon = styled.div`
 `;
 
 const SearchResults = styled.div`
-  /* position: relative; */
+  width: 98.5vw;
+  height: 100vh;
+  align-content: center;
+  background: white;
+  border: 2px solid black;
+  margin: 0.5%;
+  padding-top: 1%;
 `;
 
 const Search = () => {
@@ -65,10 +71,6 @@ const Search = () => {
   // console.log(searchInput)
 
   return (
-    // <ClickAwayListener
-    //   onClick={freezeModal}
-    //   //  onClickAway={handleClickAway}
-    // >
     <SearchContainer>
       <SearchIcon>
         <FontAwesomeIcon
@@ -77,23 +79,29 @@ const Search = () => {
           style={{ cursor: "pointer" }}
         />
       </SearchIcon>
-      <input
-        onKeyDown={handleKeyDown}
-        val={searchInput}
-        onChange={handleInput}
-        placeholder={openSearch ? "Search" : null}
-        style={{
-          width: openSearch ? "80vw" : "0",
-          borderStyle: openSearch ? "solid" : "none",
-          padding: openSearch ? "5px" : "0",
-          textAlign: "left"
-        }}
-      />
+      <div>
+        {" "}
+        {openSearch ? (
+          <SearchResults>
+            <input
+              onKeyDown={handleKeyDown}
+              val={searchInput}
+              onChange={handleInput}
+              placeholder={openSearch ? "Search" : null}
+              style={{
+                width: openSearch ? "80vw" : "0",
+                borderStyle: openSearch ? "solid" : "none",
+                padding: openSearch ? "5px" : "0",
+                textAlign: "left"
+              }}
+            />
 
-      <UsersResults users={searchResults.users} openSearch={openSearch} />
-      <ClansResults clans={searchResults.clans} openSearch={openSearch} />
+            <UsersResults users={searchResults.users} openSearch={openSearch} />
+            <ClansResults clans={searchResults.clans} openSearch={openSearch} />
+          </SearchResults>
+        ) : null}
+      </div>
     </SearchContainer>
-    // </ClickAwayListener>
   );
 };
 

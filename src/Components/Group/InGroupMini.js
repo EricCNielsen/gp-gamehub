@@ -17,7 +17,10 @@ import CreatePost from "./CreatePost";
 
 const ClanMiniContainer = styled.div`
   background-color: white;
-  margin: 0;
+  border: solid;
+  margin-left: 2.5%;
+  height: 82vh;
+  width: 80vw;
 `;
 
 const styles = theme => ({
@@ -48,7 +51,7 @@ const InGroupMini = props => {
   };
   const { classes } = props;
   return (
-    <div className="feed">
+    <ClanMiniContainer>
       <div>
         <h1 style={{ textAlign: "left", paddingLeft: "3%" }}>
           {props.clanName}
@@ -81,7 +84,7 @@ const InGroupMini = props => {
       </div>
       <hr />
       <PostViewer id={props.clan_id} />
-    </div>
+    </ClanMiniContainer>
   );
 };
 

@@ -90,12 +90,64 @@ const GroupInfo = ({ clan, user_id, props }) => {
     }
   };
 
-  // console.log(props)
-  return (
-    <div className="clanInfo">
-      {edit ? (
-        <>
-          <img className="logo" src={url ? url : props.clanAvatar} alt="logo" />
+    return (
+        
+          <div className="clanInfo">
+            {edit ? (
+              <>
+                <img className="logo" src={ url ? url : props.clanAvatar } alt="logo" />
+
+                {url ? (
+                  <button onClick={() => setUrl("")}>edit</button>
+                ) : (
+                  <div className="dropzone">
+                    <Dropzone
+                      className="dropzone"
+                      onDropAccepted={getSignedRequest}
+                      accept="image/*"
+                      multiple={false}  
+                    >
+                      {isUploading ? (
+                        <GridLoader />
+                      ) : (
+                        <p>Drop File or Click Here</p>
+                      )}
+                    </Dropzone>
+                  </div>
+                )}
+                <br />
+                <input
+                  id="name"
+                  placeholder={props.clanName ? props.clanName : "Clan Name"}
+                  onFocus={e => e.target.placeholder=""}
+                  onBlur={e => e.target.placeholder= props.clanName ? props.clanName : "Clan Name"}
+                  value={ !name ? props.clanName : name }
+                  onChange={e => setName(e.target.value)}
+                  style={{textAlign:"center"}}
+                />
+                <textarea
+                  id="bio"
+                  placeholder={props.clanBio ? props.clanBio : "Clan Bio"}
+                  onFocus={e => e.target.placeholder=""}
+                  onBlur={e => e.target.placeholder= props.clanBio ? props.clanBio : "Clan Bio"}
+                  value={bio}
+                  onChange={e => setBio(e.target.value)}
+                />
+                <button onClick={handleSave}>Save</button>
+              </>
+            ) : (
+              <>
+                <img className="logo" src={props.clanAvatar} alt="logo" />
+                <h1>{props.clanName}</h1>
+                <p id="bio">{props.clanBio}</p>
+                {props.user_id === props.owner_id ? (
+                  <button onClick={handleEdit}>Edit</button>
+                ) : null}
+              </>
+            )}
+          </div>
+    )
+  } 
 
           {url ? (
             <button onClick={() => setUrl("")}>edit</button>
