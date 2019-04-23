@@ -1,128 +1,169 @@
-import React from "react";
-import { connect } from "react-redux";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import Badge from "@material-ui/core/Badge";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import {
-  usePopupState,
-  bindToggle,
-  bindPopper
-} from "material-ui-popup-state/hooks";
-import CardImage from "./notificationbanner.jpeg";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import Dialog from "@material-ui/core/Dialog"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import DialogContent from "@material-ui/core/DialogContent"
+import NotificationsIcon from "@material-ui/icons/Notifications"
+import Badge from "@material-ui/core/Badge"
+import IconButton from "@material-ui/core/IconButton"
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-const styles = {
-  card: {
-    maxWidth: 345
+import axios from 'axios'
+import {updateRegisteredClans} from '../../../ducks/reducer'
+
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import Fab from "@material-ui/core/Fab"
+import CheckIcon from "@material-ui/icons/Check"
+import CloseIcon from "@material-ui/icons/Close"
+
+const theme = createMuiTheme({
+  overrides: {
+    // Name of the component ⚛️ / style sheet
+    Fab: {
+      // Name of the rule
+      text: {
+        // Some CSS
+        backgroundColor: 'red',
+        borderRadius: 3,
+        border: 0,
+        color: 'white',
+        height: 48,
+        padding: '0 30px',
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      },
+    },
   },
-  media: {
-    height: 140
-  },
-  root: {
-    // flexGrow: 1,
-    overflow: "hidden",
-    position: "relative",
-    zIndex: 1
-  },
-  grow: {
-    flexGrow: 1
-  },
-  navbar: {
-    position: "relative",
-    top: 0
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
+  typography: { useNextVariants: true },
+});
+
+class Notification extends Component {
+    constructor(){
+      super()
+      this.state = {
+        open: false,
+        invites: [],
+        notificationNumber: ``
+      }
+    }
+
+    componentDidMount() {
+      this.handleInvitations()
+    }
+
+  handleInvitations = async () => {
+    try {
+        let { notificationNumber } = this.state
+        const invites = await axios.get(`/api/invites/`)
+        if (notificationNumber === ``) {
+          notificationNumber = invites.data.length
+        }
+        this.setState({
+          ...this.state,
+          invites: invites.data, 
+          notificationNumber
+        })
+
+    } catch (error) {
+      console.log(`unable to get invites: ${error}`)
+    }
   }
-};
+  
+  notificationBellOpen = () => {
+    this.setState({ open: true, notificationNumber: 0 })
+  }
 
-function Notification(props) {
-  const popupState = usePopupState({
-    variant: "popper",
-    popupId: "account-img"
-  });
-  // const {  } = props
-  return (
-    <div>
+  handleClickOpen = () => {
+    this.setState({ open: true })
+  }
+
+  handleClose = () => {
+    this.setState({ open: false })
+  }
+
+  handleListItemClick = value => {
+    this.props.onClose(value)
+  }
+
+  handleInvitationAction = async (id, clan_id, action, i) => {
+    try {
+    let { invites } = this.state
+    invites.splice(i, 1)
+    this.setState({
+      invites
+    })
+      if (action) {
+        const registeredClans = await axios.put("/api/accept-invite", {id, clan_id})
+        console.log(registeredClans.data)
+        this.props.updateRegisteredClans(registeredClans.data)
+      } else {
+        await axios.delete(`/api/decline-invite/${id}`)
+      }
+    } catch (error) {
+      console.log(`there was a problem processing invitation response: ${error}`)
+    }
+  }
+
+  render() {
+    const inviteDisplay = this.state.invites.map((invite, i) => {
+      const { username, name, id, clan_id } = invite
+      return (
+        <ListItem key={id}>
+                <p>{username} is inviting you to join <strong>{name}</strong> clan</p>
+                <MuiThemeProvider theme={theme}>
+                <Fab size="small" onClick={() => this.handleInvitationAction(id, clan_id, true, i)} aria-label="Add">
+                  <CheckIcon />
+                </Fab>
+                </MuiThemeProvider>
+                <Fab size="small" onClick={() => this.handleInvitationAction(id, clan_id, false, i)} aria-label="Add">
+                  <CloseIcon />
+                </Fab>
+        </ListItem>
+      )
+    })
+    return (
       <div>
-        <IconButton
-          color="inherit"
-          variant="contained"
-          {...bindToggle(popupState)}
-        >
-          <Badge badgeContent={1} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-      </div>
-      <Popper {...bindPopper(popupState)} transition>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            id="menu-list-grow"
-            style={{
-              position: "relative",
-              zIndex: 1000,
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom"
-            }}
+        <div>
+          <IconButton
+            color="inherit"
+            variant="contained"
+            onClick={this.notificationBellOpen}
           >
-            <Paper>
-              <ClickAwayListener onClickAway={popupState.close}>
-                <Card className={styles.card}>
-                  <CardActionArea>
-                    <CardMedia
-                      className={styles.media}
-                      image={CardImage}
-                      title="switch"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        Lizard
-                      </Typography>
-                      <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      Share
-                    </Button>
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
-                  </CardActions>
-                </Card>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </div>
-  );
+            <Badge badgeContent={this.state.notificationNumber} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </div>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="simple-dialog-title"
+        >
+          <DialogTitle id="confirmation-dialog-title">
+            Clan invitations
+          </DialogTitle>
+          <DialogContent>
+            <List>
+              {inviteDisplay}
+            </List>
+          </DialogContent>
+        </Dialog>
+      </div>
+    )
+  }
 }
 
-const mapSateToProps = reduxState => {
-  const { username, picture, user_id } = reduxState;
+const mapStateToProps = reduxState => {
+  const { username, picture, user_id } = reduxState
   return {
-    id: user_id,
+    user_id,
     username,
     picture
-  };
-};
+  }
+}
 
-export default connect(mapSateToProps)(Notification);
+const mapDispatchToProps = {
+  updateRegisteredClans
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notification)

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 // import { Link } from "react-router-dom"
-import { connect } from "react-redux";
-import { updateUser } from "../../ducks/reducer";
-import AccountImage from "./AccountImage/AccountImage";
-import Notification from "./Notification/Notification";
+import { connect } from "react-redux"
+import { updateUser, updateRegisteredClans } from "../../ducks/reducer"
+import AccountImage from "./AccountImage/AccountImage"
+import Notification from "./Notification/Notification"
 
 //MaterialUI
 import PropTypes from "prop-types";
@@ -58,9 +58,11 @@ function Nav(props) {
 
   async function handleCurrent() {
     try {
-      const { updateUser, history, location } = props;
-      const user = await axios.get("/auth/account");
-      updateUser(user.data);
+      const { updateUser, updateRegisteredClans, history, location } = props
+      const user = await axios.get("/auth/account")
+      updateUser(user.data)
+      const getRegisteredClans = await axios.get("/api/registeredclans")
+      updateRegisteredClans(getRegisteredClans.data)
       if (user && location.pathname === "/") {
         history.push("/dashboard");
       }
@@ -108,8 +110,9 @@ Nav.propTypes = {
 };
 
 const mapDispatchToProps = {
-  updateUser
-};
+  updateUser,
+  updateRegisteredClans
+}
 
 export default connect(
   null,
