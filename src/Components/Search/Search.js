@@ -72,7 +72,7 @@ const Search = () => {
   console.log(searchInput)
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
+    <ClickAwayListener>
       <SearchContainer>
           <SearchIcon>
             <FontAwesomeIcon

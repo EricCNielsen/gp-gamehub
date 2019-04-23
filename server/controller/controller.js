@@ -105,7 +105,7 @@ module.exports = {
     try {
       const db = req.app.get("db"),
         { id } = req.params,
-        members = await db.getClanMembers(id)
+        members = await db.get_clan_members(id)
       res.status(200).send(members)
     } catch (err) {
       console.log("error getting members:", err)
