@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   margin: 2% 2% 0 2%;
+  height: fit-content;
 }
 
 .clanInfo {
@@ -9,8 +10,9 @@
   justify-content: center;
   flex-direction: column;
   border: solid;
-  height: 440px;
-  width: 353px;
+  height: 54vh;
+  width: 31.5vw;
+  padding-bottom:2%
 }
 
 .clanInfo h1 {
@@ -19,15 +21,21 @@
 
 #bio {
   margin: 0 auto;
-  width: 350px;
+  width: 30vw;
   height: 75px;
+}
+
+#name {
+  margin: 0 auto;
+  width: 30vw;
+  height: fit-content;
 }
 
 .members {
   border: solid;
   margin-top: 2%;
-  height: 180px;
-  width: 353px;
+  height: 25.5vh;
+  width: 31.5vw;
   overflow: auto;
 }
 
@@ -35,7 +43,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 auto;
+  margin: 2%;
   justify-content: space-between;
 }
 ::-webkit-scrollbar {
@@ -43,7 +51,9 @@
 }
 
 #mem {
+  max-width: 50px;
   margin: 3%;
+  overflow: auto;
 }
 
 .member p {
@@ -62,13 +72,14 @@
 
 .logo {
   margin: 10px auto;
-  width: 300px;
-  height: 200px;
+  width: 60%;
+  height: 50%;
+  object-fit: contain
 }
 
 .feed {
   border: solid;
   margin-left: 2.5%;
-  height: 630px;
-  width: 915px;
+  height: 82vh;
+  width: 80vw;
 }

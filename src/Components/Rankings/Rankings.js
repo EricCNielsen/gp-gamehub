@@ -2,6 +2,28 @@ import React, { useEffect, useState } from "react";
 import MobileContainer from "../Styles/MobileContainer";
 import axios from "axios";
 import StarRatings from "react-star-ratings";
+import styled from "styled-components";
+
+const RankingContainer = styled.div`
+    height: 40vh;
+    overflow: auto;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 10px;
+    margin: 0px 2px;
+    height: fit-content;
+
+    @media screen and (min-width:700px) {
+        margin: 0 auto;
+        width: 20vw;
+        position: absolute;
+        top:25%;
+        right:.1%;
+        border: 1px solid lightgrey;
+        border-radius: 10px;
+    }
+`
 
 const Rankings = props => {
   useEffect(() => {
@@ -16,7 +38,7 @@ const Rankings = props => {
   };
 
   return (
-    <MobileContainer>
+    <RankingContainer>
       <h1>Rankings</h1>
       <hr />
       <h2>Top 5 Users</h2>
@@ -36,7 +58,7 @@ const Rankings = props => {
           );
         })}
       </ol>
-    </MobileContainer>
+    </RankingContainer>  
   );
 };
 
