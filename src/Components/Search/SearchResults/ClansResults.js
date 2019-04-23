@@ -18,7 +18,7 @@ const Clan = styled.div`
     object-fit: cover;
   }
   overflow: auto;
-`;
+`
 const ClanTitle = styled.div`
   background-color: rgb(229, 229, 229);
   border: 2px solid black;
@@ -27,7 +27,7 @@ const ClanTitle = styled.div`
   margin-left: 10vw;
   margin-right: 10vw;
   height: fit-content;
-`;
+`
 
 const ClansResults = ({ clans, openSearch }) => {
   const results = clans.map((clan, i) => {
@@ -36,7 +36,15 @@ const ClansResults = ({ clans, openSearch }) => {
         <Clan key={i}>
           <h3>Clans</h3>
           <hr />
-          <img src={clan.avatar} alt="clan" />
+          <img
+          onError={e => {
+            e.target.onerror = null
+            e.target.src =
+              "https://games.vodacom.co.za/assets/rich/placeholder_games_cover.png"
+          }}
+          src={clan.avatar}
+          alt="clan"
+        />
           <h1>{clan.name}</h1>
           <h3>{clan.ranking}</h3>
         </Clan>
@@ -48,7 +56,7 @@ const ClansResults = ({ clans, openSearch }) => {
       <h1>Clans</h1>
       {results}
     </ClanTitle>
-  ) : null;
-};
+  ) : null
+}
 
-export default ClansResults;
+export default ClansResults
