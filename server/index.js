@@ -7,7 +7,9 @@ const express = require("express"),
   session = require("express-session"),
   pg = require("pg"),
   axios = require("axios"),
-  pgSession = require("connect-pg-simple")(session);
+  pgSession = require("connect-pg-simple")(session),
+  clansCtrl = require("./controller/clansCtrl/clansCtrl"),
+  invitesCtrl = require("./controller/invitesCtrl/invitesCtrl")
 
 const app = express(),
   {
@@ -139,11 +141,11 @@ app.delete("/api/reply/:id", ctrl.deleteReply);
 app.delete("/api/post/:id", ctrl.deletePost);
 
 // clans -----------------------------
-app.get("/api/clan/:id", ctrl.getClan)
-app.get("/api/registeredclans/", ctrl.getRegisteredClans)
-app.get('/api/clan/:id/members', ctrl.getMembers);
-app.put("/api/clan", ctrl.updateClan)
-app.post("/api/clan", ctrl.createClan)
+app.get("/api/clan/:id", clansCtrl.getClan)
+app.get("/api/registeredclans/", clansCtrl.getRegisteredClans)
+app.get('/api/clan/:id/members', clansCtrl.getMembers);
+app.put("/api/clan", clansCtrl.updateClan)
+app.post("/api/clan", clansCtrl.createClan)
 
 // ranks -----------------------------
 app.get("/api/top5users", ctrl.top5Users)
@@ -164,10 +166,10 @@ app.get("/api/search", ctrl.search)
 app.get("/api/consoles", ctrl.getConsoles)
 
 // invites ---------------------------
-app.get("/api/invites/", ctrl.getInvitations)
-app.put("/api/accept-invite", ctrl.acceptInvite)
-app.post("/api/create-invite", ctrl.createInvite)
-app.delete("/api/decline-invite", ctrl.declineInvite)
+app.get("/api/invites/", invitesCtrl.getInvitations)
+app.put("/api/accept-invite", invitesCtrl.acceptInvite)
+app.post("/api/create-invite", invitesCtrl.createInvite)
+app.delete("/api/decline-invite", invitesCtrl.declineInvite)
 
 
 massive(CONNECTION_STRING).then(db => {
