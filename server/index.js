@@ -144,10 +144,15 @@ app.get("/api/registeredclans/", ctrl.getRegisteredClans)
 app.get("/api/user-ranking/:id", ctrl.getUserRanking)
 app.get("/api/clan-posts/:id", ctrl.getClanPosts)
 app.get('/api/clan/:id/members', ctrl.getMembers);
+app.get("/api/invites/", ctrl.getInvitations)
+app.put("/api/accept-invite", ctrl.acceptInvite)
+app.post("/api/create-invite", ctrl.createInvite)
+app.delete("/api/decline-invite", ctrl.declineInvite)
 
 app.put("/api/user", ctrl.updateUser)
 app.put("/api/update-ranking", ctrl.updateRanking)
 app.put("/api/clan", ctrl.updateClan)
+app.get("/api/user-membership/:id", ctrl.checkUserMembership)
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db)

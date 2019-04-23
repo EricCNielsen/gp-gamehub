@@ -1,6 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState } from "react"
+import styled from "styled-components"
+import { Link } from "react-router-dom"
+import InviteMember from "../../InviteMember/InviteMember"
+import Button from "@material-ui/core/Button"
+
+// redux:
+import { connect } from "react-redux"
 
 const User = styled.div`
   padding: 1%;
@@ -10,16 +15,17 @@ const User = styled.div`
     margin-right: 10vw; */
   height: fit-content;
   border-top: 2px solid black;
+  text-decoration: none;
   width: 98%;
   img {
     border: 1px solid black;
     border-radius: 50%;
-    height: 10vh;
-    width: 10vh;
+    height: 3em;
+    width: 3em;
     object-fit: cover;
   }
   overflow: auto;
-`;
+`
 const SearchTitle = styled.div`
   background-color: rgba(229, 229, 229, 0.9);
   border: 2px solid black;
@@ -28,30 +34,69 @@ const SearchTitle = styled.div`
   margin-left: 10vw;
   margin-right: 10vw;
   height: fit-content;
-`;
+`
 
-const UserResults = ({ users, openSearch }, props) => {
+function UserResults({ users, openSearch, registeredClans, user_id }) {
+  const [modalInfo, setModalInfo] = useState({ open: false, user: 0 })
+  const handleClanInvite = user => {
+    setModalInfo({ open: true, user })
+  }
+
   const results = users.map((user, i) => {
     return openSearch ? (
-      <Link to={`/user/${user.user_id}`} style={{ width: "80vw" }}>
-        <User key={i}>
-          <div>
-            <img src={user.picture} alt="user profile" />
-            <h1>{user.ranking}</h1>
-            <h1>{user.username}</h1>
-            <h2>{user.location}</h2>
+      <User key={i}>
+        <div>
+          <Link to={`/user/${user.user_id}`}>
+            {!user.picture ? (
+              <img
+                src="https://games.vodacom.co.za/assets/rich/placeholder_games_cover.png"
+                alt="user profile"
+              />
+            ) : (
+              <img
+                src={user.picture}
+                onError={e => {
+                  e.target.onerror = null
+                  e.target.src =
+                    "https://games.vodacom.co.za/assets/rich/placeholder_games_cover.png"
+                }}
+                alt="user profile"
+              />
+            )}
+            <h4>{user.username}</h4>
+            {/* <h3>{user.ranking}</h3> */}
+            <h5>{user.location}</h5>
             <p>{user.user_id}</p>
-          </div>
-        </User>
-      </Link>
-    ) : null;
-  });
+          </Link>
+          {registeredClans.length > 0 && user_id !== user.user_id ? (
+            <Button
+              variant="contained"
+              size="small"
+              color="secondary"
+              onClick={() => handleClanInvite(user)}
+            >
+              Invite to Clan
+            </Button>
+          ) : null}
+        </div>
+      </User>
+    ) : null
+  })
   return openSearch ? (
     <SearchTitle>
+      <InviteMember modalInfo={modalInfo} />
       <h1>Users</h1>
       {results}
     </SearchTitle>
-  ) : null;
-};
+  ) : null
+}
 
-export default UserResults;
+const mapStateToProps = reduxState => {
+  const { registeredClans, user_id } = reduxState
+  return {
+    registeredClans,
+    user_id
+  }
+}
+
+export default connect(mapStateToProps)(UserResults)
