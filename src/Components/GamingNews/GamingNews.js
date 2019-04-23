@@ -16,6 +16,7 @@ const NewsContainer = styled.div`
     margin-left: 25vw;
     margin-right: 25vw;
     padding: 1%;
+    background: white;
     @media screen and (min-width:700px) {
         margin: 0 auto;
         width: 20vw;

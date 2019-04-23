@@ -46,9 +46,7 @@
   margin: 2%;
   justify-content: space-between;
 }
-::-webkit-scrollbar {
-  width: 10px;
-}
+
 
 #mem {
   max-width: 50px;

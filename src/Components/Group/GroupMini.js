@@ -12,7 +12,7 @@ const ClanMiniContainer = styled.div`
   border-bottom: 1px solid black;
     @media screen and (min-width:700px) {
         margin: 0 auto;
-        width: 52vw;
+        width: 54vw;
         position: absolute;
         top:15%;
         left:23.65%;

@@ -31,7 +31,7 @@ const styles = {
     flexGrow: 1
   },
   navbar: {
-    backgroundColor: "black",
+    backgroundColor: "#414744",
     color: "#FF473A",
     transparency: 0.6,
     position: "relative",
