@@ -7,19 +7,20 @@ import UsersResults from "./SearchResults/UsersResults"
 import ClansResults from "./SearchResults/ClansResults"
 
 const SearchContainer = styled.div`
-  position: relative;
-  height: 5vh;
-  width: 100vw;
-  input {
-    transition: width 0.5s;
-    border-radius: 10px;
-    padding: 0.5%;
-    outline: none;
-    background-color: white;
-    height: 2vh;
-  }
-  z-index: 1;
-`
+    position: relative;
+    height: 5vh;
+    width: 100vw;
+    input {
+        transition: width .5s;
+        border-radius:10px;
+        padding: .5%;
+        outline:none;
+        background-color: white;
+        height: 2vh;
+    };
+    z-index:1;
+    
+`;
 
 const SearchIcon = styled.div`
   position: relative;
@@ -30,8 +31,14 @@ const SearchIcon = styled.div`
 `
 
 const SearchResults = styled.div`
-  /* position: relative; */
-`
+  width: 98.5vw;
+  height: 100vh;
+  align-content: center;
+  background: white;
+  border: 2px solid black;
+  margin:.5%;
+  padding-top: 1%;
+`;
 
 const Search = () => {
   const [searchInput, setSearchInput] = useState("")
@@ -65,36 +72,38 @@ const Search = () => {
   console.log(searchInput)
 
   return (
-    // <ClickAwayListener
-    //   onClick={freezeModal}
-    //   //  onClickAway={handleClickAway}
-    // >
-    <SearchContainer>
-      <SearchIcon>
-        <FontAwesomeIcon
-          icon="search"
-          onClick={_ => setOpenSearch(!openSearch)}
-          style={{ cursor: "pointer" }}
-        />
-      </SearchIcon>
-      <input
-        onKeyDown={handleKeyDown}
-        val={searchInput}
-        onChange={handleInput}
-        placeholder={openSearch ? "Search" : null}
-        style={{
-          width: openSearch ? "80vw" : "0",
-          borderStyle: openSearch ? "solid" : "none",
-          padding: openSearch ? "5px" : "0",
-          textAlign: "left"
-        }}
-      />
-
-      <UsersResults users={searchResults.users} openSearch={openSearch} />
-      <ClansResults clans={searchResults.clans} openSearch={openSearch} />
-    </SearchContainer>
-    // </ClickAwayListener>
-  )
-}
+    <ClickAwayListener>
+      <SearchContainer>
+          <SearchIcon>
+            <FontAwesomeIcon
+              icon="search"
+              onClick={_ => setOpenSearch(!openSearch)}
+              style={{ cursor: "pointer" }}
+            />
+          </SearchIcon>
+          <div> {openSearch ? 
+          <SearchResults>
+            <input
+              onKeyDown={handleKeyDown}
+              val={searchInput}
+              onChange={handleInput}
+              placeholder={openSearch ? "Search" : null}
+              style={{
+                width: openSearch ? "80vw" : "0",
+                borderStyle: openSearch ? "solid" : "none",
+                padding: openSearch ? "5px" : "0",
+                textAlign: "left"
+              }}
+            />
+  
+              <UsersResults users={searchResults.users} openSearch={openSearch} />
+              <ClansResults clans={searchResults.clans} openSearch={openSearch} />
+          </SearchResults>
+          : null }
+          </div>
+      </SearchContainer>
+    </ClickAwayListener>
+  );
+};
 
 export default Search

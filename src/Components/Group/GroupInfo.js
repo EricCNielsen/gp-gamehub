@@ -89,7 +89,6 @@ const GroupInfo = ( {clan, user_id, props})=> {
     }
   };
 
-  console.log(props)
     return (
         
           <div className="clanInfo">

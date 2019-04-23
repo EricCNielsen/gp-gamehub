@@ -13,6 +13,7 @@ const RankingContainer = styled.div`
     border-radius: 10px;
     margin: 0px 2px;
     height: fit-content;
+    background: white;
 
     @media screen and (min-width:700px) {
         margin: 0 auto;

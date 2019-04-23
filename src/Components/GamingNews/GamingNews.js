@@ -11,19 +11,23 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
 const NewsContainer = styled.div`
-  height: 40vh;
-  overflow: auto;
-  margin-left: 25vw;
-  margin-right: 25vw;
-  padding: 1%;
-  @media screen and (min-width: 700px) {
-    margin: 0 auto;
-    width: 20vw;
-    position: absolute;
-    top: 25%;
-    left: 0.1%;
-    h1 {
-      background: white;
+    height: 40vh;
+    overflow: auto;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    padding: 1%;
+    background: white;
+    @media screen and (min-width:700px) {
+        margin: 0 auto;
+        width: 20vw;
+        position: absolute;
+        top:25%;
+        left:.1%;
+        h1 {
+            background: white;
+        }
+        border: 1px solid lightgrey;
+        border-radius: 10px;
     }
     border: 1px solid lightgrey;
     border-radius: 10px;

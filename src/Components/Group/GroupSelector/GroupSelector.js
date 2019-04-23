@@ -34,7 +34,7 @@ function GroupSelector(props) {
   return (
     <div>
       <FormControl>
-        <NativeSelect value={selectedClan} onChange={handleChange} name="clans">
+        <NativeSelect value={selectedClan} onClick={showPosts} onChange={handleChange} name="clans">
           {clansList}
         </NativeSelect>
       </FormControl>
