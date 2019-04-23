@@ -104,7 +104,7 @@ module.exports = {
   getMembers: async (req, res) => {
     const db = req.app.get("db"),
       { id } = req.params,
-      members = await db.getClanMembers(id);
+      members = await db.get_clan_members(id);
     res.status(200).send(members);
   },
   top5Users: async (req, res) => {
@@ -155,7 +155,7 @@ module.exports = {
       const { session } = req;
       //   const { id } = req.session.clan;
       const db = req.app.get("db");
-      let clan = await db.updateClan({
+      let clan = await db.update_clan({
         clan_id,
         bio,
         avatar: url,
@@ -254,10 +254,8 @@ module.exports = {
       // console.log(req.params);
       let { id } = req.params;
       let getpost = await db.get_post([id]);
-      let getreplies;
       // console.log(getpost);
-      console.log(getpost[0]);
-      res.status(200).send(getpost[0]);
+      res.status(200).send(getpost);
     } catch (err) {
       console.log(err);
     }
@@ -274,22 +272,35 @@ module.exports = {
       console.log(err);
     }
   },
-  deletePost: async (req, res) => {
+  deleteReply: async (req, res) => {
     try {
+      console.log(req.params);
       const { id } = req.params;
       const db = req.app.get("db");
-      await db.delete_post([id]);
+      await db.delete_reply([id]);
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
     }
   },
-  getReplies: async (req, res) => {
+  createReply: async (req, res) => {
     try {
-      console.log("going");
+      console.log(11, req.body);
+      const { user_id, content, parent_id } = req.body;
+      let date = formatDate(new Date());
+      const db = req.app.get("db");
+      await db.create_reply([content, user_id, parent_id, date]);
+      res.sendStatus(200);
+      console.log("finish");
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  deletePost: async (req, res) => {
+    try {
       const { id } = req.params;
       const db = req.app.get("db");
-      await db.get_replies([id]);
+      await db.delete_post([id]);
       res.sendStatus(200);
     } catch (err) {
       console.log(err);

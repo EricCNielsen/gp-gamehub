@@ -1,20 +1,20 @@
-import React, { useEffect } from "react"
-import axios from "axios"
+import React, { useEffect } from "react";
+import axios from "axios";
 // import { Link } from "react-router-dom"
-import { connect } from "react-redux"
-import { updateUser } from "../../ducks/reducer"
-import AccountImage from "./AccountImage/AccountImage"
-import Notification from "./Notification/Notification"
+import { connect } from "react-redux";
+import { updateUser } from "../../ducks/reducer";
+import AccountImage from "./AccountImage/AccountImage";
+import Notification from "./Notification/Notification";
 
 //MaterialUI
-import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import Menu from "./Menu/Menu"
-import logo from "./gamehub.png"
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Menu from "./Menu/Menu";
+import logo from "./gamehub.png";
 // import NotificationsIcon from "@material-ui/icons/Notifications"
 // import Badge from "@material-ui/core/Badge"
 // import MenuItem from "@material-ui/core/MenuItem"
@@ -40,38 +40,38 @@ const styles = {
   card: {
     maxWidth: 345
   }
-}
+};
 
 function Nav(props) {
   useEffect(() => {
-    handleCurrent()
-  })
+    handleCurrent();
+  });
 
   function handleLogout() {
     try {
-      props.auth.logout()
-      axios.post("/auth/logout")
+      props.auth.logout();
+      axios.post("/auth/logout");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
   async function handleCurrent() {
     try {
-      const { updateUser, history, location } = props
-      const user = await axios.get("/auth/account")
-      updateUser(user.data)
+      const { updateUser, history, location } = props;
+      const user = await axios.get("/auth/account");
+      updateUser(user.data);
       if (user && location.pathname === "/") {
-        history.push("/dashboard")
+        history.push("/dashboard");
       }
     } catch (err) {
       if (location.pathname !== "/") {
-        props.history.push("/")
+        props.history.push("/");
       }
     }
   }
 
-  const { classes, location } = props
+  const { classes, location } = props;
   return (
     <div className={classes.root}>
       <AppBar className={classes.navbar}>
@@ -100,18 +100,18 @@ function Nav(props) {
         </Toolbar>
       </AppBar>
     </div>
-  )
+  );
 }
 
 Nav.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 const mapDispatchToProps = {
   updateUser
-}
+};
 
 export default connect(
   null,
   mapDispatchToProps
-)(withStyles(styles)(Nav))
+)(withStyles(styles)(Nav));

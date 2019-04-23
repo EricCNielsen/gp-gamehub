@@ -139,9 +139,10 @@ app.get("/api/registeredclans/", ctrl.getRegisteredClans);
 app.get("/api/user-ranking/:id", ctrl.getUserRanking);
 
 app.get("/api/post/:id", ctrl.getPost);
-app.get("/api/replies", ctrl.getReplies);
 app.put("/api/post", ctrl.updatePost);
+app.delete("/api/reply/:id", ctrl.deleteReply);
 app.delete("/api/post/:id", ctrl.deletePost);
+app.post("/api/reply", ctrl.createReply);
 
 app.put("/api/user", ctrl.updateUser);
 app.put("/api/update-ranking", ctrl.updateRanking);

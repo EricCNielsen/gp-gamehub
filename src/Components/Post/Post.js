@@ -4,7 +4,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { connect } from "react-redux";
 import styled from "styled-components";
-
 const Editor = {};
 Editor.modules = {};
 Editor.modules.toolbar = [
@@ -49,25 +48,34 @@ Editor.formats = [
 ];
 
 const PostInfoWrapper = styled.div`
-  background: violet;
-  border: 1px solid black;
+  margin-left: 2rem;
   display: flex;
-  flex-direction: row;
+  align-items: center;
 `;
 
 const PostContentWrapper = styled.div`
-  background: blue;
   display: flex;
+  padding-left: 3rem;
+`;
+
+const PostWrapper = styled.div`
+  border: 1px solid black
+  margin: 3rem;
+`;
+
+const ReplyWrapper = styled.div`
+  padding-left: 2rem;
+  /* background: lightgrey; */
+  border-bottom: 1px solid lightgrey;
 `;
 
 function Post(props) {
   const { classes } = props;
   const [quillRef, setQuillRef] = useState(null);
   const [reactQuillRef, setReactQuillRef] = useState({});
-  const [post, setPost] = useState({});
-  const [replies, setReplies] = useState({});
-  const [postQuillValue, setPostQuillValue] = useState("");
-  const [showPostQuill, setShowPostQuill] = useState(false);
+  const [post, setPost] = useState([]);
+  const [quillValue, setQuillValue] = useState("");
+  const [showQuill, setShowQuill] = useState(false);
 
   useEffect(() => {
     attachQuillRefs();
@@ -83,111 +91,212 @@ function Post(props) {
 
   const getPost = async () => {
     let res = await axios.get(`/api/post/${props.match.params.id}`);
-    console.log(res.data);
     setPost(res.data);
   };
 
-  const getReplies = async () => {
-    let res = await axios.get(`/api/postreplies`);
-    console.log(res.data);
-    setReplies(res.data);
+  const handleQuillChange = html => {
+    console.log(html);
+    setQuillValue(html);
   };
 
-  const handlePostQuillChange = html => {
-    setPostQuillValue(html);
+  const handleShowQuill = () => {
+    setShowQuill(!showQuill);
+    setQuillValue(post.content);
   };
 
-  const handleShowPostQuillValue = () => {
-    setShowPostQuill(!showPostQuill);
-    setPostQuillValue(post.content);
+  // const updatePost = async () => {
+  //   console.log(quillValue);
+  //   let updatedPost = {
+  //     content: post.content,
+  //     post_id: post.post_id
+  //   };
+  //   try {
+  //     await axios.put("/api/post", updatedPost);
+  //     getPost();
+  //     handleShowQuillValue();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const deleteReply = async post_id => {
+    console.log(post_id);
+    try {
+      await axios.delete(`/api/reply/${post_id}`);
+      getPost();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const updatePost = async () => {
-    console.log(postQuillValue);
-    let updatedPost = {
-      content: postQuillValue,
-      post_id: post.post_id
+  const deletePost = async post => {
+    console.log(post);
+    try {
+      await axios.delete(`/api/post/${post.post_id}`);
+      props.history.push("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createReply = async () => {
+    let reply = {
+      content: quillValue,
+      user_id: props.user_id,
+      parent_id: props.match.params.id
     };
     try {
-      await axios.put("/api/post", updatedPost);
-      getPost();
-      handleShowPostQuillValue();
+      await axios.post("/api/reply", reply);
+      setShowQuill(!showQuill);
+      setQuillValue("");
     } catch (err) {
       console.log(err);
+      // alert("Please fill out the required fields");
     }
   };
 
-  const deletePost = async () => {
-    let id = post.post_id;
-    try {
-      await axios.delete(`/api/post/${id}`);
-      this.props.history.push("/dashboard");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return (
-    <div>
-      <PostInfoWrapper>
-        <h2>{post.title}</h2>
-        <img
-          src={post.picture}
-          alt="userimg"
-          style={{ height: "60px", width: "60px", borderRadius: "50%" }}
-        />
-        <p>
-          {post.username} posted on {post.date}
-        </p>
-      </PostInfoWrapper>
-      <PostContentWrapper>
-        <div className="edit-delete-butts">
-          {showPostQuill ? (
-            <React.Fragment>
-              <button onClick={() => updatePost()}>Save</button>
-              <button onClick={() => deletePost()}>Delete</button>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {" "}
-              {post.user_id === props.user_id ? (
-                <button onClick={handleShowPostQuillValue}>Edit</button>
-              ) : null}{" "}
-            </React.Fragment>
-          )}
-        </div>
-        <div>
-          {showPostQuill ? (
-            <ReactQuill
-              ref={el => {
-                setReactQuillRef(el);
+  const parentPost = post
+    .filter(post => !post.parent_id)
+    .map(post => {
+      return (
+        <div key={post.post_id}>
+          <h2>{post.title}</h2>
+          <PostInfoWrapper>
+            <img
+              src={post.picture}
+              alt="userimg"
+              style={{
+                height: "60px",
+                width: "60px",
+                borderRadius: "50%",
+                margin: "10px"
               }}
-              theme={"snow"}
-              onChange={html => handlePostQuillChange(html)}
-              modules={Editor.modules}
-              formats={Editor.formats}
-              defaultValue={postQuillValue}
-              value={postQuillValue}
-              placeholder="Write your post here..."
-              className="quillbox-reply"
             />
-          ) : (
+            <p>
+              {post.username} posted on {post.date}
+            </p>
+            {post.user_id === props.user_id ? (
+              <div>
+                <button onClick={() => deletePost(post)}>Delete</button>
+              </div>
+            ) : null}
+          </PostInfoWrapper>
+          <PostContentWrapper>
             <div
               dangerouslySetInnerHTML={{
                 __html: post.content
               }}
               className="post-content"
+              style={{ textAlign: "left", paddingRight: "2rem" }}
             />
-          )}
+          </PostContentWrapper>
+          <hr />
         </div>
-      </PostContentWrapper>
-    </div>
+      );
+    });
+
+  const postReplies = post
+    .filter(post => post.parent_id)
+    .map(post => {
+      return (
+        <div key={post.post_id}>
+          <ReplyWrapper>
+            <PostInfoWrapper>
+              <img
+                src={post.picture}
+                alt="userimg"
+                style={{
+                  height: "60px",
+                  width: "60px",
+                  borderRadius: "50%",
+                  margin: "10px"
+                }}
+              />
+              <p>
+                {post.username} posted on {post.date}
+              </p>
+              {post.user_id === props.user_id ? (
+                <div>
+                  <button
+                    onClick={() => {
+                      deleteReply(post.post_id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : null}
+            </PostInfoWrapper>
+            <PostContentWrapper>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: post.content
+                }}
+                className="post-content"
+                style={{ textAlign: "left", paddingRight: "2rem" }}
+              />
+            </PostContentWrapper>
+          </ReplyWrapper>
+        </div>
+      );
+    });
+  console.log(post);
+  return (
+    <PostWrapper>
+      {parentPost}
+      {postReplies}
+      <div className="create-reply-wrapper">
+        <img
+          className="user-img"
+          src={props.profile_pic}
+          alt=""
+          style={{
+            height: "60px",
+            width: "60px",
+            borderRadius: "50%",
+            margin: "10px"
+          }}
+        />
+        <div className="reply-input">
+          <div className="reply-input-wrapper">
+            {showQuill ? (
+              <div className="reply-quill">
+                <ReactQuill
+                  ref={el => {
+                    setQuillRef(el);
+                  }}
+                  theme={"snow"}
+                  onChange={html => handleQuillChange(html)}
+                  modules={Editor.modules}
+                  formats={Editor.formats}
+                  defaultValue={quillValue || ""}
+                  value={quillValue || ""}
+                  placeholder="Write your reply here..."
+                  className="quillbox-reply"
+                />
+                <button style={{ marginBottom: "10px" }} onClick={createReply}>
+                  Submit
+                </button>
+              </div>
+            ) : (
+              <div
+                className="reply-quill"
+                onClick={() => handleShowQuill()} /*ON CLICK TO OPEN A QUILL*/
+              >
+                <p>Reply to this topic...</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </PostWrapper>
   );
 }
 
 const mapStateToProps = reduxState => {
   return {
-    user_id: reduxState.user_id
+    user_id: reduxState.user_id,
+    profile_pic: reduxState.picture
   };
 };
 
