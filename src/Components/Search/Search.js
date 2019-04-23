@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import styled from "styled-components"
-import axios from "axios"
-import ClickAwayListener from "@material-ui/core/ClickAwayListener"
-import UsersResults from "./SearchResults/UsersResults"
-import ClansResults from "./SearchResults/ClansResults"
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from "styled-components";
+import axios from "axios";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import UsersResults from "./SearchResults/UsersResults";
+import ClansResults from "./SearchResults/ClansResults";
 
 const SearchContainer = styled.div`
   position: relative;
@@ -19,7 +19,7 @@ const SearchContainer = styled.div`
     height: 2vh;
   }
   z-index: 1;
-`
+`;
 
 const SearchIcon = styled.div`
   position: relative;
@@ -27,42 +27,42 @@ const SearchIcon = styled.div`
   left: 1.5vw;
   width: fit-content;
   z-index: 2;
-`
+`;
 
 const SearchResults = styled.div`
   /* position: relative; */
-`
+`;
 
 const Search = () => {
-  const [searchInput, setSearchInput] = useState("")
-  const [openSearch, setOpenSearch] = useState(false)
-  const [freezeModal, setFreezeModal] = useState(false)
+  const [searchInput, setSearchInput] = useState("");
+  const [openSearch, setOpenSearch] = useState(false);
+  const [freezeModal, setFreezeModal] = useState(false);
   const [searchResults, setSearchResults] = useState({
     users: [],
     clans: [],
     posts: []
-  })
-  const [touchEvent, setTouchEvent] = useState()
+  });
+  const [touchEvent, setTouchEvent] = useState();
 
   const fireSearch = async () => {
-    let searchData = await axios.get(`/api/search?search=${searchInput}`)
-    setSearchResults(searchData.data)
-  }
+    let searchData = await axios.get(`/api/search?search=${searchInput}`);
+    setSearchResults(searchData.data);
+  };
   const handleInput = e => {
-    setSearchInput(e.target.value)
-  }
+    setSearchInput(e.target.value);
+  };
   const handleKeyDown = e => {
     if (e.key === "Enter") {
-      fireSearch()
+      fireSearch();
     }
-  }
+  };
   // const handleClickAway = () => {
   //   if (openSearch) {
   //     setOpenSearch(!openSearch)
   //   }
   // }
 
-  console.log(searchInput)
+  // console.log(searchInput)
 
   return (
     // <ClickAwayListener
@@ -94,7 +94,7 @@ const Search = () => {
       <ClansResults clans={searchResults.clans} openSearch={openSearch} />
     </SearchContainer>
     // </ClickAwayListener>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

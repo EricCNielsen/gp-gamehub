@@ -51,7 +51,7 @@ const GamingNews = props => {
     const targetUrl =
       "https://newsapi.org/v2/everything?q=video+games&sortBy=relevancy&pageSize=5&apiKey=";
     const res = await axios.get(targetUrl + REACT_APP_NEWS_API);
-    console.log(res.data.articles);
+    // console.log(res.data.articles);
     setArticles(res.data.articles);
   };
 
@@ -69,10 +69,10 @@ const GamingNews = props => {
   //     setArticles(res.data)
   // }
 
-  console.log("articles", articles);
+  // console.log("articles", articles);
 
   const newsArticles = articles.map((article, i) => {
-    console.log(article.url);
+    // console.log(article.url);
     return (
       <Card
         className={props.card}

@@ -74,7 +74,7 @@ Editor.formats = [
 
 const BodyWrapper = styled.div`
   height: 100vh;
-  width: 100%;
+  padding: 2rem;
 `;
 
 // const propTypes = {
@@ -167,15 +167,6 @@ function CreatePost(props) {
         />
       </div>
       <AddImage setPostImage={setPostImage} />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={create}
-        className={classes.button}
-      >
-        Send
-        <Icon className={classes.rightIcon}>send</Icon>
-      </Button>
     </BodyWrapper>
   );
 }
