@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import GroupMini from "../Group/GroupMini";
 import Search from "../Search/Search";
 import GamingNews from "../GamingNews/GamingNews";
@@ -18,29 +18,47 @@ const Wrapper = styled.div`
     overflow:hidden;
   }
 `
+const DashboardPage = styled.div`
+  width:100%;
+  height: 100%;
+  background: white;
+
+`
 
 
 function Dashboard(props) {
+  const [isLoading, setIstLoading] = useState(true)
+  
   useEffect(() => {
-    getUserInfo();
+    const fetchData = async () => {
+      getUserInfo()
+    }
+
+    fetchData()
   }, []);
 
   async function getUserInfo() {
     const { updateUser } = props;
     if (!props.username) {
       const user = await axios.get("/auth/account");
+      setIstLoading(false)
       updateUser(user.data[0]);
     }
   }
 
   return (
     <>
-      <Search />
-      <Wrapper>
-        <GroupMini />
-        <Rankings />
-        <GamingNews />
-      </Wrapper>
+    {isLoading ? (
+      <div>Loading ...</div>
+    ): <DashboardPage>
+        <Search />
+        <Wrapper>
+          <GroupMini />
+          <Rankings />
+          <GamingNews />
+        </Wrapper>
+      </DashboardPage>
+    }
     </>
   );
 }
