@@ -78,17 +78,6 @@ const BodyWrapper = styled.div`
   padding: 2rem;
 `;
 
-// const propTypes = {
-//   initial: PropTypes.bool,
-//   onToggle: PropTypes.func.isRequired,
-//   width: PropTypes.number.isRequired,
-//   padding: PropTypes.number.isRequired,
-//   ballColor: PropTypes.string.isRequired,
-//   ballColorActive: PropTypes.string.isRequired,
-//   bgToggled: PropTypes.string.isRequired,
-//   borderColor: PropTypes.string.isRequired
-// };
-
 function CreatePost(props) {
   const { classes } = props;
   const [quillRef, setQuillRef] = useState(null);
@@ -96,16 +85,6 @@ function CreatePost(props) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [picture, setPicture] = useState("");
-  // const [user_id, setUserId] = useState(0);
-
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     title: "",
-  //     content: "",
-  //     picture: "",
-  //     important: false
-  //   };
 
   useEffect(() => {
     attachQuillRefs();
