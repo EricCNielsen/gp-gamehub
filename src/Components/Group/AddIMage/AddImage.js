@@ -49,17 +49,21 @@ export default function AddImage(props) {
           src={url}
           alt="clan-post"
         />
-      ) : null}
-
-      <Dropzone
-        style={{ postion: "inherit" }}
-        className="dropzone"
-        onDropAccepted={getSignedRequest}
-        accept="image/*"
-        multiple={false}
-      >
-        {uploading ? <GridLoader /> : <p>Drop File here or Click to upload</p>}
-      </Dropzone>
+      ) : (
+        <Dropzone
+          style={{ postion: "inherit", margin: "1rem 0" }}
+          className="dropzone"
+          onDropAccepted={getSignedRequest}
+          accept="image/*"
+          multiple={false}
+        >
+          {uploading ? (
+            <GridLoader />
+          ) : (
+            <p>Drop File here or Click to upload</p>
+          )}
+        </Dropzone>
+      )}
     </div>
   );
 }

@@ -21,6 +21,7 @@ const ClanMiniContainer = styled.div`
   margin-left: 2.5%;
   height: 82vh;
   width: 80vw;
+  overflow: scroll;
 `;
 
 const styles = theme => ({
@@ -52,8 +53,21 @@ const InGroupMini = props => {
   const { classes } = props;
   return (
     <ClanMiniContainer>
-      <div>
-        <h1 style={{ textAlign: "left", paddingLeft: "3%" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          height: "4rem"
+        }}
+      >
+        <h1
+          style={{
+            textAlign: "left",
+            fontSize: "2rem",
+            fontFamily: "Arial Black"
+          }}
+        >
           {props.clanName}
         </h1>
         <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
@@ -65,21 +79,11 @@ const InGroupMini = props => {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Create a post</DialogTitle>
-          <CreatePost />
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              // onClick={create}
-              className={styles.button}
-            >
-              Send
-              <Icon className={styles.rightIcon}>send</Icon>
-            </Button>
-          </DialogActions>
+          <CreatePost
+            handleClickOpen={handleClickOpen}
+            handleClose={handleClose}
+            getClan={props.getClan}
+          />
         </Dialog>
       </div>
       <hr />

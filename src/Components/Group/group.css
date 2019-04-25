@@ -12,18 +12,21 @@
   border: solid;
   height: 54vh;
   width: 31.5vw;
-  padding-bottom:2%;
+  padding-bottom: 2%;
   background: white;
 }
 
 .clanInfo h1 {
   margin: 5px;
+  padding-bottom: 1rem;
+  font-weight: 700;
 }
 
 #bio {
   margin: 0 auto;
   width: 30vw;
   height: 75px;
+  border: 1px solid black;
 }
 
 #name {
@@ -35,7 +38,7 @@
 .members {
   border: solid;
   margin-top: 2%;
-  height: 25.5vh;
+  height: 27vh;
   width: 31.5vw;
   overflow: auto;
   background: white;
@@ -46,15 +49,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin: 2%;
-  justify-content: space-between;
-  
+  justify-content: space-evenly;
 }
-
 
 #mem {
   max-width: 50px;
-  margin: 3%;
-  overflow: auto;
+  margin: 6%;
+  overflow: hidden;
 }
 
 .member p {
@@ -75,7 +76,7 @@
   margin: 10px auto;
   width: 60%;
   height: 50%;
-  object-fit: contain
+  object-fit: contain;
 }
 
 .feed {

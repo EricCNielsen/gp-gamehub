@@ -132,7 +132,12 @@ const GroupInfo = ({ clan, user_id, props }) => {
         </>
       ) : (
         <>
-          <img className="logo" src={props.clanAvatar} alt="logo" />
+          <img
+            className="logo"
+            src={props.clanAvatar}
+            style={{ borderRadius: "100%" }}
+            alt="logo"
+          />
           <h1>{props.clanName}</h1>
           <p id="bio">{props.clanBio}</p>
           {props.user_id === props.owner_id ? (

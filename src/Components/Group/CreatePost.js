@@ -10,6 +10,8 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import Icon from "@material-ui/core/Icon";
 
 const styles = theme => ({
@@ -73,7 +75,6 @@ Editor.formats = [
 ];
 
 const BodyWrapper = styled.div`
-  height: 100vh;
   padding: 2rem;
 `;
 
@@ -95,7 +96,7 @@ function CreatePost(props) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [picture, setPicture] = useState("");
-  const [important, setImportant] = useState(false);
+  // const [user_id, setUserId] = useState(0);
 
   // constructor() {
   //   super();
@@ -108,7 +109,7 @@ function CreatePost(props) {
 
   useEffect(() => {
     attachQuillRefs();
-  });
+  }, []);
 
   function setPostImage(url) {
     setPicture(url);
@@ -125,11 +126,13 @@ function CreatePost(props) {
     let post = {
       title,
       content,
-      picture
+      picture,
+      user_id: props.user_id,
+      clan_id: props.clan_id
     };
-    console.log(post);
     try {
-      await axios.post("/api/post", post);
+      const newPost = await axios.post("/api/post", post);
+      props.handleClose();
     } catch (err) {
       console.log(err);
       alert("Please fill out the required fields");
@@ -166,9 +169,33 @@ function CreatePost(props) {
           className="quillbox"
         />
       </div>
-      <AddImage setPostImage={setPostImage} />
+      <AddImage
+        setPostImage={setPostImage}
+        style={{ position: "relative", left: "0" }}
+      />
+      <Button onClick={props.handleClose} color="primary">
+        Cancel
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={create}
+        className={styles.button}
+      >
+        Send
+        <Icon className={styles.rightIcon}>send</Icon>
+      </Button>
     </BodyWrapper>
   );
 }
 
-export default withStyles(styles)(CreatePost);
+function mapStateToProps(reduxState) {
+  return {
+    user_id: reduxState.user_id,
+    clan_id: reduxState.clan_id
+  };
+}
+
+export default withRouter(
+  connect(mapStateToProps)(withStyles(styles)(CreatePost))
+);
