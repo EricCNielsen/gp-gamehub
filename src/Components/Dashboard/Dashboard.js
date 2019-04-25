@@ -43,6 +43,24 @@ function Dashboard(props) {
     }
   }
 
+  const Responsive = styled.div`
+    @media only screen and (max-width: 400px) {
+      
+    }
+  `;
+
+if (Responsive) {
+return (
+<div>
+      <Responsive>
+        <Search />
+        <GroupMini />
+        <GamingNews />
+        <Rankings />
+      </Responsive>
+    </div>
+)
+} else {
   return (
     <>
     {isLoading ? (
@@ -58,6 +76,8 @@ function Dashboard(props) {
     }
     </>
   );
+
+}
 }
 
 // const mapSateToProps = reduxState => {
