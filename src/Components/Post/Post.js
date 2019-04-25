@@ -61,7 +61,6 @@ const PostContentWrapper = styled.div`
 
 const PostWrapper = styled.div`
   border: 1px solid black
-  border-radius: 1%;
   margin: 3rem;
   background: white;
   /* box-shadow: 5px 5px 10px black; */
