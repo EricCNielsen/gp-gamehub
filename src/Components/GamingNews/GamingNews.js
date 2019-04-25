@@ -16,7 +16,7 @@ const HeightContainer = styled.div`
     margin-left: 25vw;
     margin-right: 25vw;
     padding: 1%;
-`
+`;
 
 const styles = {
     card: {

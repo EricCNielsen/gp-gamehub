@@ -4,6 +4,7 @@ import Search from "../Search/Search";
 import GamingNews from "../GamingNews/GamingNews";
 import Rankings from "../Rankings/Rankings";
 import axios from "axios";
+import styled from "styled-components";
 
 import { connect } from "react-redux";
 import { updateUser } from "../../ducks/reducer";
@@ -21,14 +22,36 @@ function Dashboard(props) {
     }
   }
 
+  const Responsive = styled.div`
+    @media only screen and (max-width: 400px) {
+      
+    }
+  `;
+
+if (Responsive) {
+return (
+<div>
+      <Responsive>
+        <Search />
+        <GroupMini />
+        <GamingNews />
+        <Rankings />
+      </Responsive>
+    </div>
+)
+} else {
   return (
     <div>
-      <Search />
-      <GroupMini />
-      <GamingNews />
-      <Rankings />
+      <Responsive>
+        <Search />
+        <GroupMini />
+        <GamingNews />
+        <Rankings />
+      </Responsive>
     </div>
   );
+
+}
 }
 
 // const mapSateToProps = reduxState => {
