@@ -56,16 +56,29 @@ const PostInfoWrapper = styled.div`
 const PostContentWrapper = styled.div`
   display: flex;
   padding-left: 3rem;
+  padding-bottom: 2rem;
 `;
 
 const PostWrapper = styled.div`
   border: 1px solid black
+  border-radius: 1%;
   margin: 3rem;
+  background: white;
+  /* box-shadow: 5px 5px 10px black; */
+  /* box-shadow: 3px 3px 5px 6px darkgrey; */
+  box-shadow: 0 15px 30px 0 #2C3539,
+              0 5px 15px 0 #2C3539;
+
+`;
+
+const MainPostWrapper = styled.div`
+  border-bottom: 1px solid black;
 `;
 
 const ReplyWrapper = styled.div`
   padding-left: 2rem;
-  /* background: lightgrey; */
+  padding-top: 2rem;
+  background: #dad;
   border-bottom: 1px solid black;
 `;
 
@@ -160,37 +173,38 @@ function Post(props) {
     .map(post => {
       return (
         <div key={post.post_id}>
-          <h2>{post.title}</h2>
-          <PostInfoWrapper>
-            <img
-              src={post.picture}
-              alt="userimg"
-              style={{
-                height: "60px",
-                width: "60px",
-                borderRadius: "50%",
-                margin: "10px"
-              }}
-            />
-            <p>
-              {post.username} posted on {post.date}
-            </p>
-            {post.user_id === props.user_id ? (
-              <div>
-                <button onClick={() => deletePost(post)}>Delete</button>
-              </div>
-            ) : null}
-          </PostInfoWrapper>
-          <PostContentWrapper>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: post.content
-              }}
-              className="post-content"
-              style={{ textAlign: "left", paddingRight: "2rem" }}
-            />
-          </PostContentWrapper>
-          <hr />
+          <MainPostWrapper>
+            <h2>{post.title}</h2>
+            <PostInfoWrapper>
+              <img
+                src={post.picture}
+                alt="userimg"
+                style={{
+                  height: "60px",
+                  width: "60px",
+                  borderRadius: "50%",
+                  margin: "10px"
+                }}
+              />
+              <p>
+                {post.username} posted on {post.date}
+              </p>
+              {post.user_id === props.user_id ? (
+                <div>
+                  <button onClick={() => deletePost(post)}>Delete</button>
+                </div>
+              ) : null}
+            </PostInfoWrapper>
+            <PostContentWrapper>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: post.content
+                }}
+                className="post-content"
+                style={{ textAlign: "left", paddingRight: "2rem" }}
+              />
+            </PostContentWrapper>
+          </MainPostWrapper>
         </div>
       );
     });
@@ -260,7 +274,7 @@ function Post(props) {
         <div>
           <div>
             {showQuill ? (
-              <div className="reply-quill">
+              <div>
                 <ReactQuill
                   ref={el => {
                     setQuillRef(el);
