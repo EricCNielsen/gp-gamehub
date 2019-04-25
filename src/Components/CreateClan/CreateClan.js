@@ -15,15 +15,18 @@ import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 
 export default function CreateClan(props) {
-  const [open, setOpen] = useState(false)
-  const [avatar, setAvatar] = useState("")
   const [privateClan, setPrivateClan] = useState(false)
   const [competitive, setCompetitive] = useState(false)
+  const [open, setOpen] = useState(false)
   const [clanName, setClanName] = useState("")
+  const [avatar, setAvatar] = useState("")
   const [bio, setBio] = useState("")
   const [gamingConsoles, setGamingConsoles] = useState([])
 
   useEffect(() => {
+    if (props.open) {
+      setOpen(props.open)
+    }
     return () => {
       console.log(
         "cleaned up",
@@ -32,10 +35,11 @@ export default function CreateClan(props) {
         privateClan,
         competitive,
         clanName,
-        bio
+        bio,
+        open
       )
     }
-  }, [gamingConsoles, avatar, privateClan, competitive, clanName, bio])
+  }, [gamingConsoles, avatar, props, privateClan, competitive, clanName, bio])
 
   function setClanAvatar(url) {
     setAvatar(url)
@@ -78,7 +82,8 @@ export default function CreateClan(props) {
         bio,
         avatar,
         competitive,
-        privateClan
+        privateClan,
+        gamingConsoles
       })
     } catch (err) {
       console.log(`there was a problem creating the clan ${err}`)
@@ -86,14 +91,14 @@ export default function CreateClan(props) {
   }
 
   function handleClose() {
+    if (props.setOpenModal) {
+      props.setOpenModal(false)
+    }
     setOpen(false)
   }
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        + create Clan
-      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="create-clan">
         <DialogTitle id="creat-clan">Create Clan</DialogTitle>
         <DialogContent>
