@@ -10,15 +10,13 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100vw;
-  height: 100vh;
-  @media screen and (min-width:700px) {
+  @media screen and (min-width: 700px) {
     display: flex;
     flex-direction: row-reverse;
     width: 100vw;
-    overflow:hidden;
+    overflow: hidden;
   }
-`
-
+`;
 
 function Dashboard(props) {
   useEffect(() => {
