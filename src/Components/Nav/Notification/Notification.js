@@ -168,8 +168,7 @@ class Notification extends Component {
               <div>
                 <span
                   style={{
-                    fontSize: "3em",
-                    width: "3.5em"
+                    fontSize: "3em"
                   }}
                   role="img"
                   aria-label="emoji-Oh well.."

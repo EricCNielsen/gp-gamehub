@@ -26,7 +26,12 @@ function AccountImage(props) {
     <div>
       <div
         id="account-img"
-        style={{ display: "flex", flexFlow: "column", cursor: "pointer" }}
+        style={{
+          display: "flex",
+          flexFlow: "column",
+          alignItems: "center",
+          cursor: "pointer"
+        }}
       >
         <img
           variant="contained"
