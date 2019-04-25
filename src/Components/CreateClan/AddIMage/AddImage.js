@@ -35,7 +35,6 @@ export default function AddImage(props) {
             "file-type": file.type
           }
         })
-      console.log(signS3)
       const { signedRequest, url } = signS3.data
       uploadFile(file, signedRequest, url)
     } catch (err) {

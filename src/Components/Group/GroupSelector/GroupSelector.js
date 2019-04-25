@@ -1,34 +1,40 @@
-import React, { useState } from "react";
-import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import Button from "@material-ui/core/Button";
-import { withRouter } from "react-router-dom";
-import PostViewer from "../../PostsViewer/PostViewer";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import CreatePost from "../CreatePost";
+import React, { useState } from "react"
+import FormControl from "@material-ui/core/FormControl"
+import NativeSelect from "@material-ui/core/NativeSelect"
+import Button from "@material-ui/core/Button"
+import { withRouter } from "react-router-dom"
+import PostViewer from "../../PostsViewer/PostViewer"
+import CreateClan from "./../../CreateClan/CreateClan"
+import Dialog from "@material-ui/core/Dialog"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import CreatePost from "../CreatePost"
 
 function GroupSelector(props) {
-  const [selectedClan, setSelectedClan] = useState(props.clans[0].clan_id);
-  const [showPosts, setShowPosts] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [selectedClan, setSelectedClan] = useState(props.clans[0].clan_id)
+  const [showPosts, setShowPosts] = useState(true)
+  const [openModal, setOpenModal] = useState(false)
+  const [open, setOpen] = useState(false)
 
   console.log(props)
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
-  function handleChange(event) {
-    if (event.target.value === "") {
-      setShowPosts(false);
-      setSelectedClan(event.target.value);
-    } else {
-      setShowPosts(true);
-      setSelectedClan(event.target.value);
+  function handleSelectorChange(event) {
+    switch (event.target.value) {
+      case "":
+        setShowPosts(false)
+        setOpenModal(true)
+        setSelectedClan(event.target.value)
+        break
+      default:
+        setOpenModal(false)
+        setShowPosts(true)
+        setSelectedClan(event.target.value)
     }
   }
 
@@ -37,25 +43,25 @@ function GroupSelector(props) {
       <option key={clan.name} value={clan.clan_id}>
         {clan.name}
       </option>
-    );
-  });
+    )
+  })
 
   function handleClanView() {
-    props.history.push(`group/${selectedClan}`);
+    props.history.push(`group/${selectedClan}`)
   }
 
-
-console.log(selectedClan, props)
+  console.log(selectedClan, props)
   return (
     <div>
+      <CreateClan open={openModal} />
       <FormControl>
         <NativeSelect
           value={selectedClan}
-          onClick={showPosts}
-          onChange={handleChange}
+          onChange={handleSelectorChange}
           name="clans"
         >
           {clansList}
+          <option value="">+ Create a Clan</option>
         </NativeSelect>
       </FormControl>
       {selectedClan > 0 ? (
@@ -93,9 +99,7 @@ console.log(selectedClan, props)
       ) : null}
       <div>{showPosts && <PostViewer id={selectedClan} />}</div>
     </div>
-  );
+  )
 }
 
-
-
-export default withRouter(GroupSelector);
+export default withRouter(GroupSelector)

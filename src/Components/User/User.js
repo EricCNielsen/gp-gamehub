@@ -13,9 +13,11 @@ function User(props) {
     [url, setUrl] = useState(""),
     [edit, setEdit] = useState(false),
     [exp, setExp] = useState(""),
-    [picture, setPicture] = useState(props.picture),
     [username, setUsername] = useState(""),
     // [email, setEmail] = useState(props.email),
+    [picture, setPicture] = useState(
+      "https://games.vodacom.co.za/assets/rich/placeholder_games_cover.png"
+    ),
     [location, setLocation] = useState(""),
     [bio, setBio] = useState("")
 

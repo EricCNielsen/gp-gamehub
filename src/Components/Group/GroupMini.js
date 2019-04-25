@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import MobileContainer from "../Styles/MobileContainer";
-import CreateClan from "../CreateClan/CreateClan";
-import styled from "styled-components";
-import { connect } from 'react-redux';
-import GroupSelector from "./GroupSelector/GroupSelector";
+import React, { useState, useEffect } from "react"
+import MobileContainer from "../Styles/MobileContainer"
+import CreateClan from "../CreateClan/CreateClan"
+import styled from "styled-components"
+import GroupSelector from "./GroupSelector/GroupSelector"
+import Button from "@material-ui/core/Button"
+import { connect } from "react-redux"
 
-import axios from "axios";
+import axios from "axios"
 
 const ClanMiniContainer = styled.div`
   background-color: white;
@@ -27,58 +28,67 @@ const ClanMiniContainer = styled.div`
     max-height: 98vh;
     min-height: 80vh;
   }
-`;
+`
 
-const GroupMini = (props) => {
+const GroupMini = props => {
   const [registeredclans, setRegisteredClans] = useState([])
   const [showSelector, setShowSelector] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-
-  console.log(props)
-
 
   useEffect(() => {
     let fetchData = async () => {
       getRegisteredClans()
     }
     fetchData()
-  }, [])
+  }, [props.incrementToUpdateList])
 
   async function getRegisteredClans() {
     try {
-      const getRegisteredClans = await axios.get("/api/registeredclans");
+      const getRegisteredClans = await axios.get("/api/registeredclans")
       if (getRegisteredClans.data.length > 0) {
         setRegisteredClans(getRegisteredClans.data)
         setShowSelector(true)
         setIsLoading(false)
       }
     } catch (err) {
-      console.log(`there was an error getting your registered clan: ${err}`);
+      console.log(`there was an error getting your registered clan: ${err}`)
     }
+  }
+
+  function openCreateClanModal() {
+    setOpenModal(true)
   }
   return (
     <>
-    <ClanMiniContainer>
-      {isLoading ? (
-        <div>Peeking at your groups...</div>
-      ):showSelector ? (
-        <GroupSelector 
-        clans={registeredclans} 
-        user_id={props.user_id}
-        />
-      ) : (
-        <CreateClan />
-      )}
-    </ClanMiniContainer>
-
-  </>
+      <ClanMiniContainer>
+        {isLoading ? (
+          <div>Peeking at your groups...</div>
+        ) : showSelector ? (
+          <GroupSelector clans={registeredclans} user_id={props.user_id} />
+        ) : (
+          <>
+            <Button
+              onClick={openCreateClanModal}
+              variant="contained"
+              size="small"
+              color="primary"
+            >
+              + Create Clan
+            </Button>
+            <CreateClan setOpenModal={setOpenModal} open={openModal} />
+          </>
+        )}
+      </ClanMiniContainer>
+    </>
   )
 }
 
-function mapStateToProps(state) {
-  return{
-    user_id: state.user_id
+const mapStateToProps = reduxState => {
+  return {
+    incrementToUpdateList: reduxState.incrementToUpdateList,
+    user_id: reduxState.user_id
   }
 }
 
-export default connect(mapStateToProps)(GroupMini);
+export default connect(mapStateToProps)(GroupMini)
