@@ -10,17 +10,19 @@ import axios from "axios"
 
 const ClanMiniContainer = styled.div`
   background-color: white;
-  margin: 0;
+  margin-top: 2%;
+  margin-bottom: 5%;
   border-bottom: 1px solid black;
   overflow: auto;
   height: 80vh;
   box-shadow: 0 15px 30px 0 #2c3539, 0 5px 15px 0 #2c3539;
+  border-radius: 10px;
   @media screen and (min-width: 700px) {
     margin: 0 auto;
-    width: 54vw;
+    width: 55vw;
     position: absolute;
     top: 15%;
-    left: 23.65%;
+    left: 22.6%;
     border: 1px solid lightgrey;
     border-radius: 10px;
     max-height: 98vh;
@@ -34,8 +36,10 @@ const GroupMini = props => {
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
-    console.log("hit")
-    getRegisteredClans()
+    let fetchData = async () => {
+      getRegisteredClans()
+    }
+    fetchData()
   }, [props.incrementToUpdateList])
 
   async function getRegisteredClans() {
@@ -44,6 +48,7 @@ const GroupMini = props => {
       if (getRegisteredClans.data.length > 0) {
         setRegisteredClans(getRegisteredClans.data)
         setShowSelector(true)
+        setIsLoading(false)
       }
     } catch (err) {
       console.log(`there was an error getting your registered clan: ${err}`)
@@ -54,29 +59,34 @@ const GroupMini = props => {
     setOpenModal(true)
   }
   return (
-    <ClanMiniContainer>
-      {showSelector ? (
-        <GroupSelector clans={registeredclans} />
-      ) : (
-        <>
-          <Button
-            onClick={openCreateClanModal}
-            variant="contained"
-            size="small"
-            color="primary"
-          >
-            + Create Clan
-          </Button>
-          <CreateClan setOpenModal={setOpenModal} open={openModal} />
-        </>
-      )}
-    </ClanMiniContainer>
+    <>
+      <ClanMiniContainer>
+        {isLoading ? (
+          <div>Peeking at your groups...</div>
+        ) : showSelector ? (
+          <GroupSelector clans={registeredclans} user_id={props.user_id} />
+        ) : (
+          <>
+            <Button
+              onClick={openCreateClanModal}
+              variant="contained"
+              size="small"
+              color="primary"
+            >
+              + Create Clan
+            </Button>
+            <CreateClan setOpenModal={setOpenModal} open={openModal} />
+          </>
+        )}
+      </ClanMiniContainer>
+    </>
   )
 }
 
 const mapStateToProps = reduxState => {
   return {
-    incrementToUpdateList: reduxState.incrementToUpdateList
+    incrementToUpdateList: reduxState.incrementToUpdateList,
+    user_id: reduxState.user_id
   }
 }
 

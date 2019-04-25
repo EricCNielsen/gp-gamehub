@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState } from "react"
 import FormControl from "@material-ui/core/FormControl"
 import NativeSelect from "@material-ui/core/NativeSelect"
 import Button from "@material-ui/core/Button"
 import { withRouter } from "react-router-dom"
 import PostViewer from "../../PostsViewer/PostViewer"
 import CreateClan from "./../../CreateClan/CreateClan"
-import { connect } from "react-redux"
 import Dialog from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import CreatePost from "../CreatePost"
@@ -14,8 +13,9 @@ function GroupSelector(props) {
   const [selectedClan, setSelectedClan] = useState(props.clans[0].clan_id)
   const [showPosts, setShowPosts] = useState(true)
   const [openModal, setOpenModal] = useState(false)
-
   const [open, setOpen] = useState(false)
+
+  console.log(props)
 
   const handleClose = () => {
     setOpen(false)
@@ -50,6 +50,7 @@ function GroupSelector(props) {
     props.history.push(`group/${selectedClan}`)
   }
 
+  console.log(selectedClan, props)
   return (
     <div>
       <CreateClan open={openModal} />
@@ -89,9 +90,9 @@ function GroupSelector(props) {
           >
             <DialogTitle id="form-dialog-title">Create a post</DialogTitle>
             <CreatePost
-              handleClickOpen={handleClickOpen}
               handleClose={handleClose}
-              getClan={props.getClan}
+              getDashClan={selectedClan}
+              user_id={props.user_id}
             />
           </Dialog>
         </div>
@@ -101,4 +102,4 @@ function GroupSelector(props) {
   )
 }
 
-export default connect()(withRouter(GroupSelector))
+export default withRouter(GroupSelector)
