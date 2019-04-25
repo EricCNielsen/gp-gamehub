@@ -13,6 +13,9 @@ const GroupInfo = ({ clan, user_id, props }) => {
     [edit, setEdit] = useState(false),
     [bio, setBio] = useState(""),
     [clanState, setClanState] = useState([]);
+
+
+
   let handleEdit = () => {
     setEdit(!edit);
     setName(!name ? props.clanName : name);
@@ -83,6 +86,10 @@ const GroupInfo = ({ clan, user_id, props }) => {
       console.log(err);
     }
   };
+
+  if(!props.clanName){
+    return <div className="clanInfo">I am Loading mother Effer</div>
+  }
   return (
     <div className="clanInfo">
       {edit ? (

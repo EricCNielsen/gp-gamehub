@@ -17,14 +17,18 @@ const NewsContainer = styled.div`
     background: white;
     box-shadow: 0 15px 30px 0 #2C3539,
                 0 5px 15px 0 #2C3539;
+    font-size: 40px;
+    font-weight: bold;
     @media screen and (min-width:700px) {
-        margin: 0 auto;
+        margin-left: 1%;
         width: 20vw;
         position: absolute;
         top:25%;
         left:.1%;
+        min-height: 6%;
         h1 {
             background: white;
+            font-size: 40px;
         }
         border: 1px solid lightgrey;
         border-radius: 10px;
@@ -45,9 +49,13 @@ const styles = {
 
 const GamingNews = props => {
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getNews();
+    let fetchData = async () => {
+      getNews();
+    }
+    fetchData()
   }, []);
 
   const getNews = async () => {
@@ -55,7 +63,7 @@ const GamingNews = props => {
     const targetUrl =
       "https://newsapi.org/v2/everything?q=video+games&sortBy=relevancy&pageSize=5&apiKey=";
     const res = await axios.get(targetUrl + REACT_APP_NEWS_API);
-    // console.log(res.data.articles);
+    setIsLoading(false)
     setArticles(res.data.articles);
   };
 
@@ -104,8 +112,16 @@ const GamingNews = props => {
 
   return (
     <NewsContainer>
-      <h1>News</h1>
-      {newsArticles}
+      {isLoading ? (
+        <div>Checking the news...</div>
+      ) : <div>
+          <h1>News</h1>
+          <hr/>
+          <div>
+            {newsArticles}
+          </div>
+        </div>
+      }
     </NewsContainer>
   );
 };

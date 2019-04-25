@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react"
-import StarRatings from "react-star-ratings"
-import axios from "axios"
+import React, { useState, useEffect } from "react";
+import StarRatings from "react-star-ratings";
+import axios from "axios";
+import styled from "styled-components";
+
+
 
 function StarRating(props) {
   const [userRanking, setUserRanking] = useState({
@@ -8,9 +11,14 @@ function StarRating(props) {
     ranking_id: 0,
     id: props.id
   })
+  const [isLoading, setIsLoading] = useState(true)
+
 
   useEffect(() => {
-    CheckRanking()
+    let fetchData = async () => {
+      CheckRanking()
+    }
+    fetchData()
   }, [])
 
   async function CheckRanking() {
@@ -24,6 +32,7 @@ function StarRating(props) {
         })
       }
       const { ranking, id } = dbRanking
+      setIsLoading(false)
       setUserRanking({
         ...userRanking,
         ranking: ranking,
@@ -71,6 +80,9 @@ function StarRating(props) {
 
   return (
     <div>
+      {isLoading ? (
+        <div>Loading ...</div>
+      ):
       <StarRatings
         rating={userRanking.ranking}
         starRatedColor="red"
@@ -78,6 +90,7 @@ function StarRating(props) {
         numberOfStars={5}
         name="rating"
       />
+    }
     </div>
   )
 }

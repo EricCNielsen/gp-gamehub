@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import MenuItem from "@material-ui/core/MenuItem";
+// 'import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import AddImage from "./AddIMage/AddImage";
-import PropTypes from "prop-types";
-import classNames from "classnames";
+// import PropTypes from "prop-types";
+// import classNames from "classnames";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -78,17 +78,22 @@ const BodyWrapper = styled.div`
   padding: 2rem;
 `;
 
-function CreatePost(props) {
-  const { classes } = props;
+function CreatePost({ getDashClan, user_id, handleClose }, props) {
   const [quillRef, setQuillRef] = useState(null);
   const [reactQuillRef, setReactQuillRef] = useState({});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [picture, setPicture] = useState("");
 
+  console.log(props);
+
   useEffect(() => {
     attachQuillRefs();
   }, []);
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
   function setPostImage(url) {
     setPicture(url);
@@ -106,12 +111,12 @@ function CreatePost(props) {
       title,
       content,
       picture,
-      user_id: props.user_id,
-      clan_id: props.clan_id
+      user_id: user_id,
+      clan_id: props.clan_id || getDashClan
     };
     try {
-      const newPost = await axios.post("/api/post", post);
-      props.handleClose();
+      await axios.post("/api/post", post);
+      refreshPage();
     } catch (err) {
       console.log(err);
       alert("Please fill out the required fields");
@@ -152,7 +157,7 @@ function CreatePost(props) {
         setPostImage={setPostImage}
         style={{ position: "relative", left: "0" }}
       />
-      <Button onClick={props.handleClose} color="primary">
+      <Button onClick={handleClose} color="primary">
         Cancel
       </Button>
       <Button
