@@ -78,24 +78,22 @@ const BodyWrapper = styled.div`
   padding: 2rem;
 `;
 
-
-
-function CreatePost({getDashClan, user_id, handleClose}, props) {
+function CreatePost({ getDashClan, user_id, handleClose }, props) {
   const [quillRef, setQuillRef] = useState(null);
   const [reactQuillRef, setReactQuillRef] = useState({});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [picture, setPicture] = useState("");
 
-  console.log(props)
-  
+  console.log(props);
+
   useEffect(() => {
     attachQuillRefs();
   }, []);
 
   const refreshPage = () => {
-    window.location.reload()
-}
+    window.location.reload();
+  };
 
   function setPostImage(url) {
     setPicture(url);
@@ -115,9 +113,9 @@ function CreatePost({getDashClan, user_id, handleClose}, props) {
       picture,
       user_id: user_id,
       clan_id: props.clan_id || getDashClan
-      };
+    };
     try {
-     await axios.post("/api/post", post);
+      await axios.post("/api/post", post);
       refreshPage();
     } catch (err) {
       console.log(err);
