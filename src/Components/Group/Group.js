@@ -7,29 +7,23 @@ import InGroupMini from "./InGroupMini";
 import GroupInfo from "./GroupInfo";
 import GroupMembers from "./GroupMembers";
 
-
 const Group = props => {
   const [url, setUrl] = useState(""),
-        [name, setName] = useState(""),
-        [bio, setBio] = useState(""),
-        [members, setMembers] = useState([]),
-        [clan, setClan] = useState([]);
+    [name, setName] = useState(""),
+    [bio, setBio] = useState(""),
+    [members, setMembers] = useState([]),
+    [clan, setClan] = useState([]);
 
-        
-
-  useEffect(
-    () => {
-      getClan();
-      getMembers();
-    },
-    []
-  );
+  useEffect(() => {
+    getClan();
+    getMembers();
+  }, []);
 
   const getMembers = () => {
-    const {id} = props.match.params;
-   axios.get(`/api/clan/${id}/members`).then(res => {
-     setMembers(res.data);
-   });
+    const { id } = props.match.params;
+    axios.get(`/api/clan/${id}/members`).then(res => {
+      setMembers(res.data);
+    });
   };
 
   const getClan = () => {
@@ -39,10 +33,9 @@ const Group = props => {
         setName(res.data[0].name);
         setBio(res.data[0].bio);
         setUrl(res.data[0].avatar);
-        setClan(res.data[0])
+        setClan(res.data[0]);
         props.updateClan(res.data[0]);
-      }
-      );
+      });
     } else {
       const { clanName, clanBio, clanAvatar } = props;
       setName(clanName);
@@ -51,17 +44,17 @@ const Group = props => {
     }
   };
 
-    return (
-      <div className="clan">
-        <div className="two">
-          <GroupInfo clan={clan} user_id={props.user_id} props={props}/>
-          <GroupMembers members={members}/>
-        </div>
-          <InGroupMini />
+  return (
+    <div className="clan">
+      <div className="two">
+        <GroupInfo clan={clan} user_id={props.user_id} props={props} />
+        <GroupMembers members={members} />
       </div>
-    );
-}
-  
+      <InGroupMini />
+    </div>
+  );
+};
+
 const mapStateToProps = reduxState => {
   return {
     user_id: reduxState.user_id,
@@ -73,4 +66,7 @@ const mapStateToProps = reduxState => {
   };
 };
 
-export default connect(mapStateToProps,{ updateClan })(Group);
+export default connect(
+  mapStateToProps,
+  { updateClan }
+)(Group);

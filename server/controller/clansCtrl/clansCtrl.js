@@ -17,7 +17,7 @@ module.exports = {
       const newClan = await db.add_clan_owner_admin({
         user_id,
         clan_id
-      })
+      });
       // console.log(clan, newClan)
     } catch (err) {
       console.log(`error creating clan: ${err}`);
@@ -37,10 +37,10 @@ module.exports = {
     try {
       const db = req.app.get("db"),
         { id } = req.params,
-        members = await db.getClanMembers(id)
-      res.status(200).send(members)
+        members = await db.get_clan_members(id);
+      res.status(200).send(members);
     } catch (err) {
-      console.log("error getting members:", err)
+      console.log("error getting members:", err);
     }
   },
   updateClan: async (req, res) => {
@@ -73,4 +73,4 @@ module.exports = {
       })
       .catch(err => res.status(500).send(err));
   }
-}
+};
