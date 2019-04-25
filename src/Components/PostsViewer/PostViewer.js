@@ -1,56 +1,58 @@
-import React, { useState, useEffect } from "react"
-import ReactQuill from "react-quill"
-import "react-quill/dist/quill.bubble.css"
-import axios from "axios"
-import styled from "styled-components"
-import { withRouter } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
+import axios from "axios";
+import styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
 const AuthorInfo = styled.div`
   display: flex;
   align-items: center;
   padding-left: 10px;
-`
+`;
 
 function PostViewer(props) {
   useEffect(() => {
-    getClanPosts()
-  }, [props.id])
-  const [posts, setPosts] = useState([])
-  const [noPosts, setNoPosts] = useState(true)
+    getClanPosts();
+  }, [props.id]);
+  const [posts, setPosts] = useState([]);
+  const [noPosts, setNoPosts] = useState(true);
+
+  console.log(posts);
 
   async function getClanPosts() {
     try {
-      let clanPosts = await axios.get(`/api/clan-posts/${props.id}`)
+      let clanPosts = await axios.get(`/api/clan-posts/${props.id}`);
       if (clanPosts.data.length > 0) {
-        setNoPosts(false)
-        setPosts(clanPosts.data)
+        setNoPosts(false);
+        setPosts(clanPosts.data);
       } else {
-        setNoPosts(true)
+        setNoPosts(true);
       }
     } catch (err) {
-      console.log(`there was an error pulling the posts: ${err}`)
+      console.log(`there was an error pulling the posts: ${err}`);
     }
   }
 
   function goToPost(id) {
-    props.history.push(`/post/${id}`)
+    props.history.push(`/post/${id}`);
   }
 
   const postsList = posts
     .filter(post => !post.parent_id)
     .map(post => {
       function replies() {
-        const replies = posts.filter(post => post.parent_id)
-        console.log(posts)
+        const replies = posts.filter(post => post.parent_id);
+        console.log(posts);
         if (replies.length > 0 && replies[0].parent_id === post.post_id) {
-          const repliesCount = replies.length
+          const repliesCount = replies.length;
           return (
             <button onClick={() => goToPost(post.post_id)}>
               {repliesCount} {repliesCount === 1 ? "reply" : "replies"}
             </button>
-          )
+          );
         } else {
-          return null
+          return null;
         }
       }
       return (
@@ -62,14 +64,17 @@ function PostViewer(props) {
               style={{ width: "3em", height: "3em", borderRadius: "50%" }}
             />
             <p style={{ paddingLeft: "10px" }}>
-              posted by {post.username} on {post.date}
+              {post.title} posted by {post.username} on {post.date}
             </p>
           </AuthorInfo>
           <ReactQuill theme="bubble" value={post.content} readOnly={true} />
+          <div style={{ flexDirection: "flex-end" }}>
+            <a href={`/Post/${post.post_id}`}>More</a>
+          </div>
           {replies()}
         </div>
-      )
-    })
+      );
+    });
 
   return (
     <div>
@@ -98,7 +103,7 @@ function PostViewer(props) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default withRouter(PostViewer)
+export default withRouter(PostViewer);

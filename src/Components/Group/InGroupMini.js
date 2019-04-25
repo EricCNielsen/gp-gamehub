@@ -43,7 +43,7 @@ const styles = theme => ({
 
 const InGroupMini = props => {
   const [open, setOpen] = useState(false);
-
+  console.log(props);
   const handleClose = () => {
     setOpen(false);
   };
@@ -79,11 +79,7 @@ const InGroupMini = props => {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Create a post</DialogTitle>
-          <CreatePost
-            handleClickOpen={handleClickOpen}
-            handleClose={handleClose}
-            getClan={props.getClan}
-          />
+          <CreatePost handleClose={handleClose} getClan={props.getClan} />
         </Dialog>
       </div>
       <hr />
