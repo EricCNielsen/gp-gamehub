@@ -45,9 +45,13 @@ const styles = {
 
 const GamingNews = props => {
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getNews();
+    let fetchData = async () => {
+      getNews();
+    }
+    fetchData()
   }, []);
 
   const getNews = async () => {
@@ -56,6 +60,7 @@ const GamingNews = props => {
       "https://newsapi.org/v2/everything?q=video+games&sortBy=relevancy&pageSize=5&apiKey=";
     const res = await axios.get(targetUrl + REACT_APP_NEWS_API);
     console.log(res.data.articles);
+    setIsLoading(false)
     setArticles(res.data.articles);
   };
 
@@ -104,8 +109,15 @@ const GamingNews = props => {
 
   return (
     <NewsContainer>
-      <h1>News</h1>
-      {newsArticles}
+      {isLoading ? (
+        <div>Checking the news...</div>
+      ) : <div>
+          <h1>News</h1>
+          <div>
+            {newsArticles}
+          </div>
+        </div>
+      }
     </NewsContainer>
   );
 };

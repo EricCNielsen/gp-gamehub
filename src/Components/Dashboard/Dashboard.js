@@ -21,19 +21,16 @@ const Wrapper = styled.div`
 const DashboardPage = styled.div`
   width:100%;
   height: 100%;
-  background: white;
-
 `
 
 
 function Dashboard(props) {
-  const [isLoading, setIstLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   
   useEffect(() => {
-    const fetchData = async () => {
+    let fetchData = async () => {
       getUserInfo()
     }
-
     fetchData()
   }, []);
 
@@ -41,7 +38,7 @@ function Dashboard(props) {
     const { updateUser } = props;
     if (!props.username) {
       const user = await axios.get("/auth/account");
-      setIstLoading(false)
+      setIsLoading(false)
       updateUser(user.data[0]);
     }
   }

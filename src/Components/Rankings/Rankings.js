@@ -27,38 +27,50 @@ const RankingContainer = styled.div`
 `
 
 const Rankings = props => {
+  const [top5Users, setTop5Users] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    getTop5Users();
+    let fetchData = async () => {
+      getTop5Users();
+    }
+    fetchData()
   }, []);
 
-  const [top5Users, setTop5Users] = useState([]);
 
   const getTop5Users = async () => {
     let top5 = await axios.get("/api/top5users");
     setTop5Users(top5.data);
+    setIsLoading(false)
   };
 
   return (
     <RankingContainer>
-      <h1>Rankings</h1>
-      <hr />
-      <h2>Top 5 Users</h2>
-      <ol>
-        {top5Users.map(user => {
-          return (
-            <li key={user.username} style={{ textAlign: "left" }}>
-              {user.username} :
-              <div>
-                <StarRatings
-                  rating={+user.a_r}
-                  starDimension="20px"
-                  starSpacing="10px"
-                />
-              </div>
-            </li>
-          );
-        })}
-      </ol>
+      {isLoading ? (
+        <div>Finding the best of the best...</div>
+      ) : (
+      <div>
+        <h1>Rankings</h1>
+        <hr />
+        <h2>Top 5 Users</h2>
+        <ol>
+          {top5Users.map(user => {
+            return (
+              <li key={user.username} style={{ textAlign: "left" }}>
+                {user.username} :
+                <div>
+                  <StarRatings
+                    rating={+user.a_r}
+                    starDimension="20px"
+                    starSpacing="10px"
+                  />
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+      )}
     </RankingContainer>  
   );
 };

@@ -26,9 +26,14 @@ const ClanMiniContainer = styled.div`
 const GroupMini = () => {
   const [registeredclans, setRegisteredClans] = useState([])
   const [showSelector, setShowSelector] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
 
   useEffect(() => {
-    getRegisteredClans()
+    let fetchData = async () => {
+      getRegisteredClans()
+    }
+    fetchData()
   }, [])
 
   async function getRegisteredClans() {
@@ -37,19 +42,25 @@ const GroupMini = () => {
       if (getRegisteredClans.data.length > 0) {
         setRegisteredClans(getRegisteredClans.data)
         setShowSelector(true)
+        setIsLoading(false)
       }
     } catch (err) {
       console.log(`there was an error getting your registered clan: ${err}`)
     }
   }
   return (
+    <>
     <ClanMiniContainer>
-        {showSelector ? (
-          <GroupSelector clans={registeredclans} />
-        ) : (
-          <CreateClan />
-        )}
+      {isLoading ? (
+        <div>Peeking at your groups...</div>
+      ):showSelector ? (
+        <GroupSelector clans={registeredclans} />
+      ) : (
+        <CreateClan />
+      )}
     </ClanMiniContainer>
+
+  </>
   )
 }
 
