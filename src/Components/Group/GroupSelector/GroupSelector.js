@@ -6,28 +6,23 @@ import { withRouter } from "react-router-dom"
 import PostViewer from "../../PostsViewer/PostViewer"
 import CreateClan from "./../../CreateClan/CreateClan"
 import { connect } from "react-redux"
+import Dialog from "@material-ui/core/Dialog"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import CreatePost from "../CreatePost"
 
 function GroupSelector(props) {
   const [selectedClan, setSelectedClan] = useState(props.clans[0].clan_id)
-  // const [selectedClan, setSelectedClan] = useState("")
   const [showPosts, setShowPosts] = useState(true)
   const [openModal, setOpenModal] = useState(false)
-  // const { clans } = props
-  // const prevClans = usePrevious(clans)
 
-  // useEffect(() => {
-  //   if (prevClans.clans !== clans) {
-  //     setSelectedClan(clans[0].clan_id)
-  //   }
-  // }, [clans])
+  const [open, setOpen] = useState(false)
 
-  // function usePrevious(value) {
-  //   const ref = useRef()
-  //   useEffect(() => {
-  //     ref.current = value
-  //   })
-  //   return ref.current
-  // }
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
 
   function handleSelectorChange(event) {
     switch (event.target.value) {
@@ -69,24 +64,41 @@ function GroupSelector(props) {
         </NativeSelect>
       </FormControl>
       {selectedClan > 0 ? (
-        <Button
-          onClick={handleClanView}
-          variant="contained"
-          size="small"
-          color="primary"
-        >
-          View Clan
-        </Button>
+        <div style={{ marginTop: "10px" }}>
+          <Button
+            onClick={handleClanView}
+            variant="contained"
+            size="small"
+            color="primary"
+            style={{ marginRight: "10px" }}
+          >
+            View Clan
+          </Button>
+          <Button
+            onClick={handleClickOpen}
+            variant="contained"
+            size="small"
+            color="primary"
+          >
+            Create a post
+          </Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Create a post</DialogTitle>
+            <CreatePost
+              handleClickOpen={handleClickOpen}
+              handleClose={handleClose}
+              getClan={props.getClan}
+            />
+          </Dialog>
+        </div>
       ) : null}
       <div>{showPosts && <PostViewer id={selectedClan} />}</div>
     </div>
   )
 }
-
-// const mapStateToProps = reduxState => {
-//   return {
-//     clans: reduxState.registeredClans
-//   }
-// }
 
 export default connect()(withRouter(GroupSelector))

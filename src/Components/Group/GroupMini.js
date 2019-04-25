@@ -12,6 +12,9 @@ const ClanMiniContainer = styled.div`
   background-color: white;
   margin: 0;
   border-bottom: 1px solid black;
+  overflow: auto;
+  height: 80vh;
+  box-shadow: 0 15px 30px 0 #2c3539, 0 5px 15px 0 #2c3539;
   @media screen and (min-width: 700px) {
     margin: 0 auto;
     width: 54vw;

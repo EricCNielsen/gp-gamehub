@@ -11,12 +11,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
 const NewsContainer = styled.div`
-    height: 40vh;
+    height: 45vh;
     overflow: auto;
-    margin-left: 25vw;
-    margin-right: 25vw;
     padding: 1%;
     background: white;
+    box-shadow: 0 15px 30px 0 #2C3539,
+                0 5px 15px 0 #2C3539;
     @media screen and (min-width:700px) {
         margin: 0 auto;
         width: 20vw;
@@ -55,7 +55,7 @@ const GamingNews = props => {
     const targetUrl =
       "https://newsapi.org/v2/everything?q=video+games&sortBy=relevancy&pageSize=5&apiKey=";
     const res = await axios.get(targetUrl + REACT_APP_NEWS_API);
-    console.log(res.data.articles);
+    // console.log(res.data.articles);
     setArticles(res.data.articles);
   };
 
@@ -73,10 +73,10 @@ const GamingNews = props => {
   //     setArticles(res.data)
   // }
 
-  console.log("articles", articles);
+  // console.log("articles", articles);
 
   const newsArticles = articles.map((article, i) => {
-    console.log(article.url);
+    // console.log(article.url);
     return (
       <Card
         className={props.card}

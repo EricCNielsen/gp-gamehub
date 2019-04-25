@@ -5,26 +5,26 @@ import StarRatings from "react-star-ratings";
 import styled from "styled-components";
 
 const RankingContainer = styled.div`
-    height: 40vh;
-    overflow: auto;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+  height: 40vh;
+  overflow: auto;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-radius: 10px;
+  margin: 0px 2px;
+  height: fit-content;
+  background: white;
+  box-shadow: 0 15px 30px 0 #2c3539, 0 5px 15px 0 #2c3539;
+  @media screen and (min-width: 700px) {
+    margin: 0 auto;
+    width: 20vw;
+    position: absolute;
+    top: 25%;
+    right: 0.1%;
+    border: 1px solid lightgrey;
     border-radius: 10px;
-    margin: 0px 2px;
-    height: fit-content;
-    background: white;
-
-    @media screen and (min-width:700px) {
-        margin: 0 auto;
-        width: 20vw;
-        position: absolute;
-        top:25%;
-        right:.1%;
-        border: 1px solid lightgrey;
-        border-radius: 10px;
-    }
-`
+  }
+`;
 
 const Rankings = props => {
   useEffect(() => {
@@ -59,7 +59,7 @@ const Rankings = props => {
           );
         })}
       </ol>
-    </RankingContainer>  
+    </RankingContainer>
   );
 };
 

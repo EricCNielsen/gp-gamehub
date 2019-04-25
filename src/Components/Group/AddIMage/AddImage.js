@@ -6,9 +6,7 @@ import { GridLoader } from "react-spinners";
 
 export default function AddImage(props) {
   const [uploading, setUploading] = useState(false),
-    imgPlaceholder =
-      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Placeholder_couple_superhero.png",
-    [url, setUrl] = useState(imgPlaceholder);
+    [url, setUrl] = useState("");
 
   const uploadFile = async (file, signedRequest, url) => {
     try {
@@ -45,17 +43,27 @@ export default function AddImage(props) {
 
   return (
     <div>
-      <img style={{ width: "6em", height: "6em" }} src={url} alt="clan-post" />
-
-      <Dropzone
-        style={{ postion: "inherit" }}
-        className="dropzone"
-        onDropAccepted={getSignedRequest}
-        accept="image/*"
-        multiple={false}
-      >
-        {uploading ? <GridLoader /> : <p>Drop File here or Click to upload</p>}
-      </Dropzone>
+      {url ? (
+        <img
+          style={{ width: "6em", height: "6em" }}
+          src={url}
+          alt="clan-post"
+        />
+      ) : (
+        <Dropzone
+          style={{ postion: "inherit", margin: "1rem 0" }}
+          className="dropzone"
+          onDropAccepted={getSignedRequest}
+          accept="image/*"
+          multiple={false}
+        >
+          {uploading ? (
+            <GridLoader />
+          ) : (
+            <p>Drop File here or Click to upload</p>
+          )}
+        </Dropzone>
+      )}
     </div>
   );
 }
