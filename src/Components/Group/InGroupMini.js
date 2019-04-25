@@ -7,17 +7,21 @@ import PostViewer from "./../PostsViewer/PostViewer";
 
 const ClanMiniContainer = styled.div`
   background-color: white;
-  margin: 0;
+  border: solid;
+  margin-left: 2.5%;
+  height: 82vh;
+  width: 80vw;
 `
 
 const InGroupMini = (props) => {
   console.log(props)
   return (
-    <div className="feed">
+
+    <ClanMiniContainer>
       <h1 style={{textAlign:"left", paddingLeft:"3%"}}>{props.clanName}</h1>
       <hr/>
       <PostViewer id={props.clan_id}/>
-    </div>
+    </ClanMiniContainer>
   )
 }
 
