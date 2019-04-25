@@ -119,12 +119,19 @@ module.exports = {
   },
   createPost: async (req, res) => {
     try {
-      const { title, content, picture } = req.body;
-      const { user_id } = req.session.user;
+      console.log(req.body);
+      const { title, content, picture, user_id, clan_id } = req.body;
       const db = req.app.get("db");
       let date = formatDate(new Date());
-      let post = await db.create_post([user_id, title, content, picture, date]);
-      res.sendStatus(200);
+      let post = await db.create_post([
+        title,
+        content,
+        picture,
+        date,
+        user_id,
+        clan_id
+      ]);
+      res.status(200).send(post);
     } catch (err) {
       console.log(err);
     }
@@ -234,15 +241,18 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
-  }, checkUserMembership: async (req, res) => {
+  },
+  checkUserMembership: async (req, res) => {
     try {
-      const db = req.app.get("db")
-      const { id } = req.params
-      const userMembership = await db.check_user_clans_invitations({ user_id: id })
-      console.log(userMembership)
-      res.status(200).send(userMembership)
+      const db = req.app.get("db");
+      const { id } = req.params;
+      const userMembership = await db.check_user_clans_invitations({
+        user_id: id
+      });
+      console.log(userMembership);
+      res.status(200).send(userMembership);
     } catch (err) {
-      console.log(`there was an error checking user membership: ${err}`)
+      console.log(`there was an error checking user membership: ${err}`);
     }
   }
 };

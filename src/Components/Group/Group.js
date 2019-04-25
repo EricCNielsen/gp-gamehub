@@ -7,7 +7,6 @@ import InGroupMini from "./InGroupMini";
 import GroupInfo from "./GroupInfo";
 import GroupMembers from "./GroupMembers";
 
-
 const Group = props => {
   const [url, setUrl] = useState(""),
         [name, setName] = useState(""),
@@ -27,10 +26,10 @@ const Group = props => {
     },[]);
 
   const getMembers = () => {
-    const {id} = props.match.params;
-   axios.get(`/api/clan/${id}/members`).then(res => {
-     setMembers(res.data);
-   });
+    const { id } = props.match.params;
+    axios.get(`/api/clan/${id}/members`).then(res => {
+      setMembers(res.data);
+    });
   };
 
   const getClan = () => {
@@ -40,7 +39,7 @@ const Group = props => {
         setName(res.data[0].name);
         setBio(res.data[0].bio);
         setUrl(res.data[0].avatar);
-        setClan(res.data[0])
+        setClan(res.data[0]);
         props.updateClan(res.data[0]);
         setIsLoading(false)
       }
@@ -67,9 +66,11 @@ const Group = props => {
         </div>
           <InGroupMini />
       </div>
-    );
-}
-  
+      <InGroupMini />
+    </div>
+  );
+};
+
 const mapStateToProps = reduxState => {
   return {
     user_id: reduxState.user_id,
@@ -81,4 +82,7 @@ const mapStateToProps = reduxState => {
   };
 };
 
-export default connect(mapStateToProps,{ updateClan })(Group);
+export default connect(
+  mapStateToProps,
+  { updateClan }
+)(Group);

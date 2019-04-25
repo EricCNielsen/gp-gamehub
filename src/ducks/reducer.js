@@ -13,42 +13,42 @@ const initialState = {
   clanName: ``,
   clanAvatar: ``,
   registeredClans: []
-}
+};
 
 const UPDATE_USER = `UPDATE_USER`,
   UPDATE_CLAN = `UPDATE_CLAN`,
-  UPDATE_REGISTERED_CLANS = `UPDATE_REGISTERED_CLANS`
+  UPDATE_REGISTERED_CLANS = `UPDATE_REGISTERED_CLANS`;
 
 export function updateUser(user) {
   if (user[0]) {
-    user = user[0]
+    user = user[0];
   }
   return {
     type: UPDATE_USER,
     payload: user
-  }
+  };
 }
 
 export function updateClan(clan) {
   if (clan[0]) {
-    clan = clan[0]
+    clan = clan[0];
   }
   return {
     type: UPDATE_CLAN,
     payload: clan
-  }
+  };
 }
 
 export function updateRegisteredClans(registeredClans) {
-  console.log(registeredClans)
+  // console.log(registeredClans)
   return {
     type: UPDATE_REGISTERED_CLANS,
     payload: registeredClans
-  }
+  };
 }
 
 export default function reducer(state = initialState, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
   switch (type) {
     case UPDATE_USER:
       const {
@@ -60,7 +60,7 @@ export default function reducer(state = initialState, action) {
         exp,
         email,
         user_id
-      } = payload
+      } = payload;
       return {
         ...state,
         bio,
@@ -71,7 +71,7 @@ export default function reducer(state = initialState, action) {
         email,
         user_id,
         exp
-      }
+      };
     case UPDATE_CLAN:
       const {
         owner_id,
@@ -79,14 +79,14 @@ export default function reducer(state = initialState, action) {
         bio: clanBio,
         avatar: clanAvatar,
         name: clanName
-      } = payload
-      return { ...state, owner_id, clan_id, clanBio, clanAvatar, clanName }
+      } = payload;
+      return { ...state, owner_id, clan_id, clanBio, clanAvatar, clanName };
     case UPDATE_REGISTERED_CLANS:
       return {
         ...state,
         registeredClans: [...payload]
-      }
+      };
     default:
-      return state
+      return state;
   }
 }

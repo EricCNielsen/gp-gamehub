@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import styled from "styled-components"
-import axios from "axios"
-import ClickAwayListener from "@material-ui/core/ClickAwayListener"
-import UsersResults from "./SearchResults/UsersResults"
-import ClansResults from "./SearchResults/ClansResults"
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from "styled-components";
+import axios from "axios";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import UsersResults from "./SearchResults/UsersResults";
+import ClansResults from "./SearchResults/ClansResults";
 
 const SearchContainer = styled.div`
-    position: relative;
-    height: 5vh;
-    width: 100vw;
-    input {
-        transition: width .5s;
-        border-radius:10px;
-        padding: .5%;
-        outline:none;
-        background-color: white;
-        height: 2vh;
-    };
-    z-index:1;
-    
+  position: relative;
+  height: 5vh;
+  width: 100vw;
+  input {
+    transition: width 0.5s;
+    border-radius: 10px;
+    padding: 0.5%;
+    outline: none;
+    background-color: white;
+    height: 2vh;
+  }
+  z-index: 1;
 `;
 
 const SearchIcon = styled.div`
@@ -28,7 +27,7 @@ const SearchIcon = styled.div`
   left: 1.5vw;
   width: fit-content;
   z-index: 2;
-`
+`;
 
 const SearchResults = styled.div`
   width: 98.5vw;
@@ -36,52 +35,53 @@ const SearchResults = styled.div`
   align-content: center;
   background: white;
   border: 2px solid black;
-  margin:.5%;
+  margin: 0.5%;
   padding-top: 1%;
 `;
 
 const Search = () => {
-  const [searchInput, setSearchInput] = useState("")
-  const [openSearch, setOpenSearch] = useState(false)
-  const [freezeModal, setFreezeModal] = useState(false)
+  const [searchInput, setSearchInput] = useState("");
+  const [openSearch, setOpenSearch] = useState(false);
+  const [freezeModal, setFreezeModal] = useState(false);
   const [searchResults, setSearchResults] = useState({
     users: [],
     clans: [],
     posts: []
-  })
-  const [touchEvent, setTouchEvent] = useState()
+  });
+  const [touchEvent, setTouchEvent] = useState();
 
   const fireSearch = async () => {
-    let searchData = await axios.get(`/api/search?search=${searchInput}`)
-    setSearchResults(searchData.data)
-  }
+    let searchData = await axios.get(`/api/search?search=${searchInput}`);
+    setSearchResults(searchData.data);
+  };
   const handleInput = e => {
-    setSearchInput(e.target.value)
-  }
+    setSearchInput(e.target.value);
+  };
   const handleKeyDown = e => {
     if (e.key === "Enter") {
-      fireSearch()
+      fireSearch();
     }
-  }
+  };
   // const handleClickAway = () => {
   //   if (openSearch) {
   //     setOpenSearch(!openSearch)
   //   }
   // }
 
-  console.log(searchInput)
+  // console.log(searchInput)
 
   return (
-    <ClickAwayListener>
-      <SearchContainer>
-          <SearchIcon>
-            <FontAwesomeIcon
-              icon="search"
-              onClick={_ => setOpenSearch(!openSearch)}
-              style={{ cursor: "pointer" }}
-            />
-          </SearchIcon>
-          <div> {openSearch ? 
+    <SearchContainer>
+      <SearchIcon>
+        <FontAwesomeIcon
+          icon="search"
+          onClick={_ => setOpenSearch(!openSearch)}
+          style={{ cursor: "pointer" }}
+        />
+      </SearchIcon>
+      <div>
+        {" "}
+        {openSearch ? (
           <SearchResults>
             <input
               onKeyDown={handleKeyDown}
@@ -95,15 +95,14 @@ const Search = () => {
                 textAlign: "left"
               }}
             />
-  
-              <UsersResults users={searchResults.users} openSearch={openSearch} />
-              <ClansResults clans={searchResults.clans} openSearch={openSearch} />
+
+            <UsersResults users={searchResults.users} openSearch={openSearch} />
+            <ClansResults clans={searchResults.clans} openSearch={openSearch} />
           </SearchResults>
-          : null }
-          </div>
-      </SearchContainer>
-    </ClickAwayListener>
+        ) : null}
+      </div>
+    </SearchContainer>
   );
 };
 
-export default Search
+export default Search;

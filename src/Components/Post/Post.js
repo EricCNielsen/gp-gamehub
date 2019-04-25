@@ -66,7 +66,7 @@ const PostWrapper = styled.div`
 const ReplyWrapper = styled.div`
   padding-left: 2rem;
   /* background: lightgrey; */
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid black;
 `;
 
 function Post(props) {
@@ -257,8 +257,8 @@ function Post(props) {
             margin: "10px"
           }}
         />
-        <div className="reply-input">
-          <div className="reply-input-wrapper">
+        <div>
+          <div>
             {showQuill ? (
               <div className="reply-quill">
                 <ReactQuill

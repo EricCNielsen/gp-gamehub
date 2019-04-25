@@ -78,10 +78,10 @@ const GamingNews = props => {
   //     setArticles(res.data)
   // }
 
-  console.log("articles", articles);
+  // console.log("articles", articles);
 
   const newsArticles = articles.map((article, i) => {
-    console.log(article.url);
+    // console.log(article.url);
     return (
       <Card
         className={props.card}
