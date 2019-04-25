@@ -11,12 +11,16 @@ const RankingContainer = styled.div`
   border-right: 1px solid black;
   border-bottom: 1px solid black;
   border-radius: 10px;
-  margin: 0px 2px;
+  margin-bottom: 5%;
   height: fit-content;
   background: white;
   box-shadow: 0 15px 30px 0 #2c3539, 0 5px 15px 0 #2c3539;
+  h1 {
+    font-size: 40px;
+    font-weight: bold;
+  };
   @media screen and (min-width: 700px) {
-    margin: 0 auto;
+    margin-right: 1%;
     width: 20vw;
     position: absolute;
     top: 25%;
@@ -53,7 +57,7 @@ const Rankings = props => {
         <h1>Rankings</h1>
         <hr />
         <h2>Top 5 Users</h2>
-        <ol>
+        <ol style={{paddingLeft:"5%", paddingBottom:"2%"}}>
           {top5Users.map(user => {
             return (
               <li key={user.username} style={{ textAlign: "left" }}>

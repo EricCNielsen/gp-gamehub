@@ -16,6 +16,7 @@ const Wrapper = styled.div`
     width: 100vw;
     overflow: hidden;
   }
+  padding: 5%;
 `
 const DashboardPage = styled.div`
   width:100%;
