@@ -9,21 +9,15 @@ import GroupMembers from "./GroupMembers";
 
 const Group = props => {
   const [url, setUrl] = useState(""),
-        [name, setName] = useState(""),
-        [bio, setBio] = useState(""),
-        [members, setMembers] = useState([]),
-        [clan, setClan] = useState([]),
-        [isLoading, setIsLoading] = useState(true)
-
-        
+    [name, setName] = useState(""),
+    [bio, setBio] = useState(""),
+    [members, setMembers] = useState([]),
+    [clan, setClan] = useState([]);
 
   useEffect(() => {
-    let fetchData = async () => {
-        getClan();
-        getMembers();
-      }
-    fetchData()
-    },[]);
+    getClan();
+    getMembers();
+  }, []);
 
   const getMembers = () => {
     const { id } = props.match.params;
@@ -41,9 +35,7 @@ const Group = props => {
         setUrl(res.data[0].avatar);
         setClan(res.data[0]);
         props.updateClan(res.data[0]);
-        setIsLoading(false)
-      }
-      );
+      });
     } else {
       const { clanName, clanBio, clanAvatar } = props;
       setName(clanName);
@@ -52,19 +44,11 @@ const Group = props => {
     }
   };
 
-    return (
-      <div className="clan">
-        <div className="two">
-        {isLoading ? (
-          <div>Loading...</div>
-        ): (
-          <div>
-            <GroupInfo clan={clan} user_id={props.user_id} props={props}/>
-            <GroupMembers members={members}/>
-          </div>
-        )}
-        </div>
-          <InGroupMini />
+  return (
+    <div className="clan">
+      <div className="two">
+        <GroupInfo clan={clan} user_id={props.user_id} props={props} />
+        <GroupMembers members={members} />
       </div>
       <InGroupMini />
     </div>
