@@ -175,5 +175,5 @@ app.delete("/api/decline-invite", invitesCtrl.declineInvite)
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
   console.log("db is running!");
-  app.listen(SERVER_PORT, () => console.log(`cruising on port ${SERVER_PORT}`));
+  app.listen(SERVER_PORT, () => console.log(`f*ck José on port ${SERVER_PORT}`));
 });

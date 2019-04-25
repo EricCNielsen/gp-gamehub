@@ -11,8 +11,9 @@ import CreatePost from "../CreatePost";
 function GroupSelector(props) {
   const [selectedClan, setSelectedClan] = useState(props.clans[0].clan_id);
   const [showPosts, setShowPosts] = useState(true);
-
   const [open, setOpen] = useState(false);
+
+  console.log(props)
 
   const handleClose = () => {
     setOpen(false);
@@ -43,6 +44,8 @@ function GroupSelector(props) {
     props.history.push(`group/${selectedClan}`);
   }
 
+
+console.log(selectedClan, props)
   return (
     <div>
       <FormControl>
@@ -81,9 +84,9 @@ function GroupSelector(props) {
           >
             <DialogTitle id="form-dialog-title">Create a post</DialogTitle>
             <CreatePost
-              handleClickOpen={handleClickOpen}
               handleClose={handleClose}
-              getClan={props.getClan}
+              getDashClan={selectedClan}
+              user_id={props.user_id}
             />
           </Dialog>
         </div>
@@ -92,5 +95,7 @@ function GroupSelector(props) {
     </div>
   );
 }
+
+
 
 export default withRouter(GroupSelector);
