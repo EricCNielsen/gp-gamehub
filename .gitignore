@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /.pnp
+/JT test
 .pnp.js
 
 # testing

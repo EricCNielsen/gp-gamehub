@@ -37,20 +37,23 @@ class InviteMember extends Component {
   }
 
   handleSubmit = async () => {
-    await axios.post('/api/create-invite', this.state.clansChecked)
+    await axios.post("/api/create-invite", this.state.clansChecked)
     this.handleClose()
   }
 
   handleClose = () => {
     this.setState({ open: false, clansChecked: {} })
-
   }
 
-  clanCheckedForInvite(e, clan){
+  clanCheckedForInvite(e, clan) {
     const { user_id } = this.props.modalInfo.user
     let clansChecked = this.state.clansChecked
-    clansChecked[clan.name] = {checked: e.target.checked,clan_id:clan.clan_id, user: user_id}
-    this.setState({clansChecked})
+    clansChecked[clan.name] = {
+      checked: e.target.checked,
+      clan_id: clan.clan_id,
+      user: user_id
+    }
+    this.setState({ clansChecked })
   }
 
   render() {
@@ -58,7 +61,7 @@ class InviteMember extends Component {
       return <div />
     }
     const { clans, invitations } = this.state.userData[0]
-    const clansDisplay = this.props.registeredClans.map((clan) => {
+    const clansDisplay = this.props.registeredClans.map(clan => {
       const alreadyMember = clans.findIndex(
         userClan => userClan.clan_id === clan.clan_id
       )
@@ -77,32 +80,32 @@ class InviteMember extends Component {
             <span>{username} is already a member</span>
           </div>
         )
-      } else if (alreadyInvited!== -1){
+      } else if (alreadyInvited !== -1) {
         return (
           <div key={clan.clan_id}>
-          <FormControlLabel
-          disabled
-          control={<Checkbox value={clan.name} />}
-          key={clan.name}
-          label={clan.name}
-          />
-          <span>invitation already sent</span>
+            <FormControlLabel
+              disabled
+              control={<Checkbox value={clan.name} />}
+              key={clan.name}
+              label={clan.name}
+            />
+            <span>invitation already sent</span>
           </div>
         )
       } else {
         return (
           <div key={clan.clan_id}>
             <FormControlLabel
-            control={<Checkbox value={clan.name} />}
-            key={clan.name}
-            label={clan.name}
-            onChange={(e) => this.clanCheckedForInvite(e, clan)}
+              control={<Checkbox value={clan.name} />}
+              key={clan.name}
+              label={clan.name}
+              onChange={e => this.clanCheckedForInvite(e, clan)}
             />
           </div>
         )
       }
     })
-    const { user_id, username } = this.props.modalInfo.user
+    const { username } = this.props.modalInfo.user
     return (
       <Dialog
         open={this.state.open}
@@ -112,7 +115,7 @@ class InviteMember extends Component {
         <DialogTitle id="creat-clan">
           <p>
             Invite <b>{username}</b> to a clan
-            </p>
+          </p>
         </DialogTitle>
         <DialogContent />
         <FormGroup>{clansDisplay}</FormGroup>
