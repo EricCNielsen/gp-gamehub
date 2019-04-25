@@ -12,11 +12,21 @@ const SearchContainer = styled.div`
   width: 100vw;
   input {
     transition: width 0.5s;
-    border-radius: 10px;
     padding: 0.5%;
     outline: none;
     background-color: white;
     height: 2vh;
+    border-bottom: 1px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    position: relative;
+    left: 1vw;
+    width: 85vw;
+  }
+  h1{
+    font-size: 40px;
+    font-weight: bold;
   }
   z-index: 1;
 `;
@@ -34,7 +44,7 @@ const SearchResults = styled.div`
   height: 100vh;
   align-content: center;
   background: white;
-  border: 2px solid black;
+  border-bottom: 1px solid black;
   margin: 0.5%;
   padding-top: 1%;
 `;
@@ -88,12 +98,12 @@ const Search = () => {
               val={searchInput}
               onChange={handleInput}
               placeholder={openSearch ? "Search" : null}
-              style={{
-                width: openSearch ? "80vw" : "0",
-                borderStyle: openSearch ? "solid" : "none",
-                padding: openSearch ? "5px" : "0",
-                textAlign: "left"
-              }}
+              // style={{
+              //   width: openSearch ? "80vw" : "0",
+              //   borderBottom: openSearch ? "solid" : "none",
+              //   padding: openSearch ? "5px" : "0",
+              //   textAlign: "left"
+              // }}
             />
 
             <UsersResults users={searchResults.users} openSearch={openSearch} />

@@ -25,7 +25,7 @@ const WelcomeMessage = styled.h1`
   margin-top: 5%;
   margin-bottom: 0;
   animation: text-flicker 3s linear;
-  animation-duration: 8s;
+  animation-duration: 3s;
   @keyframes text-flicker {
     0% {
       opacity: 0.5;
@@ -69,10 +69,9 @@ const WelcomeMessage = styled.h1`
       /* rgba(242, 22, 22, 1); */
     }
 
-    70% {
+    /* 70% {
       opacity: 0.7;
       text-shadow: 0px 0px 29px rgba(236, 114, 39, 0.9);
-      /* rgba(242, 22, 22, 1); */
     }
 
     72% {
@@ -87,7 +86,7 @@ const WelcomeMessage = styled.h1`
     100% {
       opacity: 1;
       text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
-    }
+    } */
   }
 `;
 
@@ -114,7 +113,7 @@ function About({ id }) {
       <AboutWrapper>
         <MessageWrapper>
           <WelcomeMessage>Welcome to GameHub</WelcomeMessage>
-          <P>Where gamers connect</P>
+          <P>where gamers connect</P>
         </MessageWrapper>
       </AboutWrapper>
     </div>

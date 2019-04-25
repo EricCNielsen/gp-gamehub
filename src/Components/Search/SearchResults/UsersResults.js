@@ -14,7 +14,7 @@ const User = styled.div`
   background: rgb(229,229,229);
   height: fit-content;
   border-top: 2px solid black;
-  width: 98%
+  width: 100%;
   img {
     border: 1px solid black;
     border-radius: 50%;
@@ -26,11 +26,7 @@ const User = styled.div`
 `
 const SearchTitle = styled.div`
   background-color: rgb(229, 229, 229);
-  border: 2px solid black;
-  border-radius: 10px;
   margin-top: 2vh;
-  margin-left: 10vw;
-  margin-right: 10vw;
   height: fit-content;
 `
 
