@@ -61,6 +61,9 @@ function PostViewer(props) {
             </p>
           </AuthorInfo>
           <ReactQuill theme="bubble" value={post.content} readOnly={true} />
+          <div style={{ flexDirection: "flex-end" }}>
+            <a href={`/Post/${post.post_id}`}>More</a>
+          </div>
           {replies()}
         </div>
       );
