@@ -34,6 +34,7 @@ const GroupMini = props => {
   const [registeredclans, setRegisteredClans] = useState([])
   const [showSelector, setShowSelector] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     let fetchData = async () => {
