@@ -9,7 +9,7 @@ const Clan = styled.div`
   margin-bottom: 2vh;
   height: fit-content;
   border-top: 2px solid black;
-  width: 98%;
+  width: 100%;
   img {
     border: 1px solid black;
     border-radius: 50%;
@@ -21,11 +21,7 @@ const Clan = styled.div`
 `
 const ClanTitle = styled.div`
   background-color: rgb(229, 229, 229);
-  border: 2px solid black;
-  border-radius: 10px;
   margin-top: 2vh;
-  margin-left: 10vw;
-  margin-right: 10vw;
   height: fit-content;
 `
 
@@ -35,7 +31,6 @@ const ClansResults = ({ clans, openSearch }) => {
       <Link to={`/group/${clan.clan_id}`} style={{ width: "80vw" }}>
         <Clan key={i}>
           <h3>Clans</h3>
-          <hr />
           <img
           onError={e => {
             e.target.onerror = null

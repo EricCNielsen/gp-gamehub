@@ -29,6 +29,7 @@ const pgPool = new pg.Pool({
 })
 
 app.use(express.json())
+app.use( express.static( `${__dirname}/../build` ) );
 
 app.use(
   session({

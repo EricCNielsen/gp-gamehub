@@ -35,8 +35,7 @@ const ListWrapper = styled.ul`
 `;
 
 const ContentWrapper = styled.div`
-  diplay: flex;
-  width: 100%;
+  width: 100vw;
   justify-content: center;
 `;
 

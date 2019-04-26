@@ -5,7 +5,6 @@ import styled from "styled-components"
 import GroupSelector from "./GroupSelector/GroupSelector"
 import Button from "@material-ui/core/Button"
 import { connect } from "react-redux"
-
 import axios from "axios"
 
 const ClanMiniContainer = styled.div`
