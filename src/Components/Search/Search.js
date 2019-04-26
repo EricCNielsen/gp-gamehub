@@ -51,7 +51,7 @@ const SearchResults = styled.div`
 
 const Search = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [openSearch, setOpenSearch] = useState(true);
+  const [openSearch, setOpenSearch] = useState(false);
   const [freezeModal, setFreezeModal] = useState(false);
   const [searchResults, setSearchResults] = useState({
     users: [],
