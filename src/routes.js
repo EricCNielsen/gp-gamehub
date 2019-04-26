@@ -7,6 +7,7 @@ import Group from "./Components/Group/Group";
 import Post from "./Components/Post/Post";
 import GamingNews from "./Components/GamingNews/GamingNews";
 import InGroupMini from "./Components/Group/InGroupMini";
+import Search from "./Components/Search/Search";
 
 export default (
   <Switch>
@@ -18,5 +19,6 @@ export default (
     <Route path="/user/:id" component={User} />
     <Route path="/gamingnews" component={GamingNews} />
     <Route path="/post/:id" component={Post} />
+    <Route path="/search" component={Search} />
   </Switch>
 );

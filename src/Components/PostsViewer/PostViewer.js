@@ -17,9 +17,7 @@ function PostViewer(props) {
   }, [props.id]);
   const [posts, setPosts] = useState([]);
   const [noPosts, setNoPosts] = useState(true);
-
-  console.log(posts);
-
+  
   async function getClanPosts() {
     try {
       let clanPosts = await axios.get(`/api/clan-posts/${props.id}`);
@@ -43,7 +41,6 @@ function PostViewer(props) {
     .map(post => {
       function replies() {
         const replies = posts.filter(post => post.parent_id);
-        console.log(posts);
         if (replies.length > 0 && replies[0].parent_id === post.post_id) {
           const repliesCount = replies.length;
           return (

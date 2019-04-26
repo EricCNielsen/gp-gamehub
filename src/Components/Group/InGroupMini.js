@@ -12,7 +12,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Icon from "@material-ui/core/Icon";
 import CreatePost from "./CreatePost";
 
 const ClanMiniContainer = styled.div`
@@ -79,7 +78,7 @@ const InGroupMini = props => {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Create a post</DialogTitle>
-          <CreatePost handleClose={handleClose} getClan={props.getClan} />
+          <CreatePost handleClose={handleClose} getClan={props.getClan} clan_id={props.clan_id} />
         </Dialog>
       </div>
       <hr />

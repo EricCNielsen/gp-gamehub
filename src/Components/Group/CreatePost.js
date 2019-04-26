@@ -78,14 +78,14 @@ const BodyWrapper = styled.div`
   padding: 2rem;
 `;
 
-function CreatePost({ getDashClan, user_id, handleClose }, props) {
+function CreatePost({ getDashClan, user_id, handleClose, clan_id }, props) {
   const [quillRef, setQuillRef] = useState(null);
   const [reactQuillRef, setReactQuillRef] = useState({});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [picture, setPicture] = useState("");
 
-  console.log(props);
+  console.log(clan_id);
 
   useEffect(() => {
     attachQuillRefs();
@@ -112,7 +112,7 @@ function CreatePost({ getDashClan, user_id, handleClose }, props) {
       content,
       picture,
       user_id: user_id,
-      clan_id: props.clan_id || getDashClan
+      clan_id: getDashClan || clan_id
     };
     try {
       await axios.post("/api/post", post);
@@ -123,6 +123,7 @@ function CreatePost({ getDashClan, user_id, handleClose }, props) {
     }
   };
 
+  console.log()
   return (
     <BodyWrapper>
       <div>

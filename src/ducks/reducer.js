@@ -89,7 +89,6 @@ export default function reducer(state = initialState, action) {
       } = payload
       return { ...state, owner_id, clan_id, clanBio, clanAvatar, clanName }
     case UPDATE_REGISTERED_CLANS:
-      console.log(payload)
       return {
         ...state,
         registeredClans: payload

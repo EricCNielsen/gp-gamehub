@@ -15,6 +15,8 @@ const User = styled.div`
   height: fit-content;
   border-top: 2px solid black;
   width: 100%;
+  display: flex;
+  align-items: center;
   img {
     border: 1px solid black;
     border-radius: 50%;
@@ -39,7 +41,6 @@ function UserResults({ users, openSearch, registeredClans, user_id }) {
   const results = users.map((user, i) => {
     return openSearch ? (
       <User key={i}>
-        <div>
           <Link to={`/user/${user.user_id}`}>
             {!user.picture ? (
               <img
@@ -58,9 +59,8 @@ function UserResults({ users, openSearch, registeredClans, user_id }) {
               />
             )}
             <h4>{user.username}</h4>
-            {/* <h3>{user.ranking}</h3> */}
-            <h5>{user.location}</h5>
-            <p>{user.user_id}</p>
+            <h3>{user.ranking}</h3>
+            <h5>{user.location ? user.location : 'Not Known'}</h5>
           </Link>
           {registeredClans.length > 0 && user_id !== user.user_id ? (
             <Button
@@ -72,7 +72,6 @@ function UserResults({ users, openSearch, registeredClans, user_id }) {
               Invite to Clan
             </Button>
           ) : null}
-        </div>
       </User>
     ) : null
   })

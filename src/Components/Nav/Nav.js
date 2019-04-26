@@ -58,7 +58,6 @@ function Nav(props) {
       const user = await axios.get("/auth/account")
       updateUser(user.data)
       const getRegisteredClans = await axios.get("/api/registeredclans")
-      console.log(getRegisteredClans.data)
       updateRegisteredClans(getRegisteredClans.data)
       if (user && location.pathname === "/") {
         history.push("/dashboard")
