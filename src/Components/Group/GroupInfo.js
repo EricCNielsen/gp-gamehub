@@ -88,7 +88,7 @@ const GroupInfo = ({ clan, user_id, props }) => {
   };
 
   if(!props.clanName){
-    return <div className="clanInfo">I am Loading mother Effer</div>
+    return <div className="clanInfo">Whoa, so many clans...</div>
   }
   return (
     <div className="clanInfo">
